@@ -52,7 +52,7 @@ export const PredictPage: React.FC = () => {
     const bin = simState.bins.find((b) => b.id === binId);
     if (bin) {
       setSelectedBin(bin);
-      navigate('/map');
+      navigate('/app/map');
     }
   };
 
@@ -61,7 +61,7 @@ export const PredictPage: React.FC = () => {
       
       {/* Page Header */}
       <PageHeader
-        title="2 · Waste Forecast: Generation Seasonality & Hotspots"
+        title="Predict · Waste forecast"
         subtitle="Machine learning time-series model projecting generation surge curves across 5 Pune pilot zones for proactive resource pre-allocation."
         stepNumber={2}
         stepName="Predict"
@@ -81,6 +81,26 @@ export const PredictPage: React.FC = () => {
           </div>
         }
       />
+
+      {/* One-Line Top Headline Result (Phase 4 requirement) */}
+      <div className="p-4 sm:p-5 rounded-2xl bg-white border border-charcoal-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span className="p-2.5 rounded-xl bg-emerald-100 text-emerald-800 flex-shrink-0" aria-hidden="true">
+            <TrendingUp className="w-5 h-5 text-emerald-700" />
+          </span>
+          <div>
+            <div className="text-xs uppercase font-bold tracking-wider text-charcoal-500">
+              Seasonality & Preemption Model
+            </div>
+            <p className="text-sm sm:text-base font-bold text-navy-900 leading-snug">
+              Time-series models project waste curves across 5 zones: {urgentHotspots.length} imminent bin surges preempted before overflow.
+            </p>
+          </div>
+        </div>
+        <Badge variant={urgentHotspots.length > 0 ? 'amber' : 'emerald'} size="md">
+          {urgentHotspots.length} High-Risk Hotspots Preempted
+        </Badge>
+      </div>
 
       {/* Per-Zone Volume Forecast Multi-Area Chart */}
       <SectionCard
@@ -270,7 +290,8 @@ export const PredictPage: React.FC = () => {
                 size="sm"
                 icon={<ArrowUpRight className="w-3.5 h-3.5" />}
                 iconPosition="right"
-                onClick={() => navigate('/optimize')}
+                onClick={() => navigate('/app/optimize')}
+                className="min-h-[44px] text-sm"
               >
                 Solve Routes in Step 3
               </Button>
@@ -283,10 +304,10 @@ export const PredictPage: React.FC = () => {
       {/* Loop Step Navigation */}
       <LoopStepNav
         currentStep={2}
-        prevPath="/map"
-        prevLabel="1 · Live Bin Map"
-        nextPath="/optimize"
-        nextLabel="3 · Smart Routes"
+        prevPath="/app/map"
+        prevLabel="Sense · Live bin map"
+        nextPath="/app/optimize"
+        nextLabel="Optimize · Smart routes"
       />
 
     </div>

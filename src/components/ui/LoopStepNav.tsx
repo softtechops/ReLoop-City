@@ -12,13 +12,13 @@ export interface LoopStepNavProps {
 }
 
 const STEP_NAMES = [
-  'Live Bin Map',
-  'Waste Forecast',
-  'Smart Routes',
-  'Waste Sorting (AI Vision)',
-  'Where Waste Goes & Energy',
-  'Where Waste Goes & Energy',
-  'Results & Revenue',
+  'Sense · Live bin map',
+  'Predict · Waste forecast',
+  'Optimize · Smart routes',
+  'Classify · Waste sorting',
+  'Allocate · Waste streams',
+  'Forecast · Clean energy',
+  'Report · Results & revenue',
 ];
 
 export const LoopStepNav: React.FC<LoopStepNavProps> = ({
@@ -34,60 +34,60 @@ export const LoopStepNav: React.FC<LoopStepNavProps> = ({
   return (
     <nav
       aria-label="7-Step AI Loop navigation"
-      className="mt-12 pt-6 border-t border-navy-100 flex flex-col sm:flex-row items-center justify-between gap-4"
+      className="mt-12 pt-6 border-t border-charcoal-200 flex flex-col sm:flex-row items-center justify-between gap-4"
     >
-      <div>
+      <div className="w-full sm:w-auto">
         {resolvedPrevPath ? (
-          <Link to={resolvedPrevPath} className="w-full sm:w-auto">
+          <Link to={resolvedPrevPath} className="block w-full sm:w-auto">
             <Button
               variant="secondary"
-              size="sm"
+              size="md"
               icon={<ArrowLeft className="w-4 h-4" />}
               iconPosition="left"
-              className="w-full sm:w-auto"
+              className="w-full sm:w-auto min-h-[44px] text-sm"
             >
               Previous: {prevLabel || 'Previous Step'}
             </Button>
           </Link>
         ) : (
-          <Link to="/app/overview" className="w-full sm:w-auto">
-            <Button variant="ghost" size="sm" icon={<ArrowLeft className="w-4 h-4" />} iconPosition="left">
+          <Link to="/app/overview" className="block w-full sm:w-auto">
+            <Button variant="ghost" size="md" icon={<ArrowLeft className="w-4 h-4" />} iconPosition="left" className="min-h-[44px] text-sm">
               Overview
             </Button>
           </Link>
         )}
       </div>
 
-      <div className="flex flex-col items-center text-center">
-        <span className="text-xs font-bold uppercase tracking-wider text-navy-700">
+      <div className="flex flex-col items-center text-center py-1">
+        <span className="text-xs font-bold uppercase tracking-wider text-navy-800">
           The 7-Step AI Loop · Step {currentStep} of 7
         </span>
-        <span className="text-xs text-charcoal-500 font-medium">
+        <span className="text-sm font-semibold text-charcoal-700">
           {STEP_NAMES[currentStep - 1] || 'Loop Step'}
         </span>
       </div>
 
-      <div>
+      <div className="w-full sm:w-auto">
         {resolvedNextPath ? (
-          <Link to={resolvedNextPath} className="w-full sm:w-auto">
+          <Link to={resolvedNextPath} className="block w-full sm:w-auto">
             <Button
               variant="primary"
-              size="sm"
+              size="md"
               icon={<ArrowRight className="w-4 h-4" />}
               iconPosition="right"
-              className="w-full sm:w-auto"
+              className="w-full sm:w-auto min-h-[44px] text-sm bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-md shadow-emerald-900/10 px-5"
             >
               Next: {nextLabel || 'Next Step'}
             </Button>
           </Link>
         ) : (
-          <Link to="/app/dashboard" className="w-full sm:w-auto">
+          <Link to="/app/dashboard" className="block w-full sm:w-auto">
             <Button
-              variant="sage"
-              size="sm"
+              variant="primary"
+              size="md"
               icon={<CheckCircle2 className="w-4 h-4" />}
               iconPosition="right"
-              className="w-full sm:w-auto"
+              className="w-full sm:w-auto min-h-[44px] text-sm bg-navy-900 hover:bg-navy-800 text-white font-bold px-5"
             >
               Complete Loop: Dashboard
             </Button>

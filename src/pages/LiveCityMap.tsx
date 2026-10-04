@@ -97,7 +97,7 @@ export const LiveCityMap: React.FC = () => {
       
       {/* Page Header */}
       <PageHeader
-        title="1 · Live Bin Map: Smart IoT Sensing"
+        title="Sense · Live bin map"
         subtitle="Real-time ultrasonic fill level and waste stream sensors across 100 smart receptacles in Pune PCMC corridor."
         stepNumber={1}
         stepName="Sense"
@@ -108,6 +108,7 @@ export const LiveCityMap: React.FC = () => {
               size="sm"
               icon={isSimRunning ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current" />}
               onClick={() => (isSimRunning ? pauseSimulation() : startSimulation())}
+              className="min-h-[44px] text-sm"
             >
               {isSimRunning ? 'Pause Stream' : 'Live Stream'}
             </Button>
@@ -118,12 +119,33 @@ export const LiveCityMap: React.FC = () => {
               onClick={handleFindNearestCritical}
               disabled={criticalCount === 0}
               aria-label="Find and zoom to nearest critical bin"
+              className="min-h-[44px] text-sm"
             >
-              Nearest Critical Bin
+              Zoom Critical ({criticalCount})
             </Button>
           </div>
         }
       />
+
+      {/* One-Line Top Headline Result (Phase 4 requirement) */}
+      <div className="p-4 sm:p-5 rounded-2xl bg-white border border-charcoal-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span className="p-2.5 rounded-xl bg-emerald-100 text-emerald-800 flex-shrink-0" aria-hidden="true">
+            <Radio className="w-5 h-5 text-emerald-700" />
+          </span>
+          <div>
+            <div className="text-xs uppercase font-bold tracking-wider text-charcoal-500">
+              Corridor Telemetry Status
+            </div>
+            <p className="text-sm sm:text-base font-bold text-navy-900 leading-snug">
+              100 smart IoT bins online across 5 Pune zones: {criticalCount} critical bins (≥80%) prioritized for dynamic pickup.
+            </p>
+          </div>
+        </div>
+        <Badge variant={criticalCount > 0 ? 'amber' : 'emerald'} size="md">
+          {criticalCount > 0 ? `${criticalCount} bins need pickup` : 'All bins below threshold'}
+        </Badge>
+      </div>
 
       {/* Filter Chips Bar (Section 5) */}
       <div className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-2xl bg-white border border-navy-100 shadow-blueprint">
@@ -293,24 +315,27 @@ export const LiveCityMap: React.FC = () => {
           <div
             role="region"
             aria-label="Map status legend"
-            className="absolute bottom-3 left-3 z-[1000] bg-white/95 backdrop-blur-md p-3 rounded-xl border border-navy-100 shadow-md text-xs space-y-1.5"
+            className="absolute bottom-3 left-3 z-[1000] bg-white/95 backdrop-blur-md p-3.5 rounded-2xl border border-charcoal-200 shadow-md text-xs space-y-2"
           >
-            <span className="font-bold text-navy-900 block text-xs">Sensor Legend:</span>
+            <span className="font-bold text-navy-900 block text-xs uppercase tracking-wider">IoT Sensor Legend:</span>
             <div className="flex items-center gap-2 text-xs">
-              <span className="w-3 h-3 rounded-full bg-red-600" aria-hidden="true" />
-              <span className="font-semibold text-charcoal-800">&gt;80% Critical</span>
+              <span className="w-3 h-3 rounded-full bg-red-600 flex-shrink-0" aria-hidden="true" />
+              <AlertTriangle className="w-3.5 h-3.5 text-red-600 flex-shrink-0" aria-hidden="true" />
+              <span className="font-semibold text-charcoal-800">&gt;80% Critical Fill</span>
             </div>
             <div className="flex items-center gap-2 text-xs">
-              <span className="w-3 h-3 rounded-full bg-amberGold-500" aria-hidden="true" />
-              <span className="font-semibold text-charcoal-800">50-80% Moderate</span>
+              <span className="w-3 h-3 rounded-full bg-amber-500 flex-shrink-0" aria-hidden="true" />
+              <Clock className="w-3.5 h-3.5 text-amber-600 flex-shrink-0" aria-hidden="true" />
+              <span className="font-semibold text-charcoal-800">50-80% Moderate Fill</span>
             </div>
             <div className="flex items-center gap-2 text-xs">
-              <span className="w-3 h-3 rounded-full bg-sage-500" aria-hidden="true" />
-              <span className="font-semibold text-charcoal-800">&lt;50% Normal</span>
+              <span className="w-3 h-3 rounded-full bg-emerald-600 flex-shrink-0" aria-hidden="true" />
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" aria-hidden="true" />
+              <span className="font-semibold text-charcoal-800">&lt;50% Normal Level</span>
             </div>
-            <div className="flex items-center gap-2 text-xs pt-1 border-t border-navy-100">
-              <span>🏢 Central Depot</span>
-              <span className="ml-1">♻️ MRF Plant</span>
+            <div className="flex items-center gap-3 text-xs pt-1.5 border-t border-charcoal-200 text-charcoal-700">
+              <span className="font-medium">🏢 Central Depot</span>
+              <span className="font-medium">♻️ MRF Plant</span>
             </div>
           </div>
 
@@ -496,10 +521,10 @@ export const LiveCityMap: React.FC = () => {
       {/* Loop Step Navigation */}
       <LoopStepNav
         currentStep={1}
-        prevPath="/overview"
-        prevLabel="Overview"
-        nextPath="/predict"
-        nextLabel="2 · Waste Forecast"
+        prevPath="/app/dashboard"
+        prevLabel="Dashboard"
+        nextPath="/app/predict"
+        nextLabel="Predict · Waste forecast"
       />
 
     </div>

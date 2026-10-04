@@ -172,7 +172,7 @@ export const useStore = create<StoreState>((set, get) => ({
   nextTourStep: () => {
     const next = get().currentTourStep + 1;
     if (next <= 6) {
-      const pages: ActivePage[] = ['map', 'predict', 'optimize', 'classify', 'allocate', 'allocate', 'dashboard'];
+      const pages: ActivePage[] = ['map', 'predict', 'optimize', 'classify', 'allocate', 'forecast', 'revenue'];
       set({ currentTourStep: next, activePage: pages[next], isLoopStepsExpanded: true });
     } else {
       set({ isGuidedTourOpen: false });
@@ -180,7 +180,7 @@ export const useStore = create<StoreState>((set, get) => ({
   },
   prevTourStep: () => {
     const prev = Math.max(0, get().currentTourStep - 1);
-    const pages: ActivePage[] = ['map', 'predict', 'optimize', 'classify', 'allocate', 'allocate', 'dashboard'];
+    const pages: ActivePage[] = ['map', 'predict', 'optimize', 'classify', 'allocate', 'forecast', 'revenue'];
     set({ currentTourStep: prev, activePage: pages[prev], isLoopStepsExpanded: true });
   },
   closeGuidedTour: () => set({ isGuidedTourOpen: false }),

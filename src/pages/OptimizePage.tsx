@@ -76,7 +76,7 @@ export const OptimizePage: React.FC = () => {
       
       {/* Page Header */}
       <PageHeader
-        title="3 · Smart Routes: Dynamic CVRP Optimization"
+        title="Optimize · Smart routes"
         subtitle="Capacity-constrained vehicle routing collecting only bins predicted ≥75% full, eliminating wasted trips to empty bins."
         stepNumber={3}
         stepName="Optimize"
@@ -85,14 +85,35 @@ export const OptimizePage: React.FC = () => {
             id="btn-generate-routes"
             variant="primary"
             size="md"
-            icon={<Sparkles className="w-4 h-4 text-amberGold-400" />}
+            icon={<Sparkles className="w-4 h-4 text-emerald-400" />}
             isLoading={isSolving}
             onClick={handleGenerateRoutes}
+            className="min-h-[44px] text-sm bg-navy-900 hover:bg-navy-800"
           >
             {isSolving ? 'Solving 2-Opt TSP...' : 'Generate Smart Routes'}
           </Button>
         }
       />
+
+      {/* One-Line Top Headline Result (Phase 4 requirement) */}
+      <div className="p-4 sm:p-5 rounded-2xl bg-white border border-charcoal-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span className="p-2.5 rounded-xl bg-emerald-100 text-emerald-800 flex-shrink-0" aria-hidden="true">
+            <RouteIcon className="w-5 h-5 text-emerald-700" />
+          </span>
+          <div>
+            <div className="text-xs uppercase font-bold tracking-wider text-charcoal-500">
+              Fleet Efficiency Optimization
+            </div>
+            <p className="text-sm sm:text-base font-bold text-navy-900 leading-snug">
+              Dynamic CVRP routes cut fuel use by {comparison.savings.distanceReductionPercent}% ({comparison.savings.fuelSavedLiters} L diesel saved) and save ₹{comparison.savings.fuelCostSavedInr.toLocaleString('en-IN')}.
+            </p>
+          </div>
+        </div>
+        <Badge variant="emerald" size="md">
+          {comparison.savings.distanceReductionPercent}% Distance Avoided
+        </Badge>
+      </div>
 
       {/* Before / After Summary Card (Section 5) */}
       <div className="p-6 rounded-2xl bg-white border border-navy-100 shadow-blueprint space-y-4">
@@ -370,10 +391,10 @@ export const OptimizePage: React.FC = () => {
       {/* Loop Step Navigation */}
       <LoopStepNav
         currentStep={3}
-        prevPath="/predict"
-        prevLabel="2 · Waste Forecast"
-        nextPath="/classify"
-        nextLabel="4 · Waste Sorting (AI Vision)"
+        prevPath="/app/predict"
+        prevLabel="Predict · Waste forecast"
+        nextPath="/app/classify"
+        nextLabel="Classify · Waste sorting"
       />
 
     </div>

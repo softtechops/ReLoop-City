@@ -151,6 +151,7 @@ export type ActivePage =
   | 'optimize'
   | 'classify'
   | 'allocate'
+  | 'forecast'
   | 'revenue'
   | 'assumptions';
 

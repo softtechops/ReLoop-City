@@ -17,6 +17,7 @@ const PredictPage = lazy(() => import('./pages/PredictPage').then(m => ({ defaul
 const OptimizePage = lazy(() => import('./pages/OptimizePage').then(m => ({ default: m.OptimizePage })));
 const ClassifyPage = lazy(() => import('./pages/ClassifyPage').then(m => ({ default: m.ClassifyPage })));
 const AllocatePage = lazy(() => import('./pages/AllocatePage').then(m => ({ default: m.AllocatePage })));
+const ForecastPage = lazy(() => import('./pages/ForecastPage').then(m => ({ default: m.ForecastPage })));
 const RevenuePage = lazy(() => import('./pages/RevenuePage').then(m => ({ default: m.RevenuePage })));
 const AssumptionsRoadmap = lazy(() => import('./pages/AssumptionsRoadmap').then(m => ({ default: m.AssumptionsRoadmap })));
 
@@ -53,6 +54,7 @@ export function App() {
             <Route path="optimize" element={<OptimizePage />} />
             <Route path="classify" element={<ClassifyPage />} />
             <Route path="allocate" element={<AllocatePage />} />
+            <Route path="forecast" element={<ForecastPage />} />
             <Route path="revenue" element={<RevenuePage />} />
             <Route path="assumptions" element={<AssumptionsRoadmap />} />
             <Route path="*" element={<Navigate to="/app/dashboard" replace />} />
@@ -66,6 +68,7 @@ export function App() {
           <Route path="/optimize" element={<Navigate to="/app/optimize" replace />} />
           <Route path="/classify" element={<Navigate to="/app/classify" replace />} />
           <Route path="/allocate" element={<Navigate to="/app/allocate" replace />} />
+          <Route path="/forecast" element={<Navigate to="/app/forecast" replace />} />
           <Route path="/revenue" element={<Navigate to="/app/revenue" replace />} />
           <Route path="/assumptions" element={<Navigate to="/app/assumptions" replace />} />
 

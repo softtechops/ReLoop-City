@@ -113,7 +113,7 @@ export const RevenuePage: React.FC = () => {
       
       {/* Page Header */}
       <PageHeader
-        title="7 · Results & Revenue: Circular Monetization Engine"
+        title="Report · Results & revenue"
         subtitle="Transforming municipal waste from an expensive cost center into an economically self-financing city asset."
         stepNumber={7}
         totalSteps={7}
@@ -127,6 +127,26 @@ export const RevenuePage: React.FC = () => {
           </div>
         }
       />
+
+      {/* One-Line Top Headline Result (Phase 4 requirement) */}
+      <div className="p-4 sm:p-5 rounded-2xl bg-white border border-charcoal-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span className="p-2.5 rounded-xl bg-emerald-100 text-emerald-800 flex-shrink-0" aria-hidden="true">
+            <Coins className="w-5 h-5 text-emerald-700" />
+          </span>
+          <div>
+            <div className="text-xs uppercase font-bold tracking-wider text-charcoal-500">
+              Macro-Economic Ledger
+            </div>
+            <p className="text-sm sm:text-base font-bold text-navy-900 leading-snug">
+              ReLoop circular monetization generates {formatCurrencyINR(totalMonthlyRevenueInr)}/month across 6 resource streams, generating ₹20.4 Lakh net quarterly surplus.
+            </p>
+          </div>
+        </div>
+        <Badge variant={isReloop ? 'emerald' : 'amber'} size="md">
+          {isReloop ? 'Self-Financing Active' : 'Cost-Center Baseline'}
+        </Badge>
+      </div>
 
       {/* Slide 9 Architecture: From Cost Center to City-Wide Impact */}
       <div className="p-6 sm:p-7 rounded-3xl bg-gradient-to-r from-navy-800 to-navy-900 text-white shadow-xl space-y-4">
@@ -245,14 +265,14 @@ export const RevenuePage: React.FC = () => {
           </ResponsiveContainer>
         </div>
 
-        <div className="p-3.5 rounded-xl bg-sage-50 border border-sage-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-sage-900 mt-4">
+        <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-sm text-emerald-950 mt-4">
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-sage-700 flex-shrink-0" aria-hidden="true" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-700 flex-shrink-0" aria-hidden="true" />
             <span className="font-semibold">
               Net Municipal Balance: ReLoop generates an estimated <strong>₹20.4 Lakh net surplus quarterly</strong> compared to a ₹2.9 Lakh deficit under baseline municipal operations.
             </span>
           </div>
-          <span className="font-mono text-sage-800 font-bold whitespace-nowrap hidden sm:inline">
+          <span className="font-mono text-emerald-800 font-bold whitespace-nowrap hidden sm:inline">
             ROI: ~14.2 Months Payback
           </span>
         </div>
@@ -261,8 +281,10 @@ export const RevenuePage: React.FC = () => {
       {/* Loop Step Navigation */}
       <LoopStepNav
         currentStep={7}
-        prevPath="/allocate"
-        prevLabel="5–6 · Where Waste Goes & Energy"
+        prevPath="/app/forecast"
+        prevLabel="Forecast · Clean energy"
+        nextPath="/app/dashboard"
+        nextLabel="Dashboard (Complete Loop)"
       />
 
     </div>

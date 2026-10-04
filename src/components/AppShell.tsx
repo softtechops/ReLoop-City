@@ -4,6 +4,7 @@ import { Header } from './Header';
 import { Sidebar } from './Sidebar';
 import { GuidedTourModal } from './GuidedTourModal';
 import { ResetConfirmDialog } from './ResetConfirmDialog';
+import { Toast } from './ui/Toast';
 import { Skeleton } from './ui/Skeleton';
 
 // Accessible loading fallback skeleton
@@ -36,30 +37,18 @@ export const AppShell: React.FC = () => {
         {/* Main Content Landmark */}
         <main
           id="main-content"
-          className="flex-1 px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto w-full overflow-x-hidden safe-bottom-padding"
+          className="flex-1 px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto w-full overflow-x-hidden pb-24 md:pb-8"
         >
           <Suspense fallback={<PageFallback />}>
             <Outlet />
           </Suspense>
-
-          {/* App Footer */}
-          <footer className="pt-10 pb-20 md:pb-8 border-t border-charcoal-200 text-center text-xs text-charcoal-500 space-y-1">
-            <p className="font-bold text-navy-900 text-sm">
-              ReLoop City · AI-Powered Waste-to-Resource Circular City Platform
-            </p>
-            <p className="text-charcoal-600">
-              PCCOE International Grand Challenge: 2026 Pune, India · Theme: AI for Climate Change (Smart Cities Track)
-            </p>
-            <p className="text-xs text-charcoal-400 font-mono">
-              Deterministic Client-Side Simulation · Calibrated to Pune Municipal Pilot Data · No Backend Required
-            </p>
-          </footer>
         </main>
       </div>
 
-      {/* Modals & Dialogs */}
+      {/* Modals & Dialogs & Notifications */}
       <GuidedTourModal />
       <ResetConfirmDialog />
+      <Toast />
 
     </div>
   );

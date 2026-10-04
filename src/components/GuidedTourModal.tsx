@@ -73,8 +73,8 @@ const TOUR_STEPS: (GuidedTourStep & { routePath: string })[] = [
   {
     stepNumber: 6,
     stepName: 'FORECAST',
-    pageTarget: 'allocate',
-    routePath: '/app/allocate',
+    pageTarget: 'forecast',
+    routePath: '/app/forecast',
     title: '6 · Clean Energy: Bio-Methane & Electricity',
     description: 'ReLoop calculates bio-methanation conversion yields, generating clean electricity (MWh) and Bio-CNG for municipal vehicle fleets or city grid feed-in.',
     highlightAction: 'Check the Energy Yield Forecast card to see MWh power produced and equivalent homes electrified.',
@@ -83,8 +83,8 @@ const TOUR_STEPS: (GuidedTourStep & { routePath: string })[] = [
   {
     stepNumber: 7,
     stepName: 'REPORT',
-    pageTarget: 'dashboard',
-    routePath: '/app/dashboard',
+    pageTarget: 'revenue',
+    routePath: '/app/revenue',
     title: '7 · Results & Revenue: Waste-to-Value Command',
     description: 'The executive command center for city commissioners, displaying real-time resource recovery, revenue earned, CO₂ avoided, and a live toggle against Baseline fixed schedules.',
     highlightAction: 'Toggle between "Baseline" and "ReLoop" at the top to watch the KPI delta badges update dynamically.',

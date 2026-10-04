@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { InfoPopover } from './InfoPopover';
 import { ArrowUpRight, ArrowDownRight, Minus } from 'lucide-react';
 
@@ -16,7 +16,7 @@ export interface StatCardProps {
   };
   deltaLabel?: string;
   isHero?: boolean;
-  accentColor?: 'navy' | 'sage' | 'amber' | 'charcoal';
+  accentColor?: 'navy' | 'emerald' | 'sage' | 'amber' | 'charcoal';
   icon?: React.ReactNode;
   subtitle?: string;
 }
@@ -33,25 +33,51 @@ export const StatCard: React.FC<StatCardProps> = ({
   icon,
   subtitle,
 }) => {
+  // Map legacy 'sage' to 'emerald' as per global color palette rules
+  const normalizedColor = accentColor === 'sage' ? 'emerald' : accentColor;
+
   const accentBorder = {
     navy: 'hover:border-navy-400',
-    sage: 'hover:border-sage-400',
-    amber: 'hover:border-amberGold-400',
+    emerald: 'hover:border-emerald-400',
+    amber: 'hover:border-amber-400',
     charcoal: 'hover:border-charcoal-400',
-  }[accentColor];
+  }[normalizedColor];
 
   const valueColor = {
     navy: 'text-navy-900',
-    sage: 'text-sage-700',
-    amber: 'text-amberGold-700',
+    emerald: 'text-emerald-700',
+    amber: 'text-amber-700',
     charcoal: 'text-charcoal-800',
-  }[accentColor];
+  }[normalizedColor];
+
+  // Brief highlight on value change (respects prefers-reduced-motion)
+  const [isHighlighted, setIsHighlighted] = useState(false);
+  const prevValueRef = useRef(value);
+  const isInitialMount = useRef(true);
+
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    if (prevValueRef.current !== value) {
+      prevValueRef.current = value;
+      const prefersReducedMotion =
+        typeof window !== 'undefined' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!prefersReducedMotion) {
+        setIsHighlighted(true);
+        const timer = setTimeout(() => setIsHighlighted(false), 900);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [value]);
 
   return (
     <div
-      className={`relative rounded-2xl bg-white border border-navy-100 shadow-blueprint transition-all duration-200 ${accentBorder} ${
+      className={`relative rounded-2xl bg-white border border-charcoal-200 shadow-sm hover:shadow-md transition-all duration-200 ${accentBorder} ${
         isHero
-          ? 'p-6 sm:p-7 bg-gradient-to-b from-white to-[#F8FAFC]/50 ring-1 ring-navy-700/5'
+          ? 'p-6 sm:p-7 bg-gradient-to-b from-white to-slate-50/60 ring-1 ring-navy-900/5'
           : 'p-5 sm:p-6'
       }`}
     >
@@ -59,11 +85,11 @@ export const StatCard: React.FC<StatCardProps> = ({
       <div className="flex items-center justify-between gap-2 mb-2">
         <div className="flex items-center gap-2">
           {icon && (
-            <span className="p-1.5 rounded-lg bg-navy-50 text-navy-700 flex-shrink-0" aria-hidden="true">
+            <span className="p-1.5 rounded-xl bg-navy-50 text-navy-800 flex-shrink-0" aria-hidden="true">
               {icon}
             </span>
           )}
-          <span className="text-xs font-bold uppercase tracking-wider text-charcoal-500">
+          <span className="text-xs font-bold uppercase tracking-wider text-charcoal-600">
             {title}
           </span>
         </div>
@@ -74,14 +100,18 @@ export const StatCard: React.FC<StatCardProps> = ({
       <div className="flex items-end justify-between gap-3 mb-2 flex-wrap">
         <div className="flex items-baseline gap-2 flex-wrap">
           <span
-            className={`font-black font-heading tracking-tight ${
+            className={`font-black font-heading tracking-tight transition-all duration-300 rounded-md px-1 -mx-1 ${
               isHero ? 'text-3xl sm:text-4xl md:text-5xl' : 'text-2xl sm:text-3xl'
-            } ${valueColor}`}
+            } ${valueColor} ${
+              isHighlighted
+                ? 'bg-emerald-100 text-emerald-900 ring-2 ring-emerald-400 scale-[1.02]'
+                : ''
+            }`}
           >
             {value}
           </span>
           {unit && (
-            <span className="text-xs sm:text-sm font-semibold text-charcoal-500">
+            <span className="text-sm font-semibold text-charcoal-600">
               {unit}
             </span>
           )}
@@ -96,41 +126,41 @@ export const StatCard: React.FC<StatCardProps> = ({
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className={accentColor === 'sage' ? 'text-emerald-500' : accentColor === 'amber' ? 'text-amberGold-500' : 'text-navy-500'}
+              className={normalizedColor === 'emerald' ? 'text-emerald-500' : normalizedColor === 'amber' ? 'text-amber-500' : 'text-navy-600'}
             />
           </svg>
         </div>
       </div>
 
       {/* Bottom Subtitle / Delta Row */}
-      <div className="pt-2 border-t border-navy-50 flex items-center justify-between gap-2 text-xs">
+      <div className="pt-2 border-t border-charcoal-100 flex items-center justify-between gap-2 text-sm">
         {subtitle ? (
-          <span className="text-charcoal-500 text-xs truncate">{subtitle}</span>
+          <span className="text-charcoal-600 text-sm truncate">{subtitle}</span>
         ) : delta ? (
           <div className="flex items-center gap-1.5 flex-wrap">
             {delta.isNeutral ? (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md font-semibold text-xs bg-navy-50 text-charcoal-700">
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg font-semibold text-xs bg-charcoal-100 text-charcoal-700">
                 <Minus className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>{delta.percentStr}</span>
               </span>
             ) : delta.isImprovement ? (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md font-bold text-xs bg-sage-100 text-sage-800">
-                <ArrowUpRight className="w-3.5 h-3.5 text-sage-700" aria-hidden="true" />
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg font-bold text-xs bg-emerald-100 text-emerald-800 border border-emerald-200">
+                <ArrowUpRight className="w-3.5 h-3.5 text-emerald-700" aria-hidden="true" />
                 <span>{delta.percentStr}</span>
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md font-bold text-xs bg-red-100 text-red-800">
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg font-bold text-xs bg-red-100 text-red-800 border border-red-200">
                 <ArrowDownRight className="w-3.5 h-3.5 text-red-700" aria-hidden="true" />
                 <span>{delta.percentStr}</span>
               </span>
             )}
-            <span className="text-charcoal-500 text-xs" aria-hidden="true">
+            <span className="text-charcoal-600 text-sm font-medium" aria-hidden="true">
               {deltaLabel}
             </span>
             <span className="sr-only">{delta.ariaLabel}</span>
           </div>
         ) : (
-          <span className="text-charcoal-400 text-xs">Active Pilot Feed</span>
+          <span className="text-charcoal-500 text-sm">Live Pilot Corridor</span>
         )}
       </div>
     </div>

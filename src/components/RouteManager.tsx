@@ -32,6 +32,7 @@ export const RouteManager: React.FC = () => {
       'optimize',
       'classify',
       'allocate',
+      'forecast',
       'revenue',
       'assumptions',
     ];

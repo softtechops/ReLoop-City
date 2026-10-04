@@ -1,76 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { useStore } from '../store/useStore';
 import {
-  Compass,
   LayoutDashboard,
   Radio,
   TrendingUp,
   Route,
   ScanSearch,
   GitFork,
+  Sparkles,
   Coins,
   Settings2,
-  ChevronRight,
+  Compass,
   ChevronDown,
   ChevronUp,
   ShieldCheck,
-  MoreHorizontal,
-  X,
-  Sparkles,
-  Layers,
-  Eye,
-  EyeOff
+  CheckCircle2,
 } from 'lucide-react';
 
-interface NavItem {
+interface StepperItem {
   path: string;
+  stepNumber: number;
   label: string;
-  stepNumber?: string;
+  shortLabel: string;
   icon: React.ComponentType<{ className?: string; 'aria-hidden'?: boolean | 'true' | 'false' }>;
-  badge?: string;
 }
 
 export const Sidebar: React.FC = () => {
   const location = useLocation();
-  const { isLoopStepsExpanded, toggleLoopSteps } = useStore();
-  const [isMoreSheetOpen, setIsMoreSheetOpen] = useState(false);
+  const [isMoreOpen, setIsMoreOpen] = useState(false);
+  const activePillRef = useRef<HTMLAnchorElement | null>(null);
 
-  const mainNavItems: NavItem[] = [
-    { path: '/app/overview', label: 'Overview & Concept', icon: Compass },
-    { path: '/app/dashboard', label: 'Waste-to-Value Dashboard', icon: LayoutDashboard, badge: 'Main' },
+  // The 7 AI Loop steps with unified naming convention: "<Action> · <Description>"
+  const aiLoopSteps: StepperItem[] = [
+    { path: '/app/map', stepNumber: 1, label: 'Sense · Live bin map', shortLabel: '1 · Sense', icon: Radio },
+    { path: '/app/predict', stepNumber: 2, label: 'Predict · Waste forecast', shortLabel: '2 · Predict', icon: TrendingUp },
+    { path: '/app/optimize', stepNumber: 3, label: 'Optimize · Smart routes', shortLabel: '3 · Optimize', icon: Route },
+    { path: '/app/classify', stepNumber: 4, label: 'Classify · Waste sorting', shortLabel: '4 · Classify', icon: ScanSearch },
+    { path: '/app/allocate', stepNumber: 5, label: 'Allocate · Waste streams', shortLabel: '5 · Allocate', icon: GitFork },
+    { path: '/app/forecast', stepNumber: 6, label: 'Forecast · Clean energy', shortLabel: '6 · Forecast', icon: Sparkles },
+    { path: '/app/revenue', stepNumber: 7, label: 'Report · Results & revenue', shortLabel: '7 · Report', icon: Coins },
   ];
 
-  // The 7 AI Loop steps in plain language (Sense, Predict, Optimize, Classify, Allocate, Forecast, Report)
-  const aiLoopSteps: NavItem[] = [
-    { path: '/app/map', label: '1 · Live Bin Map (Sense)', stepNumber: '1', icon: Radio },
-    { path: '/app/predict', label: '2 · Waste Forecast (Predict)', stepNumber: '2', icon: TrendingUp },
-    { path: '/app/optimize', label: '3 · Smart Routes (Optimize)', stepNumber: '3', icon: Route },
-    { path: '/app/classify', label: '4 · AI Sorting Vision (Classify)', stepNumber: '4', icon: ScanSearch },
-    { path: '/app/allocate', label: '5 · Facility Balancing (Allocate)', stepNumber: '5', icon: GitFork },
-    { path: '/app/allocate', label: '6 · Energy & Biogas (Forecast)', stepNumber: '6', icon: Sparkles },
-    { path: '/app/revenue', label: '7 · Results & Ledger (Report)', stepNumber: '7', icon: Coins },
+  // Secondary views kept in collapsible "More"
+  const moreViews = [
+    { path: '/app/overview', label: 'Overview & Concept', shortLabel: 'Overview', icon: Compass },
+    { path: '/app/assumptions', label: 'Assumptions & Roadmap', shortLabel: 'Roadmap', icon: Settings2 },
   ];
 
-  const systemNavItems: NavItem[] = [
-    { path: '/app/assumptions', label: 'Assumptions & Roadmap', icon: Settings2 },
-  ];
-
-  // 4 Primary Mobile Tabs + More Sheet
-  const mobilePrimaryTabs = [
-    { path: '/app/overview', label: 'Overview', icon: Compass },
-    { path: '/app/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { path: '/app/map', label: 'Map', icon: Radio },
-    { path: '/app/optimize', label: 'Routes', icon: Route },
-  ];
-
-  const moreSheetItems = [
-    { path: '/app/predict', label: '2 · Waste Forecast', icon: TrendingUp },
-    { path: '/app/classify', label: '4 · AI Sorting Vision', icon: ScanSearch },
-    { path: '/app/allocate', label: '5 · Facility Balancing', icon: GitFork },
-    { path: '/app/revenue', label: '7 · Results & Ledger', icon: Coins },
-    { path: '/app/assumptions', label: 'Assumptions & Roadmap', icon: Settings2 },
-  ];
+  // Auto-scroll the active mobile pill into view when route changes
+  useEffect(() => {
+    if (activePillRef.current) {
+      activePillRef.current.scrollIntoView({
+        behavior: 'smooth',
+        inline: 'center',
+        block: 'nearest',
+      });
+    }
+  }, [location.pathname]);
 
   return (
     <>
@@ -79,44 +65,96 @@ export const Sidebar: React.FC = () => {
         aria-label="Main Navigation"
         className="hidden md:flex flex-col w-64 bg-white border-r border-charcoal-200 flex-shrink-0 h-[calc(100vh-4rem)] sticky top-16 select-none"
       >
-        <div className="flex-1 overflow-y-auto px-3.5 py-4 space-y-6">
+        <div className="flex-1 overflow-y-auto px-3 py-4 space-y-5">
           
-          {/* Main Views */}
+          {/* Primary View: Dashboard */}
           <div>
-            <div className="px-3 mb-2 text-xs font-bold uppercase tracking-wider text-charcoal-500">
-              Overview
+            <NavLink
+              to="/app/dashboard"
+              className={({ isActive }) =>
+                `w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold transition-all min-h-[44px] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 ${
+                  isActive
+                    ? 'bg-navy-900 text-white shadow-sm shadow-navy-900/20'
+                    : 'text-charcoal-700 hover:text-navy-900 hover:bg-navy-50/70'
+                }`
+              }
+            >
+              {({ isActive }) => (
+                <>
+                  <div className="flex items-center gap-3">
+                    <LayoutDashboard className={`w-4 h-4 ${isActive ? 'text-emerald-400' : 'text-navy-700'}`} aria-hidden="true" />
+                    <span>Dashboard</span>
+                  </div>
+                  <span
+                    className={`px-2 py-0.5 rounded text-xs font-bold ${
+                      isActive ? 'bg-white/20 text-white' : 'bg-emerald-100 text-emerald-800'
+                    }`}
+                  >
+                    Live
+                  </span>
+                </>
+              )}
+            </NavLink>
+          </div>
+
+          {/* Continuous Circular Loop: 7-Step Vertical Stepper (Always Visible) */}
+          <div className="pt-1">
+            <div className="px-3 mb-2 flex items-center justify-between">
+              <span className="text-xs font-bold uppercase tracking-wider text-charcoal-600">
+                Circular Loop (7 Steps)
+              </span>
+              <span className="text-[11px] font-mono font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                AI Active
+              </span>
             </div>
-            <nav className="space-y-1">
-              {mainNavItems.map((item) => {
-                const Icon = item.icon;
+
+            {/* Stepper with continuous connecting line */}
+            <nav aria-label="7-Step AI Circular Loop" className="relative pl-1 pr-1 space-y-1">
+              {/* Connecting line */}
+              <div
+                className="absolute left-[23px] top-3.5 bottom-3.5 w-0.5 bg-charcoal-200"
+                aria-hidden="true"
+              />
+
+              {aiLoopSteps.map((step) => {
+                const Icon = step.icon;
+                const isActive = location.pathname === step.path;
+
                 return (
                   <NavLink
-                    key={item.path}
-                    to={item.path}
-                    className={({ isActive }) =>
-                      `w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all min-h-[42px] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 ${
-                        isActive
-                          ? 'bg-navy-900 text-white shadow-sm shadow-navy-900/20'
-                          : 'text-charcoal-700 hover:text-navy-900 hover:bg-navy-50/70'
-                      }`
-                    }
+                    key={step.path}
+                    to={step.path}
+                    className={`relative z-10 flex items-center gap-2.5 px-2.5 py-2 rounded-xl min-h-[44px] text-sm transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 ${
+                      isActive
+                        ? 'bg-navy-900 text-white font-semibold shadow-xs'
+                        : 'text-charcoal-700 hover:text-navy-900 hover:bg-navy-50/70 font-medium'
+                    }`}
                   >
-                    {({ isActive }) => (
-                      <>
-                        <div className="flex items-center gap-2.5">
-                          <Icon className={`w-4 h-4 ${isActive ? 'text-emerald-400' : 'text-navy-700'}`} aria-hidden="true" />
-                          <span>{item.label}</span>
-                        </div>
-                        {item.badge && (
-                          <span
-                            className={`px-1.5 py-0.5 rounded text-xs font-bold ${
-                              isActive ? 'bg-white/20 text-white' : 'bg-navy-100 text-navy-800'
-                            }`}
-                          >
-                            {item.badge}
-                          </span>
-                        )}
-                      </>
+                    {/* Stepper circle indicator */}
+                    <div
+                      className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold transition-all ${
+                        isActive
+                          ? 'bg-emerald-500 text-navy-950 ring-2 ring-emerald-300 font-extrabold'
+                          : 'bg-white text-charcoal-700 border border-charcoal-300 group-hover:border-navy-400'
+                      }`}
+                      aria-hidden="true"
+                    >
+                      {step.stepNumber}
+                    </div>
+
+                    <Icon
+                      className={`w-4 h-4 flex-shrink-0 ${
+                        isActive ? 'text-emerald-400' : 'text-charcoal-500'
+                      }`}
+                      aria-hidden="true"
+                    />
+
+                    <span className="truncate leading-tight text-sm">
+                      {step.label}
+                    </span>
+
+                    {isActive && (
+                      <span className="ml-auto w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0" aria-hidden="true" />
                     )}
                   </NavLink>
                 );
@@ -124,257 +162,152 @@ export const Sidebar: React.FC = () => {
             </nav>
           </div>
 
-          {/* ========================================================================= */}
-          {/* THE 7-STEP AI LOOP WITH DEDICATED TOGGLE BUTTON (User Request) */}
-          {/* "on the left side create a button so when button press all the 7 steps shows else it does not show" */}
-          {/* ========================================================================= */}
-          <div>
-            <div className="px-1 mb-2">
-              <button
-                type="button"
-                id="btn-toggle-7-ai-steps"
-                onClick={toggleLoopSteps}
-                aria-expanded={isLoopStepsExpanded}
-                aria-controls="sidebar-7-steps-list"
-                className={`w-full flex items-center justify-between p-3 rounded-2xl border text-xs font-bold transition-all min-h-[48px] group focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-500 cursor-pointer ${
-                  isLoopStepsExpanded
-                    ? 'bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-950 border-emerald-300 shadow-xs'
-                    : 'bg-white text-charcoal-800 border-charcoal-200 hover:border-emerald-400 hover:bg-emerald-50/40 shadow-xs'
-                }`}
-              >
-                <div className="flex items-center gap-2.5">
-                  <div
-                    className={`w-7 h-7 rounded-xl flex items-center justify-center transition-all ${
-                      isLoopStepsExpanded
-                        ? 'bg-emerald-600 text-white shadow-xs'
-                        : 'bg-emerald-100 text-emerald-800 group-hover:bg-emerald-600 group-hover:text-white'
-                    }`}
-                    aria-hidden="true"
-                  >
-                    <Layers className="w-4 h-4" />
-                  </div>
-                  <div className="text-left leading-tight">
-                    <div className="flex items-center gap-1.5">
-                      <span className="font-bold text-xs tracking-tight">The 7 AI Steps</span>
-                    </div>
-                    <span className="text-[10px] font-medium text-charcoal-500 block mt-0.5">
-                      {isLoopStepsExpanded ? 'Click to hide steps' : 'Click to show all 7'}
-                    </span>
-                  </div>
-                </div>
+          {/* Collapsible "More" Group (Overview, Assumptions & Roadmap) */}
+          <div className="pt-2 border-t border-charcoal-200">
+            <button
+              type="button"
+              onClick={() => setIsMoreOpen(!isMoreOpen)}
+              aria-expanded={isMoreOpen}
+              className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-semibold text-charcoal-600 hover:text-navy-900 hover:bg-charcoal-100 transition-colors min-h-[44px]"
+            >
+              <span className="text-xs font-bold uppercase tracking-wider text-charcoal-500">
+                More Pages
+              </span>
+              {isMoreOpen ? (
+                <ChevronUp className="w-4 h-4 text-charcoal-500" aria-hidden="true" />
+              ) : (
+                <ChevronDown className="w-4 h-4 text-charcoal-500" aria-hidden="true" />
+              )}
+            </button>
 
-                <div className="flex items-center gap-1.5">
-                  <span
-                    className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-bold tracking-wider ${
-                      isLoopStepsExpanded
-                        ? 'bg-emerald-200/80 text-emerald-900 ring-1 ring-emerald-300'
-                        : 'bg-charcoal-100 text-charcoal-600 group-hover:bg-emerald-100 group-hover:text-emerald-800'
-                    }`}
-                  >
-                    {isLoopStepsExpanded ? 'EXPANDED' : '7 STEPS'}
-                  </span>
-                  {isLoopStepsExpanded ? (
-                    <ChevronUp className="w-4 h-4 text-emerald-700" aria-hidden="true" />
-                  ) : (
-                    <ChevronDown className="w-4 h-4 text-charcoal-400 group-hover:text-emerald-700 transition-colors" aria-hidden="true" />
-                  )}
-                </div>
-              </button>
-            </div>
-
-            {/* Collapsible 7 Steps List */}
-            {isLoopStepsExpanded ? (
-              <nav
-                id="sidebar-7-steps-list"
-                aria-label="7-Step AI Loop Steps"
-                className="space-y-1 pl-1 pt-1 animate-in fade-in slide-in-from-top-2 duration-200"
-              >
-                {aiLoopSteps.map((item) => {
+            {isMoreOpen && (
+              <nav aria-label="Secondary navigation" className="space-y-1 mt-1 pl-1 pr-1">
+                {moreViews.map((item) => {
                   const Icon = item.icon;
                   return (
                     <NavLink
-                      key={`${item.path}-${item.stepNumber}`}
+                      key={item.path}
                       to={item.path}
                       className={({ isActive }) =>
-                        `w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all min-h-[40px] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-600 ${
+                        `w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-medium transition-all min-h-[44px] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 ${
                           isActive
-                            ? 'bg-emerald-800 text-white shadow-sm shadow-emerald-900/20'
-                            : 'text-charcoal-700 hover:text-emerald-900 hover:bg-emerald-50/70'
+                            ? 'bg-navy-900 text-white font-semibold'
+                            : 'text-charcoal-700 hover:text-navy-900 hover:bg-navy-50/70'
                         }`
                       }
                     >
                       {({ isActive }) => (
-                        <>
-                          <div className="flex items-center gap-2.5 truncate">
-                            <Icon
-                              className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-amberGold-300' : 'text-charcoal-500'}`}
-                              aria-hidden="true"
-                            />
-                            <span className="truncate">{item.label}</span>
-                          </div>
-                          {isActive ? (
-                            <ChevronRight className="w-3.5 h-3.5 text-white/80" aria-hidden="true" />
-                          ) : (
-                            <span className="text-[10px] font-mono px-1 py-0.5 rounded bg-charcoal-100 text-charcoal-600">S{item.stepNumber}</span>
-                          )}
-                        </>
+                        <div className="flex items-center gap-2.5">
+                          <Icon className={`w-4 h-4 ${isActive ? 'text-emerald-400' : 'text-charcoal-500'}`} aria-hidden="true" />
+                          <span>{item.label}</span>
+                        </div>
                       )}
                     </NavLink>
                   );
                 })}
               </nav>
-            ) : (
-              <div className="px-2 pt-1">
-                <span className="text-[11px] text-charcoal-400 font-medium italic block text-center py-1 bg-charcoal-50/60 rounded-lg border border-dashed border-charcoal-200">
-                  (7 AI loop steps hidden · Click button above)
-                </span>
-              </div>
             )}
-          </div>
-
-          {/* Systems & Scale */}
-          <div>
-            <div className="px-3 mb-2 text-xs font-bold uppercase tracking-wider text-charcoal-500">
-              System & Scaling
-            </div>
-            <nav className="space-y-1">
-              {systemNavItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <NavLink
-                    key={item.path}
-                    to={item.path}
-                    className={({ isActive }) =>
-                      `w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all min-h-[42px] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 ${
-                        isActive
-                          ? 'bg-navy-900 text-white shadow-sm shadow-navy-900/20'
-                          : 'text-charcoal-700 hover:text-navy-900 hover:bg-navy-50/70'
-                      }`
-                    }
-                  >
-                    {({ isActive }) => (
-                      <div className="flex items-center gap-2.5">
-                        <Icon className={`w-4 h-4 ${isActive ? 'text-emerald-400' : 'text-charcoal-500'}`} aria-hidden="true" />
-                        <span>{item.label}</span>
-                      </div>
-                    )}
-                  </NavLink>
-                );
-              })}
-            </nav>
           </div>
 
         </div>
 
         {/* Municipal Pilot Status Box */}
-        <div className="p-3.5 border-t border-charcoal-200 bg-[#F8FAFC]">
-          <div className="p-3 rounded-xl bg-white border border-charcoal-200 shadow-xs space-y-1">
+        <div className="p-3 border-t border-charcoal-200 bg-[#F8FAFC]">
+          <div className="p-3 rounded-2xl bg-white border border-charcoal-200 shadow-xs space-y-1">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-navy-900 flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-sage-600" aria-hidden="true" />
+              <span className="text-sm font-bold text-navy-900 flex items-center gap-1.5">
+                <ShieldCheck className="w-4 h-4 text-emerald-600" aria-hidden="true" />
                 PCCOE Pune Pilot
               </span>
-              <span className="text-xs px-2 py-0.5 rounded bg-sage-100 text-sage-800 font-bold font-mono">
+              <span className="text-xs px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 font-bold font-mono">
                 ONLINE
               </span>
             </div>
-            <p className="text-xs text-charcoal-500 leading-normal">
-              100 Smart Bins connected across 5 pilot zones in PCMC.
+            <p className="text-xs text-charcoal-600 leading-normal">
+              100 smart bins across 5 pilot zones in PCMC.
             </p>
           </div>
         </div>
       </aside>
 
-      {/* Mobile Bottom Tab Bar (4 primary tabs + More sheet) */}
+      {/* Mobile Horizontal Scrollable Step Bar (All 7 Steps + Dashboard + Overview) */}
       <nav
-        aria-label="Mobile Navigation"
-        className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-charcoal-200 px-2 pt-1 safe-bottom-padding shadow-lg"
+        aria-label="Mobile Step Navigation"
+        className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-charcoal-200 px-2 py-2 safe-bottom-padding shadow-lg"
       >
-        <div className="flex items-center justify-around">
-          {mobilePrimaryTabs.map((tab) => {
-            const Icon = tab.icon;
-            const isActive = location.pathname === tab.path;
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar scroll-smooth px-1">
+          {/* Dashboard pill */}
+          {(() => {
+            const isDashActive = location.pathname === '/app/dashboard' || location.pathname === '/app';
             return (
               <NavLink
-                key={tab.path}
-                to={tab.path}
-                className={`flex flex-col items-center justify-center min-w-[56px] min-h-[48px] py-1 px-1 rounded-xl text-xs font-semibold transition-all ${
-                  isActive ? 'text-navy-900 font-bold' : 'text-charcoal-500 hover:text-navy-800'
+                to="/app/dashboard"
+                ref={isDashActive ? activePillRef : null}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold whitespace-nowrap min-h-[44px] transition-all flex-shrink-0 ${
+                  isDashActive
+                    ? 'bg-navy-900 text-white shadow-xs'
+                    : 'text-charcoal-700 bg-charcoal-100 hover:bg-charcoal-200'
                 }`}
               >
-                <Icon className={`w-5 h-5 mb-0.5 ${isActive ? 'text-navy-900' : 'text-charcoal-400'}`} aria-hidden="true" />
-                <span>{tab.label}</span>
+                <LayoutDashboard className={`w-4 h-4 ${isDashActive ? 'text-emerald-400' : 'text-charcoal-600'}`} aria-hidden="true" />
+                <span>Dashboard</span>
+              </NavLink>
+            );
+          })()}
+
+          {/* 7 AI Steps pills */}
+          {aiLoopSteps.map((step) => {
+            const Icon = step.icon;
+            const isActive = location.pathname === step.path;
+
+            return (
+              <NavLink
+                key={step.path}
+                to={step.path}
+                ref={isActive ? activePillRef : null}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium whitespace-nowrap min-h-[44px] transition-all flex-shrink-0 ${
+                  isActive
+                    ? 'bg-navy-900 text-white font-bold shadow-xs'
+                    : 'text-charcoal-700 bg-charcoal-100 hover:bg-charcoal-200'
+                }`}
+              >
+                <span
+                  className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${
+                    isActive ? 'bg-emerald-500 text-navy-950 font-extrabold' : 'bg-white text-charcoal-700 border border-charcoal-300'
+                  }`}
+                  aria-hidden="true"
+                >
+                  {step.stepNumber}
+                </span>
+                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-emerald-400' : 'text-charcoal-600'}`} aria-hidden="true" />
+                <span>{step.shortLabel}</span>
               </NavLink>
             );
           })}
 
-          {/* "More" Sheet Trigger */}
-          <button
-            type="button"
-            onClick={() => setIsMoreSheetOpen(true)}
-            aria-expanded={isMoreSheetOpen}
-            aria-label="Open more navigation options"
-            className="flex flex-col items-center justify-center min-w-[56px] min-h-[48px] py-1 px-1 rounded-xl text-xs font-semibold text-charcoal-500 hover:text-navy-800"
-          >
-            <MoreHorizontal className="w-5 h-5 mb-0.5 text-charcoal-400" aria-hidden="true" />
-            <span>More</span>
-          </button>
+          {/* More options pills so nothing is hidden */}
+          {moreViews.map((item) => {
+            const Icon = item.icon;
+            const isActive = location.pathname === item.path;
+
+            return (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                ref={isActive ? activePillRef : null}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium whitespace-nowrap min-h-[44px] transition-all flex-shrink-0 ${
+                  isActive
+                    ? 'bg-navy-900 text-white font-bold shadow-xs'
+                    : 'text-charcoal-600 bg-charcoal-50 hover:bg-charcoal-100 border border-charcoal-200'
+                }`}
+              >
+                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-emerald-400' : 'text-charcoal-500'}`} aria-hidden="true" />
+                <span>{item.shortLabel}</span>
+              </NavLink>
+            );
+          })}
         </div>
       </nav>
-
-      {/* Mobile "More" Navigation Sheet */}
-      {isMoreSheetOpen && (
-        <div
-          className="md:hidden fixed inset-0 z-50 bg-navy-950/60 backdrop-blur-xs flex flex-col justify-end animate-in fade-in"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setIsMoreSheetOpen(false);
-          }}
-        >
-          <div className="bg-white rounded-t-3xl border-t border-charcoal-200 p-6 space-y-4 shadow-2xl safe-bottom-padding animate-in slide-in-from-bottom duration-200">
-            <div className="flex items-center justify-between pb-3 border-b border-charcoal-200">
-              <div>
-                <h3 className="text-base font-bold text-navy-900 font-['Outfit']">
-                  All ReLoop City Pages
-                </h3>
-                <span className="text-xs text-charcoal-500">The complete 7-step AI municipal loop</span>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsMoreSheetOpen(false)}
-                className="p-2 text-charcoal-400 hover:text-navy-900 rounded-lg hover:bg-navy-50"
-                aria-label="Close more navigation menu"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 gap-1.5 py-1">
-              {moreSheetItems.map((item) => {
-                const Icon = item.icon;
-                const isActive = location.pathname === item.path;
-                return (
-                  <NavLink
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setIsMoreSheetOpen(false)}
-                    className={`flex items-center justify-between p-3 rounded-xl text-sm font-semibold transition-all min-h-[44px] ${
-                      isActive
-                        ? 'bg-navy-900 text-white'
-                        : 'text-charcoal-700 hover:bg-navy-50 hover:text-navy-900'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <Icon className={`w-5 h-5 ${isActive ? 'text-amberGold-400' : 'text-navy-700'}`} aria-hidden="true" />
-                      <span>{item.label}</span>
-                    </div>
-                    <ChevronRight className="w-4 h-4 opacity-70" aria-hidden="true" />
-                  </NavLink>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 };

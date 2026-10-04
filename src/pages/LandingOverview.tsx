@@ -49,8 +49,8 @@ export const LandingOverview: React.FC = () => {
     { num: '03', name: 'Optimize', route: '/app/optimize', icon: Route, desc: 'Capacity-constrained dynamic routing (CVRP) saving 32%+ fuel' },
     { num: '04', name: 'Classify', route: '/app/classify', icon: ScanSearch, desc: 'Computer vision sorting at MRF recovering high-purity commodities' },
     { num: '05', name: 'Allocate', route: '/app/allocate', icon: GitFork, desc: 'Dynamic mass allocation to Anaerobic Digestion, Composting & Recycling' },
-    { num: '06', name: 'Forecast', route: '/app/allocate', icon: Zap, desc: 'Bio-methane & clean electricity generation forecasting for the grid' },
-    { num: '07', name: 'Report', route: '/app/revenue', icon: Coins, desc: 'Municipal Waste-to-Value Dashboard for transparent circular governance' },
+    { num: '06', name: 'Forecast', route: '/app/forecast', icon: Zap, desc: 'Bio-methane & clean electricity generation forecasting for the grid' },
+    { num: '07', name: 'Report', route: '/app/revenue', icon: Coins, desc: 'Waste-to-Value Dashboard for transparent circular governance' },
   ];
 
   return (

@@ -13,7 +13,7 @@
 > **Sense ➔ Predict ➔ Optimize ➔ Classify ➔ Allocate ➔ Forecast ➔ Report**
 
 By converting raw waste streams into **commodity-grade recyclates, clean electricity (MWh), compressed Bio-CNG, organic city compost, and recycled C&D aggregates**, ReLoop achieves:
-- **95.2% Landfill Diversion Rate** (vs. 61% baseline)
+- **95.2% Landfill Diversion Rate** (vs. 28% baseline)
 - **-32% Fleet Distance & Fuel Burn** via dynamic CVRP routing
 - **₹34.2 Lakh / Quarter** in newly monetized municipal circular revenue
 - **100% Overflow Incident Preemption**
@@ -61,7 +61,7 @@ npm run preview
 | **2. Predict** | `Predict Generation` | Multi-zone time-series forecasting model (diurnal human cycles + day-of-week seasonality). | Anticipates overflow surges 24–72 hours in advance. |
 | **3. Optimize** | `Dynamic Routes` | Capacity-Constrained Vehicle Routing Problem (CVRP) solved via **Nearest-Neighbor + 2-Opt local search**. | Bins <75% full are skipped; cuts fuel burn and tailpipe CO₂ by 32%. |
 | **4. Classify** | `MRF Vision Sort` | Pluggable Computer Vision classifier identifying material stream, purity, and target processing unit. | Recovers high-grade commodity polymers, metals, and pulp worth up to 10x mixed waste. |
-| **5. Allocate** | `Resource Streams` | Sankey mass balance flow directing materials to Anaerobic Digestion, Composting, RDF, and Aggregate crushing. | 95%+ of city waste bypasses landfills into value creation. |
+| **5. Allocate** | `Resource Allocation` | Directing materials to MRF recycling, anaerobic digestion, composting, and RDF. | 95%+ of city waste bypasses landfills into value creation. |
 | **6. Forecast** | `Energy & Bio-Methane` | Real-time bio-methanation conversion model estimating MWh electrical power and Bio-CNG. | Powers municipal facilities and city transit buses. |
 | **7. Report** | `Waste-to-Value Dashboard` | Executive municipal dashboard with live **Baseline (Fixed) vs. ReLoop (AI)** strategy toggle and delta badges. | Data-driven proof of circular economics and carbon ROI. |
 
@@ -85,7 +85,7 @@ npm run preview
    - Revenue: ~₹34.2 Lakh
    - CO₂ Avoided: ~146.5 tonnes CO₂e
 2. **The "Aha!" Moment**: Click the **"Baseline (Fixed)"** toggle in the header.
-   - Watch the KPI delta badges update: diversion drops to 61%, revenue falls to ₹18.4 Lakh, landfill spikes to 38%.
+   - Watch the KPI delta badges update: diversion drops to 28%, revenue falls to ₹18.4 Lakh, landfill spikes to 72%.
    - Switch back to **"ReLoop (AI-Optimized)"** to show the immediate circular rebound.
 3. Switch to **"1. Sense (Smart IoT Bins)"**:
    - Show the interactive Leaflet map of the Pune PCMC corridor with 100 smart bins.

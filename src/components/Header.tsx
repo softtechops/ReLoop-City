@@ -1,22 +1,19 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useStore } from '../store/useStore';
+import { ReloopLogo } from './brand/ReloopLogo';
 import { 
   Play, 
   Pause, 
   RotateCcw, 
-  FastForward, 
   Sparkles, 
-  Radio, 
   Clock, 
-  SlidersHorizontal,
-  ChevronDown,
-  Info,
   X,
-  ArrowLeft
+  ArrowLeft,
+  MoreHorizontal,
+  Compass,
+  Gauge
 } from 'lucide-react';
-import { Badge } from './ui/Badge';
-import { Button } from './ui/Button';
 
 export const Header: React.FC = () => {
   const {
@@ -27,63 +24,57 @@ export const Header: React.FC = () => {
     startSimulation,
     pauseSimulation,
     setSimSpeed,
-    tickSimulation,
     openResetConfirm,
     setMode,
     startGuidedTour,
   } = useStore();
 
-  const [isSimPopoverOpen, setIsSimPopoverOpen] = useState(false);
-  const [isBadgeInfoOpen, setIsBadgeInfoOpen] = useState(false);
-  const simPopoverRef = useRef<HTMLDivElement>(null);
-  const badgePopoverRef = useRef<HTMLDivElement>(null);
+  const [isOverflowOpen, setIsOverflowOpen] = useState(false);
+  const [isSimBannerDismissed, setIsSimBannerDismissed] = useState(false);
+  
+  const overflowRef = useRef<HTMLDivElement>(null);
+  const overflowButtonRef = useRef<HTMLButtonElement>(null);
+  const menuItemsRef = useRef<(HTMLButtonElement | HTMLAnchorElement | null)[]>([]);
 
-  // Auto-tick effect when simulation is running
-  // Also pause simulation when document is hidden (Page Visibility API, Section 8)
+  // Keyboard accessibility for overflow menu (Esc to close, arrows to navigate)
   useEffect(() => {
-    if (!isSimRunning) return;
+    if (!isOverflowOpen) return;
 
-    let isDocumentVisible = !document.hidden;
-
-    const handleVisibilityChange = () => {
-      isDocumentVisible = !document.hidden;
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-
-    const intervalMs = simSpeed === 60 ? 100 : simSpeed === 10 ? 450 : 1400;
-    const interval = setInterval(() => {
-      if (isDocumentVisible) {
-        tickSimulation();
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsOverflowOpen(false);
+        overflowButtonRef.current?.focus();
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        const activeIndex = menuItemsRef.current.findIndex((el) => el === document.activeElement);
+        const nextIndex = activeIndex < menuItemsRef.current.length - 1 ? activeIndex + 1 : 0;
+        menuItemsRef.current[nextIndex]?.focus();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        const activeIndex = menuItemsRef.current.findIndex((el) => el === document.activeElement);
+        const prevIndex = activeIndex > 0 ? activeIndex - 1 : menuItemsRef.current.length - 1;
+        menuItemsRef.current[prevIndex]?.focus();
       }
-    }, intervalMs);
-
-    return () => {
-      clearInterval(interval);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, [isSimRunning, simSpeed, tickSimulation]);
 
-  // Click outside listener for mobile sim popover
-  useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (simPopoverRef.current && !simPopoverRef.current.contains(e.target as Node)) {
-        setIsSimPopoverOpen(false);
-      }
-      if (badgePopoverRef.current && !badgePopoverRef.current.contains(e.target as Node)) {
-        setIsBadgeInfoOpen(false);
+      if (overflowRef.current && !overflowRef.current.contains(e.target as Node)) {
+        setIsOverflowOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
-  const statusChipText = isSimRunning
-    ? `Running · ${simSpeed}x (Day ${simState.currentDay}, ${String(simState.currentHour).padStart(2, '0')}:00)`
-    : `Paused · Day ${simState.currentDay}, ${String(simState.currentHour).padStart(2, '0')}:00`;
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOverflowOpen]);
+
+  const compactTimeText = `Day ${simState.currentDay}, ${String(simState.currentHour).padStart(2, '0')}:00`;
 
   return (
-    <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-charcoal-200 shadow-xs transition-all">
+    <header className="sticky top-0 z-30 bg-white border-b border-charcoal-200 shadow-sm transition-all select-none">
       {/* Skip to main content link for screen readers */}
       <a
         href="#main-content"
@@ -92,322 +83,239 @@ export const Header: React.FC = () => {
         Skip to main content
       </a>
 
+      {/* Main Header Container */}
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Tier 1 / Main Header Bar */}
         <div className="h-16 flex items-center justify-between gap-3">
           
-          {/* Brand Identity & Simulated Data Badge */}
+          {/* Left: Brand Identity */}
           <div className="flex items-center gap-3">
             <Link
-              to="/"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-charcoal-200 hover:border-navy-400 bg-white hover:bg-charcoal-50 text-xs font-bold text-navy-900 transition-all shadow-2xs mr-1 group"
-              title="Return to public product website"
-            >
-              <ArrowLeft className="w-3.5 h-3.5 text-charcoal-500 group-hover:-translate-x-0.5 transition-transform" />
-              <span className="hidden sm:inline">Back to website</span>
-              <span className="sm:hidden">Exit</span>
-            </Link>
-
-            <Link
               to="/app/dashboard"
-              className="flex items-center gap-2.5 group rounded-xl p-1 -ml-1 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600"
-              aria-label="ReLoop City - Return to dashboard"
+              className="flex items-center gap-2 group rounded-xl p-1 -ml-1 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-green-600"
+              aria-label="Reloop City - Return to dashboard"
             >
-              <div className="w-9 h-9 rounded-xl bg-navy-700 group-hover:bg-navy-800 flex items-center justify-center text-white font-bold shadow-md shadow-navy-700/20 transition-all">
-                <svg
-                  className="w-5 h-5 text-emerald-400"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-                  <path d="M3 3v5h5" />
-                  <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
-                  <path d="M16 21h5v-5" />
-                </svg>
-              </div>
-              <div>
-                <span className="font-extrabold text-xl tracking-tight text-navy-900 font-heading block leading-none">
-                  ReLoop <span className="text-sage-600">City</span>
-                </span>
-                <span className="text-xs text-charcoal-500 font-medium hidden sm:block mt-0.5">
-                  Circular Municipal Platform
-                </span>
-              </div>
+              <ReloopLogo className="h-7 w-auto" />
             </Link>
-
-            {/* Persistent Simulated Data Badge with Accessible Popover (Section 2) */}
-            <div className="relative" ref={badgePopoverRef}>
-              <button
-                type="button"
-                onClick={() => setIsBadgeInfoOpen((prev) => !prev)}
-                onMouseEnter={() => setIsBadgeInfoOpen(true)}
-                onMouseLeave={() => setIsBadgeInfoOpen(false)}
-                aria-expanded={isBadgeInfoOpen}
-                aria-label="Explanation of simulated data mode"
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold tracking-wide bg-amberGold-100 text-amberGold-800 border border-amberGold-300 hover:bg-amberGold-200/80 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600"
-              >
-                <span className="w-2 h-2 rounded-full bg-amberGold-600 animate-pulse" aria-hidden="true" />
-                <span>SIMULATED DATA</span>
-                <Info className="w-3 h-3 text-amberGold-700" aria-hidden="true" />
-              </button>
-
-              {isBadgeInfoOpen && (
-                <div
-                  role="tooltip"
-                  className="absolute left-0 top-full mt-2 z-50 w-72 p-3 rounded-xl bg-navy-900 text-white text-xs shadow-xl border border-navy-700 space-y-1 animate-in fade-in zoom-in-95"
-                >
-                  <p className="font-bold text-amberGold-400">Client-Side Simulation</p>
-                  <p className="text-navy-100 leading-relaxed text-xs">
-                    All sensor fill levels, fleet routing, and resource metrics are generated locally using a seeded deterministic engine calibrated to Pune municipal data. No backend connection is required.
-                  </p>
-                </div>
-              )}
-            </div>
           </div>
 
-          {/* Desktop Center: The ONE Baseline vs ReLoop Toggle (Section 2) */}
-          <div className="hidden lg:flex items-center bg-white p-1 rounded-xl border border-navy-200/80 shadow-xs">
-            <span className="sr-only">Operational Strategy Mode</span>
+          {/* Center: Baseline vs ReLoop Toggle (Prominent, Central, Accessible on Desktop & Mobile) */}
+          <div
+            role="radiogroup"
+            aria-label="Operational Strategy Mode"
+            className="flex items-center bg-charcoal-100 p-1 rounded-2xl border border-charcoal-200 shadow-inner"
+          >
             <button
               id="header-toggle-baseline"
+              role="radio"
+              aria-checked={mode === 'baseline'}
               type="button"
               onClick={() => setMode('baseline')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 ${
+              className={`flex items-center gap-1.5 px-3 sm:px-4 min-h-[44px] rounded-xl text-sm font-bold transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 cursor-pointer ${
                 mode === 'baseline'
-                  ? 'bg-charcoal-700 text-white shadow-xs'
-                  : 'text-charcoal-600 hover:text-navy-900 hover:bg-navy-50'
+                  ? 'bg-amber-600 text-white shadow-sm'
+                  : 'text-charcoal-700 hover:text-navy-900 hover:bg-white/60'
               }`}
             >
-              <Clock className="w-3.5 h-3.5" aria-hidden="true" />
-              <span>Baseline (Fixed)</span>
+              <Clock className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
+              <span>Baseline</span>
+              <span className="hidden md:inline font-normal text-xs opacity-90">(Fixed)</span>
             </button>
 
             <button
               id="header-toggle-reloop"
+              role="radio"
+              aria-checked={mode === 'reloop'}
               type="button"
               onClick={() => setMode('reloop')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 ${
+              className={`flex items-center gap-1.5 px-3 sm:px-4 min-h-[44px] rounded-xl text-sm font-bold transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-600 cursor-pointer ${
                 mode === 'reloop'
-                  ? 'bg-navy-700 text-white shadow-sm shadow-navy-700/20'
-                  : 'text-charcoal-600 hover:text-navy-900 hover:bg-navy-50'
+                  ? 'bg-emerald-600 text-white shadow-sm'
+                  : 'text-charcoal-700 hover:text-navy-900 hover:bg-white/60'
               }`}
             >
-              <Sparkles className="w-3.5 h-3.5 text-amberGold-400" aria-hidden="true" />
-              <span>ReLoop (AI-Optimized)</span>
+              <Sparkles className="w-4 h-4 text-emerald-100 flex-shrink-0" aria-hidden="true" />
+              <span>ReLoop</span>
+              <span className="hidden md:inline font-normal text-xs opacity-90">(AI Loop)</span>
             </button>
           </div>
 
-          {/* Desktop Right: Controls & Guided Tour */}
-          <div className="hidden md:flex items-center gap-2.5">
-            {/* Status Chip */}
+          {/* Right: Simulation Run/Pause, Compact Status Chip, and "⋯" Overflow Menu */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            
+            {/* Compact Status Chip (Text + Icon, not color alone) */}
             <div
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-medium font-mono ${
+              className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-mono font-semibold ${
                 isSimRunning
-                  ? 'bg-sage-50 text-sage-900 border-sage-200'
-                  : 'bg-navy-50/70 text-charcoal-700 border-navy-100'
+                  ? 'bg-emerald-50 text-emerald-900 border-emerald-200'
+                  : 'bg-charcoal-50 text-charcoal-700 border-charcoal-200'
               }`}
+              title={isSimRunning ? 'Simulation running' : 'Simulation paused'}
             >
-              <Radio
-                className={`w-3 h-3 ${isSimRunning ? 'text-sage-600 animate-ping' : 'text-charcoal-400'}`}
+              <span
+                className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                  isSimRunning ? 'bg-emerald-600' : 'bg-charcoal-400'
+                }`}
                 aria-hidden="true"
               />
-              <span>{statusChipText}</span>
+              <span className="font-bold">{isSimRunning ? 'RUN' : 'PAUSED'}</span>
+              <span className="text-charcoal-400">·</span>
+              <span>{compactTimeText}</span>
             </div>
 
-            {/* Sim Control Button Group */}
-            <div className="flex items-center bg-white rounded-xl border border-navy-200/80 p-0.5 shadow-xs">
+            {/* Primary Play / Pause Button (≥44px tap target) */}
+            <button
+              type="button"
+              onClick={() => (isSimRunning ? pauseSimulation() : startSimulation())}
+              className={`min-h-[44px] px-3.5 sm:px-4 rounded-xl text-sm font-bold transition-all flex items-center gap-2 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 cursor-pointer shadow-sm ${
+                isSimRunning
+                  ? 'bg-amber-100 text-amber-950 hover:bg-amber-200 border border-amber-300'
+                  : 'bg-emerald-600 text-white hover:bg-emerald-700'
+              }`}
+              aria-label={isSimRunning ? 'Pause simulation' : 'Run simulation'}
+            >
+              {isSimRunning ? (
+                <>
+                  <Pause className="w-4 h-4 fill-current" aria-hidden="true" />
+                  <span className="hidden sm:inline">Pause</span>
+                </>
+              ) : (
+                <>
+                  <Play className="w-4 h-4 fill-current" aria-hidden="true" />
+                  <span className="hidden sm:inline">Run</span>
+                </>
+              )}
+            </button>
+
+            {/* "⋯" Keyboard-Accessible Overflow Menu */}
+            <div className="relative" ref={overflowRef}>
               <button
+                ref={overflowButtonRef}
                 type="button"
-                onClick={() => (isSimRunning ? pauseSimulation() : startSimulation())}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 ${
-                  isSimRunning
-                    ? 'bg-amberGold-100 text-amberGold-900 hover:bg-amberGold-200'
-                    : 'bg-sage-100 text-sage-900 hover:bg-sage-200'
-                }`}
-                aria-label={isSimRunning ? 'Pause simulation' : 'Run simulation'}
+                onClick={() => setIsOverflowOpen((prev) => !prev)}
+                aria-haspopup="menu"
+                aria-expanded={isOverflowOpen}
+                aria-label="More simulation and navigation options"
+                className="min-h-[44px] min-w-[44px] p-2.5 rounded-xl border border-charcoal-200 hover:border-charcoal-300 bg-white hover:bg-charcoal-50 text-charcoal-700 hover:text-navy-900 transition-all flex items-center justify-center cursor-pointer shadow-2xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600"
               >
-                {isSimRunning ? (
-                  <Pause className="w-3.5 h-3.5 fill-current" aria-hidden="true" />
-                ) : (
-                  <Play className="w-3.5 h-3.5 fill-current" aria-hidden="true" />
-                )}
-                <span>{isSimRunning ? 'Pause' : 'Run'}</span>
+                <MoreHorizontal className="w-5 h-5" aria-hidden="true" />
               </button>
 
-              <button
-                type="button"
-                onClick={tickSimulation}
-                disabled={isSimRunning}
-                className="p-2 text-charcoal-600 hover:text-navy-800 hover:bg-navy-50 rounded-lg disabled:opacity-40 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600"
-                aria-label="Advance simulation by 1 hour"
-                title="Advance 1 Hour"
-              >
-                <FastForward className="w-4 h-4" aria-hidden="true" />
-              </button>
+              {/* Accessible Dropdown Menu */}
+              {isOverflowOpen && (
+                <div
+                  role="menu"
+                  aria-label="Simulation Settings and Navigation"
+                  className="absolute right-0 top-full mt-2 z-50 w-64 rounded-2xl bg-white border border-charcoal-200 shadow-xl p-2 space-y-1 animate-in fade-in zoom-in-95 duration-100"
+                >
+                  {/* Section: Simulation Speed */}
+                  <div className="px-3 py-2 border-b border-charcoal-100">
+                    <span className="text-xs font-bold uppercase tracking-wider text-charcoal-500 block mb-1.5 flex items-center gap-1.5">
+                      <Gauge className="w-3.5 h-3.5 text-navy-700" />
+                      <span>Simulation Speed</span>
+                    </span>
+                    <div className="grid grid-cols-3 gap-1">
+                      {([1, 10, 60] as const).map((spd, index) => (
+                        <button
+                          key={spd}
+                          ref={(el) => { menuItemsRef.current[index] = el; }}
+                          role="menuitem"
+                          type="button"
+                          onClick={() => {
+                            setSimSpeed(spd);
+                            setIsOverflowOpen(false);
+                          }}
+                          className={`min-h-[36px] px-2 py-1 rounded-lg text-xs font-bold transition-all ${
+                            simSpeed === spd
+                              ? 'bg-navy-900 text-white shadow-2xs'
+                              : 'bg-charcoal-50 text-charcoal-700 hover:bg-charcoal-100'
+                          }`}
+                        >
+                          {spd}x
+                        </button>
+                      ))}
+                    </div>
+                  </div>
 
-              {/* Speed Buttons */}
-              <div className="flex items-center pl-1 border-l border-navy-100 text-xs font-semibold text-charcoal-500">
-                {([1, 10, 60] as const).map((spd) => (
+                  {/* Item: Guided Tour */}
                   <button
-                    key={spd}
+                    ref={(el) => { menuItemsRef.current[3] = el; }}
+                    role="menuitem"
                     type="button"
-                    onClick={() => setSimSpeed(spd)}
-                    aria-label={`Set speed to ${spd}x`}
-                    className={`px-2 py-1 rounded-md transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 ${
-                      simSpeed === spd
-                        ? 'bg-navy-700 text-white font-bold'
-                        : 'hover:text-navy-800 hover:bg-navy-50'
-                    }`}
+                    onClick={() => {
+                      setIsOverflowOpen(false);
+                      startGuidedTour();
+                    }}
+                    className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold text-charcoal-700 hover:text-navy-900 hover:bg-charcoal-50 flex items-center gap-2.5 transition-colors cursor-pointer"
                   >
-                    {spd}x
+                    <Sparkles className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                    <span>Guided Tour</span>
                   </button>
-                ))}
-              </div>
+
+                  {/* Item: Reset Simulation */}
+                  <button
+                    ref={(el) => { menuItemsRef.current[4] = el; }}
+                    role="menuitem"
+                    type="button"
+                    onClick={() => {
+                      setIsOverflowOpen(false);
+                      openResetConfirm();
+                    }}
+                    className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold text-charcoal-700 hover:text-red-700 hover:bg-red-50 flex items-center gap-2.5 transition-colors cursor-pointer"
+                  >
+                    <RotateCcw className="w-4 h-4 text-charcoal-500 hover:text-red-600 flex-shrink-0" />
+                    <span>Reset to Day 1</span>
+                  </button>
+
+                  {/* Divider */}
+                  <div className="border-t border-charcoal-100 my-1" />
+
+                  {/* Item: Back to Public Website */}
+                  <Link
+                    ref={(el) => { menuItemsRef.current[5] = el; }}
+                    role="menuitem"
+                    to="/"
+                    onClick={() => setIsOverflowOpen(false)}
+                    className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold text-charcoal-700 hover:text-navy-900 hover:bg-charcoal-50 flex items-center gap-2.5 transition-colors cursor-pointer"
+                  >
+                    <ArrowLeft className="w-4 h-4 text-charcoal-500 flex-shrink-0" />
+                    <span>Back to Website</span>
+                  </Link>
+                </div>
+              )}
             </div>
 
-            {/* Reset Button (Opens confirmation dialog) */}
-            <button
-              type="button"
-              onClick={openResetConfirm}
-              className="p-2 text-charcoal-500 hover:text-navy-800 hover:bg-white rounded-xl border border-transparent hover:border-navy-200 transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600"
-              aria-label="Reset demo to Day 1"
-              title="Reset simulation state to Day 1"
-            >
-              <RotateCcw className="w-4 h-4" aria-hidden="true" />
-            </button>
-
-            {/* Guided Tour Trigger */}
-            <Button
-              variant="primary"
-              size="sm"
-              icon={<Sparkles className="w-3.5 h-3.5 text-amberGold-400" />}
-              onClick={startGuidedTour}
-              aria-label="Launch interactive guided tour"
-            >
-              Guided Tour
-            </Button>
-          </div>
-
-          {/* Mobile Right: Simulation drawer toggle + Guided Tour icon */}
-          <div className="flex md:hidden items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setIsSimPopoverOpen((prev) => !prev)}
-              aria-expanded={isSimPopoverOpen}
-              aria-label="Open simulation controls"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-navy-200 text-xs font-semibold text-navy-800 shadow-xs"
-            >
-              <SlidersHorizontal className="w-3.5 h-3.5 text-navy-700" aria-hidden="true" />
-              <span>Sim</span>
-              <ChevronDown className="w-3.5 h-3.5 text-charcoal-400" aria-hidden="true" />
-            </button>
-
-            <Button
-              variant="primary"
-              size="sm"
-              icon={<Sparkles className="w-3.5 h-3.5 text-amberGold-400" />}
-              onClick={startGuidedTour}
-              aria-label="Start guided tour"
-            >
-              Tour
-            </Button>
           </div>
 
         </div>
-
-        {/* Mobile Tier 2: Collapsible Simulation Popover / Tray (Section 2) */}
-        {isSimPopoverOpen && (
-          <div
-            ref={simPopoverRef}
-            className="md:hidden py-4 border-t border-navy-100 space-y-3 animate-in fade-in duration-150"
-          >
-            {/* Mode toggle */}
-            <div className="flex items-center justify-between gap-2 p-1 bg-white rounded-xl border border-navy-200">
-              <button
-                type="button"
-                onClick={() => setMode('baseline')}
-                className={`flex-1 py-2 rounded-lg text-xs font-bold text-center ${
-                  mode === 'baseline' ? 'bg-charcoal-700 text-white' : 'text-charcoal-600'
-                }`}
-              >
-                Baseline (Fixed)
-              </button>
-              <button
-                type="button"
-                onClick={() => setMode('reloop')}
-                className={`flex-1 py-2 rounded-lg text-xs font-bold text-center ${
-                  mode === 'reloop' ? 'bg-navy-700 text-white' : 'text-charcoal-600'
-                }`}
-              >
-                ReLoop (AI)
-              </button>
-            </div>
-
-            {/* Sim actions */}
-            <div className="flex items-center justify-between gap-2 bg-white p-2 rounded-xl border border-navy-200">
-              <Button
-                variant={isSimRunning ? 'secondary' : 'sage'}
-                size="sm"
-                icon={isSimRunning ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
-                onClick={() => (isSimRunning ? pauseSimulation() : startSimulation())}
-                className="flex-1"
-              >
-                {isSimRunning ? 'Pause' : 'Run Sim'}
-              </Button>
-
-              <Button
-                variant="ghost"
-                size="sm"
-                icon={<FastForward className="w-4 h-4" />}
-                onClick={tickSimulation}
-                disabled={isSimRunning}
-                aria-label="Step 1 hour"
-              >
-                +1h
-              </Button>
-
-              <div className="flex items-center border-l border-navy-100 pl-1">
-                {([1, 10, 60] as const).map((spd) => (
-                  <button
-                    key={spd}
-                    type="button"
-                    onClick={() => setSimSpeed(spd)}
-                    className={`px-2 py-1 rounded text-xs font-bold ${
-                      simSpeed === spd ? 'bg-navy-700 text-white' : 'text-charcoal-600'
-                    }`}
-                  >
-                    {spd}x
-                  </button>
-                ))}
-              </div>
-
-              <Button
-                variant="ghost"
-                size="sm"
-                icon={<RotateCcw className="w-4 h-4 text-red-600" />}
-                onClick={() => {
-                  setIsSimPopoverOpen(false);
-                  openResetConfirm();
-                }}
-                aria-label="Reset simulation"
-              >
-                Reset
-              </Button>
-            </div>
-
-            <div className="text-center text-xs font-mono text-charcoal-500">
-              {statusChipText}
-            </div>
-          </div>
-        )}
-
       </div>
+
+      {/* Slim, Dismissible Simulated Data Banner (No pulse animation, clean contrast) */}
+      {!isSimBannerDismissed && (
+        <div
+          role="status"
+          aria-label="Simulation notice"
+          className="bg-navy-950 text-white py-1.5 px-4 sm:px-6 border-t border-navy-800"
+        >
+          <div className="max-w-[1600px] mx-auto flex items-center justify-between gap-3 text-xs">
+            <div className="flex items-center gap-2 overflow-hidden">
+              <span className="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 font-bold uppercase text-[11px] tracking-wider border border-amber-500/40 flex-shrink-0">
+                Simulated Data
+              </span>
+              <span className="text-charcoal-300 truncate text-xs">
+                Deterministic client-side simulation calibrated to Pune PCMC municipal pilot data. No live backend connection.
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setIsSimBannerDismissed(true)}
+              className="p-1 rounded-lg text-charcoal-400 hover:text-white hover:bg-navy-800 transition-colors flex-shrink-0 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-500"
+              aria-label="Dismiss simulated data notification"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      )}
     </header>
   );
 };
