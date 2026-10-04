@@ -6,6 +6,9 @@ import { Skeleton } from './components/ui/Skeleton';
 // Public Product Website (full-width public marketing landing experience)
 const PublicWebsite = lazy(() => import('./pages/PublicWebsite').then(m => ({ default: m.PublicWebsite })));
 
+// Authentication Experience (Login / Signup)
+const AuthPage = lazy(() => import('./pages/AuthPage').then(m => ({ default: m.AuthPage })));
+
 // Application Shell (header with simulation controls + sidebar + 9 pages)
 const AppShell = lazy(() => import('./components/AppShell').then(m => ({ default: m.AppShell })));
 
@@ -40,6 +43,11 @@ export function App() {
       <RouteManager />
       <Suspense fallback={<PageFallback />}>
         <Routes>
+          {/* Authentication Experience */}
+          <Route path="/login" element={<AuthPage defaultMode="login" />} />
+          <Route path="/signup" element={<AuthPage defaultMode="signup" />} />
+          <Route path="/auth" element={<AuthPage defaultMode="login" />} />
+
           {/* Public Website Experience at "/" */}
           <Route path="/" element={<PublicWebsite />} />
 
