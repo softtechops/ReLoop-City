@@ -30,17 +30,17 @@ export function createInitialSimulationState(config: ConfigState = DEFAULT_CONFI
   // Initial baseline cumulative state (simulating 14 days of prior operation)
   const baselineCumulative: StreamBreakdown = {
     collectedTonnes: 148.4,
-    recycledTonnes: 26.7, // Low in baseline due to contamination & unsegregated pickup
-    compostedTonnes: 32.1,
-    energyRecoveredTonnes: 18.2,
-    cdAggregateTonnes: 14.5,
-    landfillAvoidedTonnes: 91.5,
-    landfilledTonnes: 56.9, // High landfilling in baseline (38.3%)
-    landfillDiversionRatePercent: 61.6,
-    energyGeneratedMwh: 38.2,
-    biogasProducedM3: 18190,
+    recycledTonnes: 16.2, // Low in baseline due to contamination & unsegregated pickup
+    compostedTonnes: 14.5,
+    energyRecoveredTonnes: 6.8,
+    cdAggregateTonnes: 4.1,
+    landfillAvoidedTonnes: 41.6,
+    landfilledTonnes: 106.8, // High landfilling in baseline (72.0%)
+    landfillDiversionRatePercent: 28.0,
+    energyGeneratedMwh: 14.2,
+    biogasProducedM3: 6760,
     revenueGeneratedInr: 1845000,
-    co2AvoidedTonnes: 72.4,
+    co2AvoidedTonnes: 38.6,
     overflowEventsCount: 42,
   };
 
@@ -63,17 +63,17 @@ export function createInitialSimulationState(config: ConfigState = DEFAULT_CONFI
 
   const todayBaseline: StreamBreakdown = {
     collectedTonnes: 10.4,
-    recycledTonnes: 1.8,
-    compostedTonnes: 2.2,
-    energyRecoveredTonnes: 1.3,
-    cdAggregateTonnes: 1.0,
-    landfillAvoidedTonnes: 6.3,
-    landfilledTonnes: 4.1,
-    landfillDiversionRatePercent: 60.5,
-    energyGeneratedMwh: 2.7,
-    biogasProducedM3: 1285,
+    recycledTonnes: 1.1,
+    compostedTonnes: 1.0,
+    energyRecoveredTonnes: 0.5,
+    cdAggregateTonnes: 0.3,
+    landfillAvoidedTonnes: 2.9,
+    landfilledTonnes: 7.5, // 72% landfilled
+    landfillDiversionRatePercent: 28.0,
+    energyGeneratedMwh: 1.0,
+    biogasProducedM3: 476,
     revenueGeneratedInr: 128000,
-    co2AvoidedTonnes: 5.1,
+    co2AvoidedTonnes: 2.7,
     overflowEventsCount: 3,
   };
 
@@ -224,18 +224,18 @@ export function stepSimulation(
     (reloopCompostTonnes * config.kgCo2eAvoidedPerTonneComposted / 1000) +
     (reloopMwh * config.kgCo2eAvoidedPerMwhCleanEnergy / 1000);
 
-  // Baseline stream increments (Fixed unsegregated routes, lower recovery ~61%)
+  // Baseline stream increments (Fixed unsegregated routes, lower recovery ~28%)
   const baselineCollected = hourlyCollectedTonnes * 0.92;
-  const baselineRecyclable = baselineCollected * 0.18; // contaminated
-  const baselineCompost = baselineCollected * 0.22;
-  const baselineEnergy = baselineCollected * 0.12;
-  const baselineCd = baselineCollected * 0.08;
-  const baselineLandfill = baselineCollected * 0.38; // 38% dumped in landfill
-  const baselineLandfillAvoided = baselineCollected - baselineLandfill;
+  const baselineRecyclable = baselineCollected * 0.11; // contaminated
+  const baselineCompost = baselineCollected * 0.10;
+  const baselineEnergy = baselineCollected * 0.04;
+  const baselineCd = baselineCollected * 0.03;
+  const baselineLandfill = baselineCollected * 0.72; // 72% dumped in landfill
+  const baselineLandfillAvoided = baselineCollected - baselineLandfill; // 28%
   const baselineBiogasM3 = baselineCompost * config.biogasYieldPerTonneOrganic * 0.65;
   const baselineMwh = Number(((baselineBiogasM3 * config.kwhPerCubicMeterBiogas) / 1000).toFixed(3));
   const baselineRevenue = reloopRevenue * 0.48;
-  const baselineCo2Avoided = reloopCo2Avoided * 0.44;
+  const baselineCo2Avoided = reloopCo2Avoided * 0.30;
 
   const newReloopCum: StreamBreakdown = {
     collectedTonnes: Number((state.reloopCumulative.collectedTonnes + hourlyCollectedTonnes).toFixed(2)),
@@ -261,7 +261,7 @@ export function stepSimulation(
     cdAggregateTonnes: Number((state.baselineCumulative.cdAggregateTonnes + baselineCd).toFixed(2)),
     landfillAvoidedTonnes: Number((state.baselineCumulative.landfillAvoidedTonnes + baselineLandfillAvoided).toFixed(2)),
     landfilledTonnes: Number((state.baselineCumulative.landfilledTonnes + baselineLandfill).toFixed(2)),
-    landfillDiversionRatePercent: 61.2,
+    landfillDiversionRatePercent: 28.0,
     energyGeneratedMwh: Number((state.baselineCumulative.energyGeneratedMwh + baselineMwh).toFixed(2)),
     biogasProducedM3: Math.round(state.baselineCumulative.biogasProducedM3 + baselineBiogasM3),
     revenueGeneratedInr: Math.round(state.baselineCumulative.revenueGeneratedInr + baselineRevenue),
