@@ -7,57 +7,60 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#F7F6F2',
+        background: '#F8FAFC', // Ultra-clean, modern crisp Slate-50 background
         navy: {
-          50: '#F0F4FA',
-          100: '#D9E4F2',
-          200: '#B0C8E3',
-          300: '#7FA7D1',
-          400: '#4D84BE',
-          500: '#2762A7',
-          600: '#1A4983',
-          700: '#12305C', // Municipal Primary Navy
-          800: '#0C203F',
-          900: '#071325',
+          50: '#F0F5FA',
+          100: '#E1EDF7',
+          200: '#C2DCF0',
+          300: '#94C2E4',
+          400: '#5F9FD4',
+          500: '#2A76B8',
+          600: '#175997',
+          700: '#0F3E6D',
+          800: '#0C2B4C',
+          900: '#0A1E35', // Deep Executive Sapphire Navy
+          950: '#061324',
         },
         sage: {
-          50: '#F4F7F4',
-          100: '#E5ECE5',
-          200: '#CBD8CB',
-          300: '#AEC2AE',
-          400: '#8FAA90',
-          500: '#7BA17D', // Sage green (organic/recycling)
-          600: '#5F8461',
-          700: '#476549',
-          800: '#324733',
+          50: '#ECFDF5',
+          100: '#D1FAE5',
+          200: '#A7F3D0',
+          300: '#6EE7B7',
+          400: '#34D399',
+          500: '#10B981', // Vibrant Bio-Emerald
+          600: '#059669', // Rich Eco Green
+          700: '#047857',
+          800: '#065F46',
+          900: '#064E3B',
         },
         amberGold: {
-          50: '#FDFBF5',
-          100: '#FAF3E2',
-          200: '#F4E5BD',
-          300: '#EDD492',
-          400: '#E4BF64',
-          500: '#D9A441', // Amber/gold (energy recovery)
-          600: '#B88225',
-          700: '#8F6116',
-          800: '#66430B',
+          50: '#FFFBEB',
+          100: '#FEF3C7',
+          200: '#FDE68A',
+          300: '#FCD34D',
+          400: '#FBBF24',
+          500: '#F59E0B', // Solar Amber
+          600: '#D97706',
+          700: '#B45309', // High contrast text on light amber
+          800: '#92400E',
+          900: '#78350F',
         },
         charcoal: {
-          50: '#F6F7F7',
-          100: '#E7E9E9',
-          200: '#CFD3D4',
-          300: '#A9AFB1',
-          400: '#757E81',
-          500: '#545C5F',
-          600: '#3F4649',
-          700: '#2F3437', // Charcoal primary text
-          800: '#232729',
-          900: '#171A1B',
+          50: '#F8FAFC',
+          100: '#F1F5F9',
+          200: '#E2E8F0',
+          300: '#CBD5E1',
+          400: '#94A3B8',
+          500: '#64748B',
+          600: '#475569',
+          700: '#334155',
+          800: '#1E293B',
+          900: '#0F172A', // Slate 900 primary text
         },
         residual: {
-          400: '#A0A5AA',
-          500: '#8E9296',
-          600: '#73777B',
+          400: '#94A3B8',
+          500: '#64748B',
+          600: '#475569',
         }
       },
       fontFamily: {
@@ -65,10 +68,11 @@ export default {
         mono: ['JetBrains Mono', 'Fira Code', 'monospace']
       },
       boxShadow: {
-        'blueprint': '0 4px 20px -2px rgba(18, 48, 92, 0.08), 0 2px 6px -1px rgba(18, 48, 92, 0.04)',
-        'blueprint-lg': '0 10px 30px -4px rgba(18, 48, 92, 0.12), 0 4px 10px -2px rgba(18, 48, 92, 0.06)',
-        'glow-sage': '0 0 15px -3px rgba(123, 161, 125, 0.4)',
-        'glow-amber': '0 0 15px -3px rgba(217, 164, 65, 0.4)',
+        'blueprint': '0 4px 20px -2px rgba(10, 30, 53, 0.05), 0 2px 6px -1px rgba(10, 30, 53, 0.03)',
+        'blueprint-lg': '0 12px 32px -4px rgba(10, 30, 53, 0.10), 0 4px 12px -2px rgba(10, 30, 53, 0.05)',
+        'glow-sage': '0 0 20px -3px rgba(16, 185, 129, 0.35)',
+        'glow-amber': '0 0 20px -3px rgba(245, 158, 11, 0.35)',
+        'glass': '0 8px 32px 0 rgba(15, 62, 109, 0.08)',
       }
     },
   },

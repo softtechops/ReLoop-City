@@ -158,7 +158,7 @@ export const PredictPage: React.FC = () => {
                 const urgentInZone = zoneBins.filter((b) => b.fillPercent >= 80).length;
 
                 return (
-                  <div key={zone.id} className="p-3.5 rounded-xl border border-navy-100 bg-[#F7F6F2]/40 hover:bg-navy-50/40 transition-colors space-y-2">
+                  <div key={zone.id} className="p-3.5 rounded-xl border border-navy-100 bg-[#F8FAFC] hover:bg-emerald-50/40 transition-colors space-y-2">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <span className="w-5 h-5 rounded-md bg-navy-700 text-white text-xs font-bold flex items-center justify-center font-mono">

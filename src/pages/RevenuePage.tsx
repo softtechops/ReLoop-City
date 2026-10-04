@@ -168,7 +168,7 @@ export const RevenuePage: React.FC = () => {
             return (
               <div
                 key={stream.id}
-                className="p-5 rounded-2xl bg-[#F7F6F2]/50 border border-navy-100 shadow-xs space-y-3 hover:border-navy-300 transition-all flex flex-col justify-between"
+                className="p-5 rounded-2xl bg-[#F8FAFC] border border-navy-100 shadow-xs space-y-3 hover:border-emerald-300 transition-all flex flex-col justify-between"
               >
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">

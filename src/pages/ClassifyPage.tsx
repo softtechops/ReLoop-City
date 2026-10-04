@@ -140,7 +140,7 @@ export const ClassifyPage: React.FC = () => {
                     className={`p-3.5 rounded-2xl border text-left transition-all flex flex-col justify-between min-h-[110px] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 ${
                       isSelected
                         ? 'border-navy-700 bg-navy-50 shadow-xs ring-2 ring-navy-700/20'
-                        : 'border-navy-100 bg-[#F7F6F2]/40 hover:bg-white hover:border-navy-300'
+                        : 'border-navy-100 bg-[#F8FAFC] hover:bg-white hover:border-emerald-300'
                     }`}
                   >
                     <div className="text-3xl mb-1" role="img" aria-label={`Icon for ${item.name}`}>
@@ -177,7 +177,7 @@ export const ClassifyPage: React.FC = () => {
             className={`p-7 rounded-2xl border-2 border-dashed text-center cursor-pointer transition-all space-y-2 select-none focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 ${
               isDragOver
                 ? 'border-navy-700 bg-navy-100/60 scale-[1.01]'
-                : 'border-navy-200 hover:border-navy-500 bg-[#F7F6F2]/60 hover:bg-white'
+                : 'border-navy-200 hover:border-emerald-500 bg-[#F8FAFC] hover:bg-white'
             }`}
           >
             <input
@@ -307,13 +307,13 @@ export const ClassifyPage: React.FC = () => {
 
                   {/* Economic & Carbon Metrics */}
                   <div className="grid grid-cols-2 gap-3 pt-2">
-                    <div className="p-3 rounded-xl bg-[#F7F6F2] border border-navy-100 text-xs">
+                    <div className="p-3 rounded-xl bg-[#F8FAFC] border border-navy-100 text-xs">
                       <span className="text-charcoal-500 block font-semibold uppercase text-xs">Market Value</span>
                       <span className="font-bold text-base text-navy-900">
                         ₹{classificationResult.estimatedValuePerKgInr}/kg
                       </span>
                     </div>
-                    <div className="p-3 rounded-xl bg-[#F7F6F2] border border-navy-100 text-xs">
+                    <div className="p-3 rounded-xl bg-[#F8FAFC] border border-navy-100 text-xs">
                       <span className="text-charcoal-500 block font-semibold uppercase text-xs">Avoided Carbon</span>
                       <span className="font-bold text-base text-sage-800">
                         {classificationResult.carbonAvoidanceKgPerKg} kg CO₂/kg
@@ -324,7 +324,7 @@ export const ClassifyPage: React.FC = () => {
               )}
             </div>
 
-            <div className="mt-4 p-3 rounded-xl bg-[#F7F6F2] border border-navy-100 text-xs text-charcoal-500">
+            <div className="mt-4 p-3 rounded-xl bg-[#F8FAFC] border border-navy-100 text-xs text-charcoal-500">
               <strong>Pluggable Architecture:</strong> The clean <code className="text-navy-800 bg-white px-1.5 py-0.5 rounded font-mono">classifyImage()</code> function can be replaced directly with a TensorFlow.js edge model or municipal camera webhook without modifying UI components.
             </div>
           </SectionCard>

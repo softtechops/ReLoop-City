@@ -4,17 +4,17 @@
 
 @layer base {
   :root {
-    --bg-blueprint: #F7F6F2;
-    --navy-primary: #12305C;
-    --sage-accent: #7BA17D;
-    --amber-accent: #D9A441;
-    --charcoal-text: #2F3437;
-    --residual-gray: #8E9296;
+    --bg-blueprint: #F8FAFC;
+    --navy-primary: #0F3E6D;
+    --sage-accent: #059669;
+    --amber-accent: #D97706;
+    --charcoal-text: #0F172A;
+    --residual-gray: #64748B;
   }
 
   body {
-    background-color: #F7F6F2;
-    color: #2F3437;
+    background-color: #F8FAFC;
+    color: #0F172A;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 14px;
     line-height: 1.5;
@@ -24,23 +24,23 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Outfit', 'Inter', system-ui, sans-serif;
     letter-spacing: -0.02em;
-    color: #12305C;
+    color: #0A1E35;
   }
 }
 
-/* Blueprint subtle grid pattern */
+/* Subtle modern tech grid pattern */
 .blueprint-grid {
   background-size: 32px 32px;
   background-image: 
-    linear-gradient(to right, rgba(18, 48, 92, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(18, 48, 92, 0.04) 1px, transparent 1px);
+    linear-gradient(to right, rgba(15, 62, 109, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 62, 109, 0.035) 1px, transparent 1px);
 }
 
 .blueprint-grid-dense {
   background-size: 16px 16px;
   background-image: 
-    linear-gradient(to right, rgba(18, 48, 92, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(18, 48, 92, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgba(15, 62, 109, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 62, 109, 0.045) 1px, transparent 1px);
 }
 
 /* Custom scrollbar */
@@ -49,7 +49,7 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #EDECE7;
+  background: #F1F5F9;
 }
 ::-webkit-scrollbar-thumb {
   background: #CBD5E1;
@@ -63,14 +63,14 @@
 .leaflet-container {
   width: 100%;
   height: 100%;
-  background: #E8ECEF;
+  background: #E2E8F0;
   border-radius: 1rem;
   z-index: 10;
 }
 
 /* Accessible focus outline */
 :focus-visible {
-  outline: 2px solid #12305C !important;
+  outline: 2px solid #0F3E6D !important;
   outline-offset: 2px !important;
 }
 
@@ -78,11 +78,11 @@
 @keyframes pulse-fill-red {
   0%, 100% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
   }
   50% {
     transform: scale(1.15);
-    box-shadow: 0 0 0 8px rgba(220, 38, 38, 0);
+    box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
   }
 }
 

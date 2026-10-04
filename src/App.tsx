@@ -36,7 +36,7 @@ export function App() {
   return (
     <HashRouter>
       <RouteManager />
-      <div className="min-h-screen bg-[#F7F6F2] flex flex-col text-[#2F3437] font-sans selection:bg-navy-100 selection:text-navy-900">
+      <div className="min-h-screen bg-[#F8FAFC] flex flex-col text-[#0F172A] font-sans selection:bg-emerald-100 selection:text-emerald-900">
         
         {/* Sticky Municipal Header */}
         <Header />

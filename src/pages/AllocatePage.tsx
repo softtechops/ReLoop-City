@@ -134,7 +134,7 @@ export const AllocatePage: React.FC = () => {
               { label: 'Combustible Tailings & RDF', tonnes: todayMetrics.energyRecoveredTonnes * 0.35, color: 'bg-amberGold-600' },
               { label: 'Unavoidable Residual', tonnes: todayMetrics.landfilledTonnes, color: 'bg-residual-500' },
             ].map((stream) => (
-              <div key={stream.label} className="p-3.5 rounded-xl border border-navy-100 bg-[#F7F6F2]/50 space-y-1.5">
+              <div key={stream.label} className="p-3.5 rounded-xl border border-navy-100 bg-[#F8FAFC] space-y-1.5">
                 <div className="flex justify-between items-center text-xs">
                   <span className="font-bold text-navy-900">{stream.label}</span>
                   <span className="font-mono font-bold text-navy-800">{stream.tonnes.toFixed(1)} t/d</span>

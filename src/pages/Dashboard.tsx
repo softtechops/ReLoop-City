@@ -413,7 +413,7 @@ export const Dashboard: React.FC = () => {
             {/* Stream Legend Breakdown with explicit colors and figures */}
             <div className="grid grid-cols-2 gap-2 text-xs pt-4 border-t border-navy-50">
               {donutData.map((item) => (
-                <div key={item.name} className="flex items-center gap-2 p-2 rounded-xl bg-[#F7F6F2]/60">
+                <div key={item.name} className="flex items-center gap-2 p-2 rounded-xl bg-[#F8FAFC]">
                   <span className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: item.color }} aria-hidden="true" />
                   <div className="truncate">
                     <span className="font-semibold text-charcoal-800 block truncate">{item.name}</span>

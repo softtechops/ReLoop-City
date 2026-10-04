@@ -82,7 +82,7 @@ export const Header: React.FC = () => {
     : `Paused · Day ${simState.currentDay}, ${String(simState.currentHour).padStart(2, '0')}:00`;
 
   return (
-    <header className="sticky top-0 z-30 bg-[#F7F6F2]/95 backdrop-blur-md border-b border-navy-100 shadow-xs transition-all">
+    <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-charcoal-200 shadow-xs transition-all">
       {/* Skip to main content link for screen readers */}
       <a
         href="#main-content"

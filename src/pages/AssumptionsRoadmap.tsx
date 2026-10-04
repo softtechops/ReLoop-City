@@ -97,7 +97,7 @@ export const AssumptionsRoadmap: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           
           {/* Energy Yields */}
-          <div className="space-y-4 p-4 rounded-xl bg-[#F7F6F2]/50 border border-navy-100">
+          <div className="space-y-4 p-4 rounded-xl bg-[#F8FAFC] border border-navy-100">
             <div className="flex items-center gap-2 text-xs font-bold text-navy-900 uppercase tracking-wide">
               <Zap className="w-4 h-4 text-amberGold-600" aria-hidden="true" />
               <span>Energy & Biogas Yields</span>
@@ -162,7 +162,7 @@ export const AssumptionsRoadmap: React.FC = () => {
           </div>
 
           {/* Commodity Recyclate Prices */}
-          <div className="space-y-4 p-4 rounded-xl bg-[#F7F6F2]/50 border border-navy-100">
+          <div className="space-y-4 p-4 rounded-xl bg-[#F8FAFC] border border-navy-100">
             <div className="flex items-center gap-2 text-xs font-bold text-navy-900 uppercase tracking-wide">
               <Coins className="w-4 h-4 text-sage-700" aria-hidden="true" />
               <span>Material Selling Prices (₹ / Tonne)</span>
@@ -227,7 +227,7 @@ export const AssumptionsRoadmap: React.FC = () => {
           </div>
 
           {/* Operational & Climate Parameters */}
-          <div className="space-y-4 p-4 rounded-xl bg-[#F7F6F2]/50 border border-navy-100">
+          <div className="space-y-4 p-4 rounded-xl bg-[#F8FAFC] border border-navy-100">
             <div className="flex items-center gap-2 text-xs font-bold text-navy-900 uppercase tracking-wide">
               <ShieldCheck className="w-4 h-4 text-navy-700" aria-hidden="true" />
               <span>Logistics & Climate Factors</span>

@@ -51,7 +51,7 @@ export const StatCard: React.FC<StatCardProps> = ({
     <div
       className={`relative rounded-2xl bg-white border border-navy-100 shadow-blueprint transition-all duration-200 ${accentBorder} ${
         isHero
-          ? 'p-6 sm:p-7 bg-gradient-to-b from-white to-[#F7F6F2]/30 ring-1 ring-navy-700/5'
+          ? 'p-6 sm:p-7 bg-gradient-to-b from-white to-[#F8FAFC]/50 ring-1 ring-navy-700/5'
           : 'p-5 sm:p-6'
       }`}
     >

@@ -59,7 +59,7 @@ export const SectionCard: React.FC<SectionCardProps> = ({
       <div className={paddingClass}>{children}</div>
 
       {footer && (
-        <div className="px-6 py-3.5 bg-[#F7F6F2]/60 border-t border-navy-50 text-xs text-charcoal-600">
+        <div className="px-6 py-3.5 bg-[#F8FAFC]/80 border-t border-navy-50 text-xs text-charcoal-600">
           {footer}
         </div>
       )}

@@ -60,6 +60,11 @@ interface StoreState {
   tickSimulation: () => void;
   resetSimulation: () => void;
 
+  // Left Sidebar 7-Step AI Loop Visibility Toggle
+  isLoopStepsExpanded: boolean;
+  toggleLoopSteps: () => void;
+  setLoopStepsExpanded: (expanded: boolean) => void;
+
   // Guided 7-Step AI Tour
   isGuidedTourOpen: boolean;
   currentTourStep: number;
@@ -155,15 +160,20 @@ export const useStore = create<StoreState>((set, get) => ({
     });
   },
 
+  // Left Sidebar 7-Step AI Loop Visibility Toggle
+  isLoopStepsExpanded: false,
+  toggleLoopSteps: () => set((state) => ({ isLoopStepsExpanded: !state.isLoopStepsExpanded })),
+  setLoopStepsExpanded: (expanded: boolean) => set({ isLoopStepsExpanded: expanded }),
+
   // Guided Tour
   isGuidedTourOpen: false,
   currentTourStep: 0,
-  startGuidedTour: () => set({ isGuidedTourOpen: true, currentTourStep: 0, activePage: 'map' }),
+  startGuidedTour: () => set({ isGuidedTourOpen: true, currentTourStep: 0, activePage: 'map', isLoopStepsExpanded: true }),
   nextTourStep: () => {
     const next = get().currentTourStep + 1;
     if (next <= 6) {
       const pages: ActivePage[] = ['map', 'predict', 'optimize', 'classify', 'allocate', 'allocate', 'dashboard'];
-      set({ currentTourStep: next, activePage: pages[next] });
+      set({ currentTourStep: next, activePage: pages[next], isLoopStepsExpanded: true });
     } else {
       set({ isGuidedTourOpen: false });
     }
@@ -171,7 +181,7 @@ export const useStore = create<StoreState>((set, get) => ({
   prevTourStep: () => {
     const prev = Math.max(0, get().currentTourStep - 1);
     const pages: ActivePage[] = ['map', 'predict', 'optimize', 'classify', 'allocate', 'allocate', 'dashboard'];
-    set({ currentTourStep: prev, activePage: pages[prev] });
+    set({ currentTourStep: prev, activePage: pages[prev], isLoopStepsExpanded: true });
   },
   closeGuidedTour: () => set({ isGuidedTourOpen: false }),
 }));
