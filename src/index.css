@@ -15,12 +15,16 @@
   body {
     background-color: #F7F6F2;
     color: #2F3437;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Outfit', 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', system-ui, sans-serif;
     letter-spacing: -0.02em;
+    color: #12305C;
   }
 }
 
@@ -60,22 +64,48 @@
   width: 100%;
   height: 100%;
   background: #E8ECEF;
-  border-radius: 0.75rem;
+  border-radius: 1rem;
   z-index: 10;
+}
+
+/* Accessible focus outline */
+:focus-visible {
+  outline: 2px solid #12305C !important;
+  outline-offset: 2px !important;
 }
 
 /* Pulse animation for high-fill bins */
 @keyframes pulse-fill-red {
   0%, 100% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
   }
   50% {
     transform: scale(1.15);
-    box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+    box-shadow: 0 0 0 8px rgba(220, 38, 38, 0);
   }
 }
 
 .pulse-critical {
   animation: pulse-fill-red 1.8s infinite;
+}
+
+/* Honor prefers-reduced-motion (WCAG 2.2 AA) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .pulse-critical {
+    animation: none !important;
+  }
+}
+
+/* Safe area inset utilities for mobile navigation */
+.safe-bottom-padding {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
 }

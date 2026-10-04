@@ -1,6 +1,5 @@
-import React from 'react';
-import { useStore } from '../store/useStore';
-import { ActivePage } from '../types';
+import React, { useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import {
   Compass,
   LayoutDashboard,
@@ -13,78 +12,104 @@ import {
   Settings2,
   ChevronRight,
   ShieldCheck,
-  CheckCircle2
+  MoreHorizontal,
+  X
 } from 'lucide-react';
 
 interface NavItem {
-  id: ActivePage;
+  path: string;
   label: string;
-  stepNumber?: number;
-  icon: React.ComponentType<{ className?: string }>;
+  stepNumber?: string;
+  icon: React.ComponentType<{ className?: string; 'aria-hidden'?: boolean | 'true' | 'false' }>;
   badge?: string;
 }
 
 export const Sidebar: React.FC = () => {
-  const { activePage, setActivePage } = useStore();
+  const location = useLocation();
+  const [isMoreSheetOpen, setIsMoreSheetOpen] = useState(false);
 
   const mainNavItems: NavItem[] = [
-    { id: 'overview', label: 'Landing & Concept', icon: Compass },
-    { id: 'dashboard', label: 'Waste-to-Value Dashboard', icon: LayoutDashboard, badge: 'Main' },
+    { path: '/overview', label: 'Overview & Concept', icon: Compass },
+    { path: '/dashboard', label: 'Waste-to-Value Dashboard', icon: LayoutDashboard, badge: 'Main' },
   ];
 
+  // Plain-language step naming as specified in prompt section 1
   const aiLoopSteps: NavItem[] = [
-    { id: 'map', label: '1. Sense (Smart IoT Bins)', stepNumber: 1, icon: Radio },
-    { id: 'predict', label: '2. Predict (Generation)', stepNumber: 2, icon: TrendingUp },
-    { id: 'optimize', label: '3. Optimize (CVRP Routes)', stepNumber: 3, icon: Route },
-    { id: 'classify', label: '4. Classify (MRF Vision)', stepNumber: 4, icon: ScanSearch },
-    { id: 'allocate', label: '5-6. Allocate & Forecast', stepNumber: 5, icon: GitFork },
-    { id: 'revenue', label: '7. Report & Revenue', stepNumber: 7, icon: Coins },
+    { path: '/map', label: '1 · Live Bin Map', stepNumber: '1', icon: Radio },
+    { path: '/predict', label: '2 · Waste Forecast', stepNumber: '2', icon: TrendingUp },
+    { path: '/optimize', label: '3 · Smart Routes', stepNumber: '3', icon: Route },
+    { path: '/classify', label: '4 · Waste Sorting (AI Vision)', stepNumber: '4', icon: ScanSearch },
+    { path: '/allocate', label: '5–6 · Where Waste Goes & Energy', stepNumber: '5-6', icon: GitFork },
+    { path: '/revenue', label: '7 · Results & Revenue', stepNumber: '7', icon: Coins },
   ];
 
   const systemNavItems: NavItem[] = [
-    { id: 'assumptions', label: 'Assumptions & Scaling', icon: Settings2 },
+    { path: '/assumptions', label: 'Assumptions & Roadmap', icon: Settings2 },
+  ];
+
+  // 4 Primary Mobile Tabs + More Sheet
+  const mobilePrimaryTabs = [
+    { path: '/overview', label: 'Overview', icon: Compass },
+    { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { path: '/map', label: 'Map', icon: Radio },
+    { path: '/optimize', label: 'Routes', icon: Route },
+  ];
+
+  const moreSheetItems = [
+    { path: '/predict', label: '2 · Waste Forecast', icon: TrendingUp },
+    { path: '/classify', label: '4 · Waste Sorting (AI Vision)', icon: ScanSearch },
+    { path: '/allocate', label: '5–6 · Where Waste Goes & Energy', icon: GitFork },
+    { path: '/revenue', label: '7 · Results & Revenue', icon: Coins },
+    { path: '/assumptions', label: 'Assumptions & Roadmap', icon: Settings2 },
   ];
 
   return (
     <>
-      {/* Desktop Sidebar (Left) */}
-      <aside className="hidden md:flex flex-col w-64 bg-white border-r border-navy-100 flex-shrink-0 h-[calc(100vh-4rem)] sticky top-16 select-none">
-        
-        {/* Navigation Section */}
-        <div className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
+      {/* Desktop Left Rail Sidebar */}
+      <aside
+        aria-label="Main Navigation"
+        className="hidden md:flex flex-col w-64 bg-white border-r border-navy-100 flex-shrink-0 h-[calc(100vh-4rem)] sticky top-16 select-none"
+      >
+        <div className="flex-1 overflow-y-auto px-3.5 py-4 space-y-6">
           
           {/* Main Views */}
           <div>
-            <div className="px-3 mb-2 text-[11px] font-bold uppercase tracking-wider text-charcoal-400">
+            <div className="px-3 mb-2 text-xs font-bold uppercase tracking-wider text-charcoal-500">
               Overview
             </div>
             <nav className="space-y-1">
               {mainNavItems.map((item) => {
                 const Icon = item.icon;
-                const isActive = activePage === item.id;
                 return (
-                  <button
-                    key={item.id}
-                    id={`nav-${item.id}`}
-                    onClick={() => setActivePage(item.id)}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
-                      isActive
-                        ? 'bg-navy-700 text-white shadow-sm shadow-navy-750/30'
-                        : 'text-charcoal-600 hover:text-navy-800 hover:bg-navy-50/70'
-                    }`}
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    className={({ isActive }) =>
+                      `w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all min-h-[44px] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 ${
+                        isActive
+                          ? 'bg-navy-700 text-white shadow-sm shadow-navy-750/30'
+                          : 'text-charcoal-600 hover:text-navy-900 hover:bg-navy-50/70'
+                      }`
+                    }
                   >
-                    <div className="flex items-center gap-2.5">
-                      <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-navy-500'}`} />
-                      <span>{item.label}</span>
-                    </div>
-                    {item.badge && (
-                      <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
-                        isActive ? 'bg-white/20 text-white' : 'bg-navy-100 text-navy-800'
-                      }`}>
-                        {item.badge}
-                      </span>
+                    {({ isActive }) => (
+                      <>
+                        <div className="flex items-center gap-2.5">
+                          <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-navy-600'}`} aria-hidden="true" />
+                          <span>{item.label}</span>
+                        </div>
+                        {item.badge && (
+                          <span
+                            className={`px-1.5 py-0.5 rounded text-xs font-bold ${
+                              isActive ? 'bg-white/20 text-white' : 'bg-navy-100 text-navy-800'
+                            }`}
+                          >
+                            {item.badge}
+                          </span>
+                        )}
+                      </>
                     )}
-                  </button>
+                  </NavLink>
                 );
               })}
             </nav>
@@ -93,37 +118,44 @@ export const Sidebar: React.FC = () => {
           {/* 7-Step AI Loop */}
           <div>
             <div className="flex items-center justify-between px-3 mb-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-navy-700 flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-sage-500"></span>
+              <span className="text-xs font-bold uppercase tracking-wider text-navy-800 flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-sage-500" aria-hidden="true" />
                 The 7-Step AI Loop
               </span>
-              <span className="text-[10px] text-charcoal-400 font-mono">Loop 1.0</span>
+              <span className="text-xs text-charcoal-500 font-mono">Loop 1.0</span>
             </div>
             <nav className="space-y-1">
               {aiLoopSteps.map((item) => {
                 const Icon = item.icon;
-                const isActive = activePage === item.id;
                 return (
-                  <button
-                    key={item.id}
-                    id={`nav-${item.id}`}
-                    onClick={() => setActivePage(item.id)}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
-                      isActive
-                        ? 'bg-navy-700 text-white shadow-sm shadow-navy-700/30'
-                        : 'text-charcoal-600 hover:text-navy-800 hover:bg-navy-50/70'
-                    }`}
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    className={({ isActive }) =>
+                      `w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all min-h-[44px] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 ${
+                        isActive
+                          ? 'bg-navy-700 text-white shadow-sm shadow-navy-700/30'
+                          : 'text-charcoal-600 hover:text-navy-900 hover:bg-navy-50/70'
+                      }`
+                    }
                   >
-                    <div className="flex items-center gap-2.5 truncate">
-                      <Icon className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-amberGold-400' : 'text-charcoal-500'}`} />
-                      <span className="truncate">{item.label}</span>
-                    </div>
-                    {isActive ? (
-                      <ChevronRight className="w-3.5 h-3.5 text-white/70" />
-                    ) : (
-                      <span className="text-[10px] font-mono text-charcoal-400 opacity-60">S{item.stepNumber}</span>
+                    {({ isActive }) => (
+                      <>
+                        <div className="flex items-center gap-2.5 truncate">
+                          <Icon
+                            className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-amberGold-400' : 'text-charcoal-500'}`}
+                            aria-hidden="true"
+                          />
+                          <span className="truncate">{item.label}</span>
+                        </div>
+                        {isActive ? (
+                          <ChevronRight className="w-3.5 h-3.5 text-white/80" aria-hidden="true" />
+                        ) : (
+                          <span className="text-xs font-mono text-charcoal-500">S{item.stepNumber}</span>
+                        )}
+                      </>
                     )}
-                  </button>
+                  </NavLink>
                 );
               })}
             </nav>
@@ -131,29 +163,31 @@ export const Sidebar: React.FC = () => {
 
           {/* Systems & Scale */}
           <div>
-            <div className="px-3 mb-2 text-[11px] font-bold uppercase tracking-wider text-charcoal-400">
+            <div className="px-3 mb-2 text-xs font-bold uppercase tracking-wider text-charcoal-500">
               System & Scaling
             </div>
             <nav className="space-y-1">
               {systemNavItems.map((item) => {
                 const Icon = item.icon;
-                const isActive = activePage === item.id;
                 return (
-                  <button
-                    key={item.id}
-                    id={`nav-${item.id}`}
-                    onClick={() => setActivePage(item.id)}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
-                      isActive
-                        ? 'bg-navy-700 text-white shadow-sm shadow-navy-700/30'
-                        : 'text-charcoal-600 hover:text-navy-800 hover:bg-navy-50/70'
-                    }`}
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    className={({ isActive }) =>
+                      `w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all min-h-[44px] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 ${
+                        isActive
+                          ? 'bg-navy-700 text-white shadow-sm shadow-navy-700/30'
+                          : 'text-charcoal-600 hover:text-navy-900 hover:bg-navy-50/70'
+                      }`
+                    }
                   >
-                    <div className="flex items-center gap-2.5">
-                      <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-charcoal-500'}`} />
-                      <span>{item.label}</span>
-                    </div>
-                  </button>
+                    {({ isActive }) => (
+                      <div className="flex items-center gap-2.5">
+                        <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-charcoal-500'}`} aria-hidden="true" />
+                        <span>{item.label}</span>
+                      </div>
+                    )}
+                  </NavLink>
                 );
               })}
             </nav>
@@ -162,51 +196,114 @@ export const Sidebar: React.FC = () => {
         </div>
 
         {/* Municipal Pilot Status Box */}
-        <div className="p-3 border-t border-navy-100 bg-[#F7F6F2]/70">
-          <div className="p-2.5 rounded-xl bg-white border border-navy-100 shadow-xs space-y-1.5">
+        <div className="p-3.5 border-t border-navy-100 bg-[#F7F6F2]/70">
+          <div className="p-3 rounded-xl bg-white border border-navy-100 shadow-xs space-y-1">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-bold text-navy-800 flex items-center gap-1">
-                <ShieldCheck className="w-3.5 h-3.5 text-sage-600" />
-                PCCOE Pilot Pune
+              <span className="text-xs font-bold text-navy-800 flex items-center gap-1.5">
+                <ShieldCheck className="w-4 h-4 text-sage-600" aria-hidden="true" />
+                PCCOE Pune Pilot
               </span>
-              <span className="text-[10px] px-1.5 py-0.5 rounded bg-sage-100 text-sage-800 font-semibold font-mono">
+              <span className="text-xs px-2 py-0.5 rounded bg-sage-100 text-sage-800 font-semibold font-mono">
                 ONLINE
               </span>
             </div>
-            <p className="text-[10px] text-charcoal-500 leading-tight">
-              100 Smart Bins connected across 5 pilot zones in PCMC / Pune.
+            <p className="text-xs text-charcoal-500 leading-normal">
+              100 Smart Bins connected across 5 pilot zones in PCMC.
             </p>
           </div>
         </div>
-
       </aside>
 
-      {/* Mobile Bottom Navigation Bar */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-navy-100 px-2 py-1.5 flex items-center justify-around shadow-lg">
-        {[
-          { id: 'overview' as ActivePage, label: 'Overview', icon: Compass },
-          { id: 'dashboard' as ActivePage, label: 'Dashboard', icon: LayoutDashboard },
-          { id: 'map' as ActivePage, label: 'Map', icon: Radio },
-          { id: 'optimize' as ActivePage, label: 'Routes', icon: Route },
-          { id: 'classify' as ActivePage, label: 'Sort', icon: ScanSearch },
-          { id: 'revenue' as ActivePage, label: 'Revenue', icon: Coins },
-        ].map((tab) => {
-          const Icon = tab.icon;
-          const isActive = activePage === tab.id;
-          return (
-            <button
-              key={tab.id}
-              onClick={() => setActivePage(tab.id)}
-              className={`flex flex-col items-center py-1 px-2 rounded-lg text-[10px] font-semibold transition-all ${
-                isActive ? 'text-navy-700 scale-105' : 'text-charcoal-400 hover:text-charcoal-700'
-              }`}
-            >
-              <Icon className={`w-4 h-4 mb-0.5 ${isActive ? 'text-navy-700' : 'text-charcoal-400'}`} />
-              <span>{tab.label}</span>
-            </button>
-          );
-        })}
+      {/* Mobile Bottom Tab Bar (Section 1: 4 primary tabs + More sheet) */}
+      <nav
+        aria-label="Mobile Navigation"
+        className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-navy-100 px-2 pt-1 safe-bottom-padding shadow-lg"
+      >
+        <div className="flex items-center justify-around">
+          {mobilePrimaryTabs.map((tab) => {
+            const Icon = tab.icon;
+            const isActive = location.pathname === tab.path;
+            return (
+              <NavLink
+                key={tab.path}
+                to={tab.path}
+                className={`flex flex-col items-center justify-center min-w-[56px] min-h-[48px] py-1 px-1 rounded-xl text-xs font-semibold transition-all ${
+                  isActive ? 'text-navy-900 font-bold' : 'text-charcoal-500 hover:text-navy-800'
+                }`}
+              >
+                <Icon className={`w-5 h-5 mb-0.5 ${isActive ? 'text-navy-800' : 'text-charcoal-400'}`} aria-hidden="true" />
+                <span>{tab.label}</span>
+              </NavLink>
+            );
+          })}
+
+          {/* "More" Sheet Trigger */}
+          <button
+            type="button"
+            onClick={() => setIsMoreSheetOpen(true)}
+            aria-expanded={isMoreSheetOpen}
+            aria-label="Open more navigation options"
+            className="flex flex-col items-center justify-center min-w-[56px] min-h-[48px] py-1 px-1 rounded-xl text-xs font-semibold text-charcoal-500 hover:text-navy-800"
+          >
+            <MoreHorizontal className="w-5 h-5 mb-0.5 text-charcoal-400" aria-hidden="true" />
+            <span>More</span>
+          </button>
+        </div>
       </nav>
+
+      {/* Mobile "More" Navigation Sheet */}
+      {isMoreSheetOpen && (
+        <div
+          className="md:hidden fixed inset-0 z-50 bg-navy-950/60 backdrop-blur-xs flex flex-col justify-end animate-in fade-in"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsMoreSheetOpen(false);
+          }}
+        >
+          <div className="bg-white rounded-t-3xl border-t border-navy-200 p-6 space-y-4 shadow-2xl safe-bottom-padding animate-in slide-in-from-bottom duration-200">
+            <div className="flex items-center justify-between pb-3 border-b border-navy-100">
+              <div>
+                <h3 className="text-base font-bold text-navy-800 font-['Outfit']">
+                  All ReLoop City Pages
+                </h3>
+                <span className="text-xs text-charcoal-500">The complete 7-step AI municipal loop</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsMoreSheetOpen(false)}
+                className="p-2 text-charcoal-400 hover:text-navy-800 rounded-lg hover:bg-navy-50"
+                aria-label="Close more navigation menu"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 gap-1.5 py-1">
+              {moreSheetItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = location.pathname === item.path;
+                return (
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    onClick={() => setIsMoreSheetOpen(false)}
+                    className={`flex items-center justify-between p-3 rounded-xl text-sm font-semibold transition-all min-h-[44px] ${
+                      isActive
+                        ? 'bg-navy-700 text-white'
+                        : 'text-charcoal-700 hover:bg-navy-50 hover:text-navy-900'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <Icon className={`w-5 h-5 ${isActive ? 'text-amberGold-400' : 'text-navy-700'}`} aria-hidden="true" />
+                      <span>{item.label}</span>
+                    </div>
+                    <ChevronRight className="w-4 h-4 opacity-70" aria-hidden="true" />
+                  </NavLink>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

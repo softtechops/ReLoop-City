@@ -4,36 +4,44 @@ import { generateReLoopRoutes } from '../sim/routing';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, CircleMarker } from 'react-leaflet';
 import L from 'leaflet';
 import confetti from 'canvas-confetti';
+import { PageHeader } from '../components/ui/PageHeader';
+import { LoopStepNav } from '../components/ui/LoopStepNav';
+import { SectionCard } from '../components/ui/SectionCard';
+import { Button } from '../components/ui/Button';
+import { Badge } from '../components/ui/Badge';
 import { 
   Route as RouteIcon, 
   Sparkles, 
-  Truck, 
+  TrendingDown, 
   Fuel, 
+  Clock, 
   CheckCircle2, 
-  AlertTriangle, 
-  ArrowRight,
-  TrendingDown,
-  Layers,
-  Clock,
-  Gauge,
-  Calendar,
-  Zap
+  ShieldCheck, 
+  Check, 
+  Truck
 } from 'lucide-react';
 
 const depotIcon = L.divIcon({
   className: 'custom-depot-pin',
-  html: `<div style="background-color: #12305C; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; box-shadow: 0 4px 10px rgba(18, 48, 92, 0.4); font-size: 13px;">🏢</div>`,
+  html: `<div style="background-color: #12305C; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; box-shadow: 0 4px 10px rgba(18, 48, 92, 0.4); font-size: 13px;" title="Central Depot">🏢</div>`,
   iconSize: [32, 32],
   iconAnchor: [16, 16],
 });
 
 export const OptimizePage: React.FC = () => {
-  const { simState, config, setSelectedBin, setActivePage } = useStore();
+  const { 
+    simState, 
+    config, 
+    setSelectedBin, 
+    activeTruckFilters, 
+    toggleTruckFilter, 
+    setAllTruckFilters 
+  } = useStore();
+
   const [isSolving, setIsSolving] = useState(false);
-  const [activeTruckFilter, setActiveTruckFilter] = useState<string>('all');
   const [solveCount, setSolveCount] = useState(0);
 
-  // Compute routes dynamically using CVRP heuristic (Nearest-Neighbor + 2-Opt)
+  // Compute routes using CVRP heuristic
   const { routes, comparison } = useMemo(() => {
     return generateReLoopRoutes(simState.bins, config);
   }, [simState.bins, config, solveCount]);
@@ -43,176 +51,164 @@ export const OptimizePage: React.FC = () => {
     setTimeout(() => {
       setSolveCount((c) => c + 1);
       setIsSolving(false);
-      try {
-        confetti({
-          particleCount: 45,
-          spread: 60,
-          origin: { y: 0.6 },
-          colors: ['#12305C', '#7BA17D', '#D9A441'],
-        });
-      } catch (e) {
-        // ignore in non-browser env
+
+      // Honor prefers-reduced-motion
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!prefersReducedMotion) {
+        try {
+          confetti({
+            particleCount: 45,
+            spread: 60,
+            origin: { y: 0.6 },
+            colors: ['#12305C', '#7BA17D', '#D9A441'],
+          });
+        } catch (e) {
+          // ignore
+        }
       }
     }, 450);
   };
 
-  const displayedRoutes = activeTruckFilter === 'all' 
-    ? routes 
-    : routes.filter((r) => r.truckId === activeTruckFilter);
+  const displayedRoutes = routes.filter((r) => activeTruckFilters.includes(r.truckId));
 
   return (
-    <div className="space-y-6 pb-12">
+    <div className="space-y-6 pb-16">
       
-      {/* Top Controller Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-2xl bg-white border border-navy-100 shadow-blueprint">
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl sm:text-2xl font-bold text-navy-800 font-['Outfit']">
-              Dynamic CVRP Route Optimization (Step 3: Optimize)
-            </h1>
-            <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-navy-100 text-navy-800 flex items-center gap-1">
-              <RouteIcon className="w-3 h-3 text-navy-700" />
-              Nearest-Neighbor + 2-Opt Heuristic
-            </span>
-          </div>
-          <p className="text-xs text-charcoal-500 mt-1">
-            Capacity-constrained vehicle routing collecting only bins predicted ≥75% full, eliminating wasted empty trips.
-          </p>
-        </div>
+      {/* Page Header */}
+      <PageHeader
+        title="3 · Smart Routes: Dynamic CVRP Optimization"
+        subtitle="Capacity-constrained vehicle routing collecting only bins predicted ≥75% full, eliminating wasted trips to empty bins."
+        stepNumber={3}
+        stepName="Optimize"
+        actions={
+          <Button
+            id="btn-generate-routes"
+            variant="primary"
+            size="md"
+            icon={<Sparkles className="w-4 h-4 text-amberGold-400" />}
+            isLoading={isSolving}
+            onClick={handleGenerateRoutes}
+          >
+            {isSolving ? 'Solving 2-Opt TSP...' : 'Generate Smart Routes'}
+          </Button>
+        }
+      />
 
-        {/* Generate Routes Button */}
-        <button
-          id="btn-generate-routes"
-          onClick={handleGenerateRoutes}
-          disabled={isSolving}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-navy-700 hover:bg-navy-800 text-white font-bold text-xs sm:text-sm shadow-md shadow-navy-700/20 transition-all hover:scale-102 active:scale-98 disabled:opacity-50"
-        >
-          <Sparkles className={`w-4 h-4 text-amberGold-400 ${isSolving ? 'animate-spin' : ''}`} />
-          <span>{isSolving ? 'Solving 2-Opt TSP...' : 'Recalculate Dynamic Routes'}</span>
-        </button>
-      </div>
-
-      {/* Comparison Table: Baseline vs ReLoop */}
-      <div className="bg-white rounded-2xl border border-navy-100 shadow-blueprint p-6 space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+      {/* Before / After Summary Card (Section 5) */}
+      <div className="p-6 rounded-2xl bg-white border border-navy-100 shadow-blueprint space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-navy-50">
           <div>
-            <h2 className="font-bold text-base text-navy-800 font-['Outfit']">
-              Routing Fleet Efficiency Comparison
+            <h2 className="text-base font-bold text-navy-900 font-['Outfit']">
+              Routing Fleet Efficiency Summary (Before vs After)
             </h2>
-            <p className="text-xs text-charcoal-400">
-              Direct benchmark: Baseline static daily routes vs ReLoop predictive dynamic routes
+            <p className="text-xs text-charcoal-500">
+              Immediate savings achieved by switching from static fixed routes to dynamic fill-triggered collection
             </p>
           </div>
-          <span className="px-3 py-1 rounded-full bg-sage-100 text-sage-800 font-bold text-xs">
-            -{comparison.savings.distanceReductionPercent}% Distance Reduction
-          </span>
+          <Badge variant="sage" size="md">
+            <TrendingDown className="w-3.5 h-3.5 text-sage-700" aria-hidden="true" />
+            <span>-{comparison.savings.distanceReductionPercent}% Distance Reduction</span>
+          </Badge>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead>
-              <tr className="border-b border-navy-100 text-charcoal-400 uppercase tracking-wider text-[11px]">
-                <th className="pb-3 font-bold">Logistics Metric</th>
-                <th className="pb-3 font-bold text-residual-600">Baseline (Fixed Grid)</th>
-                <th className="pb-3 font-bold text-navy-700">ReLoop (AI-Optimized)</th>
-                <th className="pb-3 font-bold text-right text-sage-700">Net Municipal Benefit</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-navy-50">
-              <tr>
-                <td className="py-3 font-semibold text-charcoal-700">Total Route Distance (km)</td>
-                <td className="py-3 font-mono font-medium text-charcoal-600">{comparison.baseline.totalDistanceKm} km</td>
-                <td className="py-3 font-mono font-bold text-navy-800">{comparison.reloop.totalDistanceKm} km</td>
-                <td className="py-3 text-right">
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-sage-100 text-sage-800 font-bold text-[11px]">
-                    <TrendingDown className="w-3 h-3" />
-                    -{comparison.savings.distanceReductionPercent}% Saved
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td className="py-3 font-semibold text-charcoal-700">Smart Bins Visited</td>
-                <td className="py-3 text-charcoal-600">
-                  {comparison.baseline.binsVisited} bins <span className="text-[10px] text-red-500">({comparison.baseline.unnecessaryEmptyVisits} &lt;50% full)</span>
-                </td>
-                <td className="py-3 font-bold text-navy-800">
-                  {comparison.reloop.binsVisited} priority bins <span className="text-[10px] text-sage-600">(≥75% full only)</span>
-                </td>
-                <td className="py-3 text-right text-sage-700 font-bold">
-                  Zero wasted trips to empty bins
-                </td>
-              </tr>
-              <tr>
-                <td className="py-3 font-semibold text-charcoal-700">Missed Overflow Incidents</td>
-                <td className="py-3 text-red-600 font-semibold">{comparison.baseline.overflowMissedBins} bin spills</td>
-                <td className="py-3 text-sage-700 font-bold">0 spills (Preempted)</td>
-                <td className="py-3 text-right text-sage-700 font-bold">
-                  100% overflow preemption
-                </td>
-              </tr>
-              <tr>
-                <td className="py-3 font-semibold text-charcoal-700">Fleet Diesel Consumed (L)</td>
-                <td className="py-3 font-mono text-charcoal-600">{comparison.baseline.fuelLiters} L</td>
-                <td className="py-3 font-mono font-bold text-navy-800">{comparison.reloop.fuelLiters} L</td>
-                <td className="py-3 text-right text-sage-700 font-bold">
-                  -{comparison.savings.fuelSavedLiters} L diesel saved
-                </td>
-              </tr>
-              <tr>
-                <td className="py-3 font-semibold text-charcoal-700">Fleet Fuel Cost (₹)</td>
-                <td className="py-3 font-mono text-charcoal-600">₹{comparison.baseline.dieselCostInr.toLocaleString()}</td>
-                <td className="py-3 font-mono font-bold text-navy-800">₹{comparison.reloop.dieselCostInr.toLocaleString()}</td>
-                <td className="py-3 text-right text-sage-700 font-bold">
-                  ₹{comparison.savings.fuelCostSavedInr.toLocaleString()} saved / day
-                </td>
-              </tr>
-              <tr>
-                <td className="py-3 font-semibold text-charcoal-700">Vehicle Tailpipe CO₂ (kg)</td>
-                <td className="py-3 font-mono text-charcoal-600">{comparison.baseline.co2EmittedKg} kg CO₂</td>
-                <td className="py-3 font-mono font-bold text-navy-800">{comparison.reloop.co2EmittedKg} kg CO₂</td>
-                <td className="py-3 text-right text-sage-700 font-bold">
-                  -{comparison.savings.co2SavedKg} kg CO₂ avoided
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        {/* 4 Before vs After Metrics */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-1">
+          <div className="p-4 rounded-xl bg-navy-50/60 border border-navy-100 space-y-1">
+            <span className="text-xs font-semibold text-charcoal-500 block">Total Route Distance</span>
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-black text-navy-900 font-['Outfit']">
+                {comparison.reloop.totalDistanceKm} km
+              </span>
+              <span className="text-xs text-charcoal-400 line-through">
+                {comparison.baseline.totalDistanceKm} km
+              </span>
+            </div>
+            <span className="text-xs font-bold text-sage-700 block">
+              -{comparison.savings.distanceReductionPercent}% Saved
+            </span>
+          </div>
+
+          <div className="p-4 rounded-xl bg-navy-50/60 border border-navy-100 space-y-1">
+            <span className="text-xs font-semibold text-charcoal-500 block">Smart Bins Serviced</span>
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-black text-navy-900 font-['Outfit']">
+                {comparison.reloop.binsVisited} bins
+              </span>
+              <span className="text-xs text-charcoal-400">
+                (≥75% full only)
+              </span>
+            </div>
+            <span className="text-xs font-bold text-sage-700 block">
+              Zero wasted stops
+            </span>
+          </div>
+
+          <div className="p-4 rounded-xl bg-navy-50/60 border border-navy-100 space-y-1">
+            <span className="text-xs font-semibold text-charcoal-500 block">Diesel Fuel Consumed</span>
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-black text-navy-900 font-['Outfit']">
+                {comparison.reloop.fuelLiters} L
+              </span>
+              <span className="text-xs text-charcoal-400 line-through">
+                {comparison.baseline.fuelLiters} L
+              </span>
+            </div>
+            <span className="text-xs font-bold text-sage-700 block">
+              -{comparison.savings.fuelSavedLiters} L saved / day
+            </span>
+          </div>
+
+          <div className="p-4 rounded-xl bg-navy-50/60 border border-navy-100 space-y-1">
+            <span className="text-xs font-semibold text-charcoal-500 block">Tailpipe Emissions</span>
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-black text-navy-900 font-['Outfit']">
+                {comparison.reloop.co2EmittedKg} kg
+              </span>
+              <span className="text-xs text-charcoal-400 line-through">
+                {comparison.baseline.co2EmittedKg} kg
+              </span>
+            </div>
+            <span className="text-xs font-bold text-sage-700 block">
+              -{comparison.savings.co2SavedKg} kg CO₂ avoided
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Map with Color-Coded Polylines & Truck Manifest */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      {/* Map with Color-Coded Polylines & Truck Toggles */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         
         {/* Map View */}
-        <div className="lg:col-span-8 bg-white rounded-2xl border border-navy-100 shadow-blueprint overflow-hidden flex flex-col h-[520px] relative">
+        <div className="lg:col-span-8 bg-white rounded-2xl border border-navy-100 shadow-blueprint overflow-hidden flex flex-col min-h-[420px] h-[55vh] lg:h-[540px] relative">
           
-          <div className="px-4 py-2.5 bg-navy-50/90 border-b border-navy-100 flex items-center justify-between text-xs z-10">
+          {/* Header strip with truck visibility toggles (Section 5) */}
+          <div className="px-4 py-2.5 bg-navy-50/90 border-b border-navy-100 flex flex-wrap items-center justify-between gap-2 text-xs z-10">
             <div className="flex items-center gap-2">
-              <span className="font-bold text-navy-800">Active Truck Routes:</span>
-              <div className="flex items-center gap-1.5">
-                <button
-                  onClick={() => setActiveTruckFilter('all')}
-                  className={`px-2 py-0.5 rounded text-[11px] font-bold ${
-                    activeTruckFilter === 'all' ? 'bg-navy-700 text-white' : 'bg-white text-charcoal-600'
-                  }`}
-                >
-                  All 4 Trucks
-                </button>
-                {routes.map((r) => (
-                  <button
-                    key={r.truckId}
-                    onClick={() => setActiveTruckFilter(r.truckId)}
-                    className={`px-2 py-0.5 rounded text-[11px] font-bold flex items-center gap-1 ${
-                      activeTruckFilter === r.truckId ? 'bg-navy-700 text-white' : 'bg-white text-charcoal-600'
-                    }`}
-                  >
-                    <span className="w-2 h-2 rounded-full" style={{ backgroundColor: r.color }}></span>
-                    <span>{r.truckId}</span>
-                  </button>
-                ))}
+              <span className="font-bold text-navy-900">Toggle Trucks:</span>
+              <div className="flex items-center gap-1.5 flex-wrap">
+                {routes.map((r) => {
+                  const isChecked = activeTruckFilters.includes(r.truckId);
+                  return (
+                    <button
+                      key={r.truckId}
+                      type="button"
+                      onClick={() => toggleTruckFilter(r.truckId)}
+                      aria-pressed={isChecked}
+                      className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition-all min-h-[32px] ${
+                        isChecked
+                          ? 'bg-navy-700 text-white shadow-xs'
+                          : 'bg-white text-charcoal-600 border border-navy-200 opacity-60'
+                      }`}
+                    >
+                      <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: r.color }} aria-hidden="true" />
+                      <span>{r.truckId}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
-            <span className="text-[11px] text-charcoal-400 font-mono">
-              Total {comparison.reloop.totalDistanceKm} km
+            <span className="text-xs text-charcoal-500 font-mono hidden sm:inline">
+              Active: {comparison.reloop.totalDistanceKm} km
             </span>
           </div>
 
@@ -232,13 +228,13 @@ export const OptimizePage: React.FC = () => {
               <Marker position={config.depotCoordinates} icon={depotIcon}>
                 <Popup>
                   <div className="text-xs p-1">
-                    <span className="font-bold">Central Municipal Depot</span>
-                    <p className="text-charcoal-500">Fleet Starting & Ending Station</p>
+                    <span className="font-bold text-navy-900">Central Municipal Depot</span>
+                    <p className="text-charcoal-600">Fleet Starting & Returning Station</p>
                   </div>
                 </Popup>
               </Marker>
 
-              {/* Draw Truck Polylines */}
+              {/* Draw Truck Polylines for Active Trucks */}
               {displayedRoutes.map((route) => {
                 if (route.pathCoordinates.length <= 1) return null;
                 return (
@@ -255,7 +251,7 @@ export const OptimizePage: React.FC = () => {
                     <Popup>
                       <div className="text-xs p-1 space-y-1">
                         <span className="font-bold" style={{ color: route.color }}>{route.truckName}</span>
-                        <p>{route.binIds.length} stops • {route.totalDistanceKm} km</p>
+                        <p>{route.binIds.length} stops · {route.totalDistanceKm} km</p>
                         <p>Load: {route.collectedKg} kg ({route.utilizationPercent}%)</p>
                       </div>
                     </Popup>
@@ -265,20 +261,20 @@ export const OptimizePage: React.FC = () => {
 
               {/* Draw Visited Bins */}
               {simState.bins.map((bin) => {
-                const assignedRoute = routes.find((r) => r.binIds.includes(bin.id));
+                const assignedRoute = displayedRoutes.find((r) => r.binIds.includes(bin.id));
                 const isAssigned = !!assignedRoute;
-                if (!isAssigned && activeTruckFilter !== 'all') return null;
+                if (!isAssigned) return null;
 
                 return (
                   <CircleMarker
                     key={bin.id}
                     center={[bin.lat, bin.lng]}
-                    radius={isAssigned ? 7 : 4}
+                    radius={7}
                     pathOptions={{
-                      color: isAssigned ? assignedRoute.color : '#CBD5E1',
-                      weight: isAssigned ? 2.5 : 1,
-                      fillColor: isAssigned ? assignedRoute.color : '#FFFFFF',
-                      fillOpacity: isAssigned ? 0.9 : 0.4,
+                      color: assignedRoute.color,
+                      weight: 2.5,
+                      fillColor: assignedRoute.color,
+                      fillOpacity: 0.9,
                     }}
                     eventHandlers={{
                       click: () => setSelectedBin(bin),
@@ -287,12 +283,10 @@ export const OptimizePage: React.FC = () => {
                     <Popup>
                       <div className="text-xs p-1">
                         <span className="font-bold">{bin.id}</span>
-                        <p className="text-charcoal-500">{bin.fillPercent}% full</p>
-                        {isAssigned && (
-                          <p className="font-semibold" style={{ color: assignedRoute.color }}>
-                            Picked by {assignedRoute.truckName}
-                          </p>
-                        )}
+                        <p className="text-charcoal-600">{bin.fillPercent}% full</p>
+                        <p className="font-semibold" style={{ color: assignedRoute.color }}>
+                          Picked by {assignedRoute.truckName}
+                        </p>
                       </div>
                     </Popup>
                   </CircleMarker>
@@ -304,68 +298,83 @@ export const OptimizePage: React.FC = () => {
         </div>
 
         {/* Right: Truck Manifest Cards */}
-        <div className="lg:col-span-4 space-y-3 h-[520px] overflow-y-auto pr-1">
+        <div className="lg:col-span-4 space-y-3 min-h-[380px] lg:h-[540px] overflow-y-auto pr-1">
           <div className="flex items-center justify-between pb-1">
             <span className="text-xs font-bold uppercase tracking-wider text-charcoal-400">
               Fleet Manifest (4 Compactor Trucks)
             </span>
           </div>
 
-          {routes.map((route) => (
-            <div
-              key={route.truckId}
-              className="p-4 rounded-xl bg-white border border-navy-100 shadow-blueprint space-y-2 hover:border-navy-300 transition-all"
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span
-                    className="w-3 h-3 rounded-full flex-shrink-0"
-                    style={{ backgroundColor: route.color }}
-                  ></span>
-                  <div>
-                    <h3 className="font-bold text-xs text-navy-900">{route.truckName}</h3>
-                    <span className="text-[10px] text-charcoal-400 font-mono">{route.truckId}</span>
+          {routes.map((route) => {
+            const isVisible = activeTruckFilters.includes(route.truckId);
+            return (
+              <div
+                key={route.truckId}
+                className={`p-4 rounded-xl bg-white border border-navy-100 shadow-blueprint space-y-2 transition-all ${
+                  isVisible ? 'hover:border-navy-300' : 'opacity-50'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="w-3 h-3 rounded-full flex-shrink-0"
+                      style={{ backgroundColor: route.color }}
+                      aria-hidden="true"
+                    />
+                    <div>
+                      <h3 className="font-bold text-sm text-navy-900">{route.truckName}</h3>
+                      <span className="text-xs text-charcoal-400 font-mono">{route.truckId}</span>
+                    </div>
+                  </div>
+                  <Badge variant="navy" size="sm">
+                    {route.binIds.length} Bins
+                  </Badge>
+                </div>
+
+                {/* Progress Payload */}
+                <div className="space-y-1">
+                  <div className="flex justify-between text-xs text-charcoal-600">
+                    <span>Payload: {(route.collectedKg / 1000).toFixed(2)} t</span>
+                    <span className="font-bold">{route.utilizationPercent}% capacity</span>
+                  </div>
+                  <div className="w-full h-1.5 rounded-full bg-navy-100 overflow-hidden">
+                    <div
+                      className="h-full rounded-full transition-all"
+                      style={{ width: `${route.utilizationPercent}%`, backgroundColor: route.color }}
+                    />
                   </div>
                 </div>
-                <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-navy-50 text-navy-800">
-                  {route.binIds.length} Bins
-                </span>
-              </div>
 
-              {/* Progress Payload */}
-              <div className="space-y-1">
-                <div className="flex justify-between text-[11px] text-charcoal-600">
-                  <span>Payload: {(route.collectedKg / 1000).toFixed(2)} t</span>
-                  <span className="font-bold">{route.utilizationPercent}% capacity</span>
-                </div>
-                <div className="w-full h-1.5 rounded-full bg-navy-100 overflow-hidden">
-                  <div
-                    className="h-full rounded-full transition-all"
-                    style={{ width: `${route.utilizationPercent}%`, backgroundColor: route.color }}
-                  ></div>
-                </div>
-              </div>
-
-              {/* Metrics Grid */}
-              <div className="grid grid-cols-3 gap-2 pt-2 border-t border-navy-50 text-center text-[11px]">
-                <div className="p-1 rounded bg-navy-50/50">
-                  <span className="text-charcoal-400 block text-[10px]">Distance</span>
-                  <span className="font-bold text-navy-800">{route.totalDistanceKm} km</span>
-                </div>
-                <div className="p-1 rounded bg-navy-50/50">
-                  <span className="text-charcoal-400 block text-[10px]">Fuel</span>
-                  <span className="font-bold text-navy-800">{route.fuelLiters} L</span>
-                </div>
-                <div className="p-1 rounded bg-navy-50/50">
-                  <span className="text-charcoal-400 block text-[10px]">Time</span>
-                  <span className="font-bold text-navy-800">{route.estimatedHours}h</span>
+                {/* Metrics Grid */}
+                <div className="grid grid-cols-3 gap-2 pt-2 border-t border-navy-50 text-center text-xs">
+                  <div className="p-1 rounded-lg bg-navy-50/50">
+                    <span className="text-charcoal-400 block text-[10px]">Distance</span>
+                    <span className="font-bold text-navy-800">{route.totalDistanceKm} km</span>
+                  </div>
+                  <div className="p-1 rounded-lg bg-navy-50/50">
+                    <span className="text-charcoal-400 block text-[10px]">Fuel</span>
+                    <span className="font-bold text-navy-800">{route.fuelLiters} L</span>
+                  </div>
+                  <div className="p-1 rounded-lg bg-navy-50/50">
+                    <span className="text-charcoal-400 block text-[10px]">Time</span>
+                    <span className="font-bold text-navy-800">{route.estimatedHours}h</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
       </div>
+
+      {/* Loop Step Navigation */}
+      <LoopStepNav
+        currentStep={3}
+        prevPath="/predict"
+        prevLabel="2 · Waste Forecast"
+        nextPath="/classify"
+        nextLabel="4 · Waste Sorting (AI Vision)"
+      />
 
     </div>
   );

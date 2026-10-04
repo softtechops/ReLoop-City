@@ -23,6 +23,30 @@ interface StoreState {
   mode: 'reloop' | 'baseline'; // Platform mode toggle
   selectedBin: SmartBin | null;
 
+  // First-run Experience (In-Memory only, no localStorage)
+  welcomeDismissed: boolean;
+  dismissWelcome: () => void;
+
+  // Reset Confirmation Modal
+  isResetConfirmOpen: boolean;
+  openResetConfirm: () => void;
+  closeResetConfirm: () => void;
+
+  // Mobile Simulation Controls Sheet
+  isMobileSimDrawerOpen: boolean;
+  setMobileSimDrawerOpen: (open: boolean) => void;
+
+  // Dashboard Preferences
+  dashboardTimeRange: 'today' | '7days' | 'all';
+  setDashboardTimeRange: (range: 'today' | '7days' | 'all') => void;
+  dashboardViewMode: 'overview' | 'compare';
+  setDashboardViewMode: (mode: 'overview' | 'compare') => void;
+
+  // Route Truck Toggles
+  activeTruckFilters: string[];
+  toggleTruckFilter: (truckId: string) => void;
+  setAllTruckFilters: (truckIds: string[]) => void;
+
   // Navigation & Workflow
   activePage: ActivePage;
   setActivePage: (page: ActivePage) => void;
@@ -47,6 +71,8 @@ interface StoreState {
 
 const simPRNG = new SeededPRNG(422026);
 
+const ALL_TRUCK_IDS = ['TRUCK-01', 'TRUCK-02', 'TRUCK-03', 'TRUCK-04'];
+
 export const useStore = create<StoreState>((set, get) => ({
   config: { ...DEFAULT_CONFIG },
   updateConfig: (newValues) => {
@@ -63,6 +89,34 @@ export const useStore = create<StoreState>((set, get) => ({
   simSpeed: 1,
   mode: 'reloop',
   selectedBin: null,
+
+  welcomeDismissed: false,
+  dismissWelcome: () => set({ welcomeDismissed: true }),
+
+  isResetConfirmOpen: false,
+  openResetConfirm: () => set({ isResetConfirmOpen: true }),
+  closeResetConfirm: () => set({ isResetConfirmOpen: false }),
+
+  isMobileSimDrawerOpen: false,
+  setMobileSimDrawerOpen: (open) => set({ isMobileSimDrawerOpen: open }),
+
+  dashboardTimeRange: '7days',
+  setDashboardTimeRange: (range) => set({ dashboardTimeRange: range }),
+  dashboardViewMode: 'overview',
+  setDashboardViewMode: (mode) => set({ dashboardViewMode: mode }),
+
+  activeTruckFilters: [...ALL_TRUCK_IDS],
+  toggleTruckFilter: (truckId: string) => {
+    const current = get().activeTruckFilters;
+    if (current.includes(truckId)) {
+      // Don't deselect all trucks
+      if (current.length === 1) return;
+      set({ activeTruckFilters: current.filter((id) => id !== truckId) });
+    } else {
+      set({ activeTruckFilters: [...current, truckId] });
+    }
+  },
+  setAllTruckFilters: (truckIds: string[]) => set({ activeTruckFilters: truckIds }),
 
   activePage: 'overview',
   setActivePage: (page) => set({ activePage: page }),
@@ -97,6 +151,7 @@ export const useStore = create<StoreState>((set, get) => ({
       simState: freshState,
       isSimRunning: false,
       selectedBin: null,
+      isResetConfirmOpen: false,
     });
   },
 
