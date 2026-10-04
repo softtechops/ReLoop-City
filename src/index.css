@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-blueprint: #F7F6F2;
+    --navy-primary: #12305C;
+    --sage-accent: #7BA17D;
+    --amber-accent: #D9A441;
+    --charcoal-text: #2F3437;
+    --residual-gray: #8E9296;
+  }
+
+  body {
+    background-color: #F7F6F2;
+    color: #2F3437;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', 'Inter', sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Blueprint subtle grid pattern */
+.blueprint-grid {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(18, 48, 92, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(18, 48, 92, 0.04) 1px, transparent 1px);
+}
+
+.blueprint-grid-dense {
+  background-size: 16px 16px;
+  background-image: 
+    linear-gradient(to right, rgba(18, 48, 92, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(18, 48, 92, 0.05) 1px, transparent 1px);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #EDECE7;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Leaflet map custom pin styles */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  background: #E8ECEF;
+  border-radius: 0.75rem;
+  z-index: 10;
+}
+
+/* Pulse animation for high-fill bins */
+@keyframes pulse-fill-red {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  50% {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+  }
+}
+
+.pulse-critical {
+  animation: pulse-fill-red 1.8s infinite;
+}
