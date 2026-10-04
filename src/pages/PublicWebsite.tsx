@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { PublicNavbar } from '../components/public/PublicNavbar';
 import { PublicFooter } from '../components/public/PublicFooter';
-import { ReloopLogo } from '../components/brand/ReloopLogo';
 import { IsometricCityLoop } from '../components/illustrations/IsometricCityLoop';
 import {
   SmartBinIllustration,
@@ -10,12 +9,10 @@ import {
   VisionSortingIllustration,
 } from '../components/illustrations/FeatureMiniIllustrations';
 import { useStore } from '../store/useStore';
-import { useCountUp } from '../lib/useCountUp';
+import { PILOT_30DAY_SNAPSHOT } from '../lib/metrics';
 import {
-  Sparkles,
   ArrowRight,
   Play,
-  CheckCircle2,
   Radio,
   TrendingUp,
   Route as RouteIcon,
@@ -23,7 +20,6 @@ import {
   GitFork,
   Zap,
   Coins,
-  ShieldCheck,
   Leaf,
   ChevronRight,
   Plus,
@@ -40,7 +36,7 @@ import {
   Globe,
   Phone,
   Mail,
-  Check
+  Sparkles
 } from 'lucide-react';
 import {
   AreaChart,
@@ -65,12 +61,6 @@ export const PublicWebsite: React.FC = () => {
     pauseSimulation,
     startGuidedTour,
   } = useStore();
-
-  // Scroll Count-Up stats for Hero Strip
-  const diversionStat = useCountUp({ end: 95.2, decimals: 1, suffix: '%' });
-  const distanceStat = useCountUp({ end: 32, decimals: 0, prefix: '-', suffix: '%' });
-  const energyStat = useCountUp({ end: 71, decimals: 0, suffix: ' MWh' });
-  const revenueStat = useCountUp({ end: 34.2, decimals: 1, prefix: '₹', suffix: 'L' });
 
   // Active step in "How It Works" interactive loop
   const [activeLoopStep, setActiveLoopStep] = useState(0);
@@ -201,74 +191,58 @@ export const PublicWebsite: React.FC = () => {
     }
   ];
 
+  // Pre-computed pilot snapshot: fixed non-zero values used for hero stats
+  const snapshot = PILOT_30DAY_SNAPSHOT.reloop;
+
   return (
-    <div className="min-h-screen bg-white text-[#0F172A] font-sans selection:bg-green-100 selection:text-green-950 pt-16">
+    <div className="min-h-screen bg-white text-navy-900 font-sans selection:bg-emerald-100 selection:text-emerald-950 pt-16">
       
-      {/* 1. Official Reloop Fixed Top Navigation */}
+      {/* Public Top Navigation */}
       <PublicNavbar />
 
       {/* ========================================================================= */}
-      {/* SECTION 1: HERO (Gradient background matching relooptoday.com) */}
+      {/* SECTION 1: HERO */}
       {/* ========================================================================= */}
       <section
         id="home"
-        className="relative min-h-[85vh] flex items-center bg-gradient-to-br from-green-50 via-emerald-50 to-white py-12 lg:py-20 overflow-hidden"
+        aria-label="Hero: ReLoop City overview"
+        className="bg-white py-16 lg:py-24 border-b border-charcoal-100"
       >
-        {/* Ambient Pulsing Glow Blobs */}
-        <div className="absolute top-10 right-10 w-24 h-24 bg-green-200 rounded-full opacity-60 blur-xl animate-pulse pointer-events-none" />
-        <div className="absolute bottom-20 left-10 w-32 h-32 bg-emerald-200 rounded-full opacity-60 blur-xl animate-pulse delay-300 pointer-events-none" />
-        <div className="absolute top-1/2 right-20 w-16 h-16 bg-yellow-200 rounded-full opacity-60 blur-lg animate-pulse delay-700 pointer-events-none" />
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
 
-        <div className="container mx-auto px-4 lg:px-6 relative z-10">
+          {/* Two-column grid: copy | visual */}
           <div className="grid lg:grid-cols-12 gap-12 items-center">
-            
-            {/* Left Content Column */}
-            <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
+
+            {/* ── Left column: copy (6 cols) ── */}
+            <div className="lg:col-span-6 space-y-8 text-center lg:text-left">
               
-              {/* Green Eco Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold shadow-xs">
-                <span>🌱 Eco-Friendly Recycling &amp; Circular Platform</span>
-              </div>
-
-              {/* Headline with Brand Gradient */}
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight font-heading">
-                Turn Your{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 via-emerald-600 to-green-700">
-                  Waste
-                </span>{' '}
-                Into Something Good
-              </h1>
-
-              {/* Sub-line */}
-              <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
-                Join the circular economy movement with Reloop. Transform urban waste and e-waste into clean energy, circular commodities, and automated zero-landfill operations.
+              {/* Plain eyebrow — no emoji, no pill background */}
+              <p className="text-sm font-medium text-charcoal-500 tracking-wide">
+                AI for circular cities · Pune pilot
               </p>
 
-              {/* 3 Quick Stats Counter */}
-              <div className="grid grid-cols-3 gap-4 sm:gap-6 py-4 border-y border-green-200/60 max-w-xl mx-auto lg:mx-0 text-center">
-                <div>
-                  <div className="text-2xl sm:text-3xl font-extrabold text-green-600 font-heading">50K+</div>
-                  <div className="text-xs sm:text-sm text-gray-600 font-medium">Active Citizens</div>
-                </div>
-                <div>
-                  <div className="text-2xl sm:text-3xl font-extrabold text-green-600 font-heading">24,000T</div>
-                  <div className="text-xs sm:text-sm text-gray-600 font-medium">Waste Recycled</div>
-                </div>
-                <div>
-                  <div className="text-2xl sm:text-3xl font-extrabold text-green-600 font-heading">95.2%</div>
-                  <div className="text-xs sm:text-sm text-gray-600 font-medium">Landfill Diversion</div>
-                </div>
-              </div>
+              {/* Headline: max 2-3 lines, font-semibold, navy */}
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-navy-900 tracking-tight leading-[1.08] font-heading">
+                Turn city waste into{' '}
+                <span className="text-emerald-600">
+                  energy, materials
+                </span>{' '}
+                and revenue.
+              </h1>
+
+              {/* Subline: readable, max-xl */}
+              <p className="text-lg text-charcoal-600 max-w-xl leading-relaxed mx-auto lg:mx-0">
+                ReLoop City senses bin fill levels, predicts demand, optimises collection routes and routes waste to the right facility — calibrated to Pune PCMC pilot data.
+              </p>
 
               {/* CTAs */}
-              <div className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
                 <Link
                   to="/app/dashboard"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold text-base shadow-lg shadow-green-500/25 hover:shadow-xl transition-all cursor-pointer min-h-[44px]"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-base transition-colors cursor-pointer min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 shadow-sm"
                 >
-                  <Sparkles className="w-5 h-5 text-emerald-200" />
-                  <span>Launch Live Demo Free</span>
-                  <ArrowRight className="w-5 h-5 text-white/90" />
+                  <span>Launch live demo</span>
+                  <ArrowRight className="w-4 h-4" />
                 </Link>
 
                 <button
@@ -277,98 +251,106 @@ export const PublicWebsite: React.FC = () => {
                     startGuidedTour();
                     navigate('/app/dashboard');
                   }}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-white hover:bg-gray-50 text-gray-800 font-semibold text-base border border-gray-200 transition-all cursor-pointer min-h-[44px]"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 text-navy-900 font-medium text-base hover:text-emerald-700 transition-colors cursor-pointer min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 rounded-lg px-2"
                 >
-                  <Play className="w-4 h-4 text-green-600 fill-green-600" />
-                  <span>Watch the 2-min tour</span>
+                  <span>Take the 2-min tour</span>
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
-
-              {/* Trust Badges */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2 text-xs sm:text-sm text-gray-500 font-medium">
-                <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-green-600" /> Free to test</span>
-                <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-green-600" /> Zero backend required</span>
-                <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-green-600" /> Calibrated to Pune PCMC data</span>
-              </div>
             </div>
 
-            {/* Right Column: Hero Visual with Animated Emojis & City Loop */}
-            <div className="lg:col-span-5 flex justify-center items-center relative">
-              <div className="relative w-full max-w-[480px]">
-                
-                {/* Floating Emojis matching relooptoday.com */}
-                <div className="absolute -top-3 -right-3 z-20 bg-yellow-400 rounded-2xl p-3 shadow-lg animate-bounce">
-                  <span className="text-2xl" role="img" aria-label="Recycle">♻️</span>
-                </div>
-                <div className="absolute -bottom-3 -left-3 z-20 bg-emerald-500 text-white rounded-2xl p-3 shadow-lg animate-bounce delay-500">
-                  <span className="text-2xl" role="img" aria-label="Plant">🌱</span>
-                </div>
-                <div className="absolute top-1/2 -left-6 z-20 bg-blue-500 text-white rounded-2xl p-2.5 shadow-lg hidden sm:block">
-                  <span className="text-xl" role="img" aria-label="Lightning">⚡</span>
-                </div>
+            {/* ── Right column: illustration panel (6 cols) ── */}
+            <div className="lg:col-span-6 flex items-center justify-center">
+              <div
+                className="relative w-full rounded-3xl border border-charcoal-200 bg-gradient-to-b from-white to-charcoal-50 aspect-[4/3] flex items-center justify-center overflow-hidden shadow-sm"
+                role="img"
+                aria-label="Isometric illustration of a smart city circular waste loop"
+              >
+                {/* Subtle dot pattern */}
+                <svg
+                  aria-hidden="true"
+                  className="absolute inset-0 w-full h-full opacity-[0.04] pointer-events-none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <pattern id="hero-dots" width="20" height="20" patternUnits="userSpaceOnUse">
+                      <circle cx="1" cy="1" r="1" fill="#12305C" />
+                    </pattern>
+                  </defs>
+                  <rect width="100%" height="100%" fill="url(#hero-dots)" />
+                </svg>
 
-                {/* Illustration Card Surface */}
-                <div className="p-4 sm:p-6 bg-white/90 backdrop-blur-md rounded-3xl border border-green-200/80 shadow-2xl">
-                  <IsometricCityLoop size={420} className="mx-auto" />
+                {/* City illustration centered and larger */}
+                <IsometricCityLoop size={380} className="relative z-10 mx-auto" />
+
+                {/* Two quiet label chips — no animation, no color chips */}
+                <div className="absolute top-4 left-4 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-charcoal-200 shadow-xs text-xs font-medium text-charcoal-600">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
+                  IoT Sensors
+                </div>
+                <div className="absolute bottom-4 right-4 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-charcoal-200 shadow-xs text-xs font-medium text-charcoal-600">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500" aria-hidden="true" />
+                  Biogas CHP
                 </div>
               </div>
             </div>
 
           </div>
-        </div>
 
-        {/* Floating Stat Strip */}
-        <div className="max-w-[1200px] w-full mx-auto px-4 sm:px-6 lg:px-8 mt-12">
-          <div
-            ref={diversionStat.ref}
-            className="w-full rounded-2xl bg-white/95 backdrop-blur-md border border-gray-200 shadow-md p-5 sm:p-6"
-          >
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-gray-200">
-              
-              <div className="pt-2 md:pt-0">
-                <span className="text-xs font-bold uppercase tracking-wider text-gray-500 block mb-1">
-                  Landfill Diversion
-                </span>
-                <span className="text-3xl sm:text-4xl font-extrabold text-green-600 font-heading tracking-tight">
-                  {diversionStat.formatted}
-                </span>
-                <span className="text-xs text-gray-500 block mt-1">vs 28% baseline</span>
-              </div>
+          {/* ── Stats strip: full width, 4 columns, thin dividers ── */}
+          <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 divide-y lg:divide-y-0 divide-x-0 lg:divide-x divide-charcoal-200 border border-charcoal-200 rounded-2xl bg-white shadow-sm overflow-hidden">
 
-              <div className="pt-2 md:pt-0">
-                <span className="text-xs font-bold uppercase tracking-wider text-gray-500 block mb-1">
-                  Fleet Distance Cut
-                </span>
-                <span className="text-3xl sm:text-4xl font-extrabold text-[#243D83] font-heading tracking-tight">
-                  {distanceStat.formatted}
-                </span>
-                <span className="text-xs text-gray-500 block mt-1">fuel &amp; emissions reduced</span>
-              </div>
-
-              <div className="pt-4 md:pt-0">
-                <span className="text-xs font-bold uppercase tracking-wider text-gray-500 block mb-1">
-                  Clean Energy Generated
-                </span>
-                <span className="text-3xl sm:text-4xl font-extrabold text-amber-600 font-heading tracking-tight">
-                  {energyStat.formatted}
-                </span>
-                <span className="text-xs text-gray-500 block mt-1">renewable biomethane</span>
-              </div>
-
-              <div className="pt-4 md:pt-0">
-                <span className="text-xs font-bold uppercase tracking-wider text-gray-500 block mb-1">
-                  Circular Value Created
-                </span>
-                <span className="text-3xl sm:text-4xl font-extrabold text-[#243D83] font-heading tracking-tight">
-                  {revenueStat.formatted}
-                </span>
-                <span className="text-xs text-gray-500 block mt-1">monetized commodities</span>
-              </div>
-
+            <div className="px-6 py-6 text-center">
+              <span className="text-xs font-semibold uppercase tracking-wider text-charcoal-500 block mb-1">
+                Landfill Diversion
+              </span>
+              <span className="text-3xl font-semibold text-navy-900 tabular-nums block font-heading">
+                {snapshot.diversionRatePercent.toFixed(1)}%
+              </span>
+              <span className="text-sm text-charcoal-500 mt-1 block">
+                vs 28% static baseline
+              </span>
             </div>
-          </div>
-        </div>
 
+            <div className="px-6 py-6 text-center">
+              <span className="text-xs font-semibold uppercase tracking-wider text-charcoal-500 block mb-1">
+                Fleet Distance Cut
+              </span>
+              <span className="text-3xl font-semibold text-emerald-700 tabular-nums block font-heading">
+                −32%
+              </span>
+              <span className="text-sm text-charcoal-500 mt-1 block">
+                fuel &amp; diesel burn reduced
+              </span>
+            </div>
+
+            <div className="px-6 py-6 text-center border-t lg:border-t-0">
+              <span className="text-xs font-semibold uppercase tracking-wider text-charcoal-500 block mb-1">
+                Clean Energy Generated
+              </span>
+              <span className="text-3xl font-semibold text-navy-900 tabular-nums block font-heading">
+                {snapshot.energyMwh.toFixed(0)} MWh
+              </span>
+              <span className="text-sm text-charcoal-500 mt-1 block">
+                renewable biomethane CHP
+              </span>
+            </div>
+
+            <div className="px-6 py-6 text-center border-t lg:border-t-0">
+              <span className="text-xs font-semibold uppercase tracking-wider text-charcoal-500 block mb-1">
+                Circular Value Created
+              </span>
+              <span className="text-3xl font-semibold text-navy-900 tabular-nums block font-heading">
+                ₹{(snapshot.revenueInr / 100000).toFixed(1)}L
+              </span>
+              <span className="text-sm text-charcoal-500 mt-1 block">
+                commodities monetized
+              </span>
+            </div>
+
+          </div>
+
+        </div>
       </section>
 
       {/* ========================================================================= */}
@@ -1194,7 +1176,7 @@ export const PublicWebsite: React.FC = () => {
       {/* ========================================================================= */}
       {/* SECTION 7: CORRIDOR & METHODOLOGY */}
       {/* ========================================================================= */}
-      <section className="py-20 bg-white border-t border-gray-200">
+      <section id="roadmap" className="py-20 bg-white border-t border-gray-200">
         <div className="container mx-auto px-4 lg:px-6 space-y-12">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">

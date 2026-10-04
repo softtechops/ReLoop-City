@@ -1,56 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ReloopLogo } from '../brand/ReloopLogo';
-import { Menu, X, ArrowRight, Sparkles } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 
 export const PublicNavbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { label: 'Home', href: '#home' },
-    { label: 'About', href: '#about' },
-    { label: 'Features', href: '#features' },
-    { label: 'Live Simulation', href: '#preview' },
-    { label: 'Statistics', href: '#statistics' },
+    { label: 'How it works', href: '#how-it-works' },
+    { label: 'Impact', href: '#statistics' },
+    { label: 'Roadmap', href: '#roadmap' },
     { label: 'FAQ', href: '#faq' },
   ];
 
   return (
-    <header className="fixed top-0 w-full bg-white/90 backdrop-blur-md border-b border-gray-100 z-50 transition-all">
-      <div className="container mx-auto px-4 lg:px-6">
+    <header className="fixed top-0 w-full bg-white/95 backdrop-blur-md border-b border-charcoal-200 z-50 transition-all">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           
-          {/* Official Reloop Brand Logo */}
+          {/* Brand Logo */}
           <Link
             to="/"
-            className="flex items-center gap-2 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-green-600 rounded-lg py-1"
-            aria-label="Reloop City - Homepage"
+            className="flex items-center gap-2 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-600 rounded-lg py-1"
+            aria-label="ReLoop City — Homepage"
           >
             <ReloopLogo className="h-7 sm:h-8" />
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-8" aria-label="Website sections">
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-8" aria-label="Website sections">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="text-gray-600 hover:text-green-600 font-medium text-sm transition-colors py-1"
+                className="text-charcoal-600 hover:text-navy-900 font-medium text-sm transition-colors py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 rounded"
               >
                 {link.label}
               </a>
             ))}
           </nav>
 
-          {/* Primary Action Button */}
+          {/* Primary CTA */}
           <div className="hidden sm:flex items-center gap-3">
             <Link
               to="/app/dashboard"
-              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-medium text-sm shadow-md shadow-green-500/20 hover:shadow-lg transition-all cursor-pointer min-h-[44px]"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm transition-colors cursor-pointer min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
             >
-              <Sparkles className="w-4 h-4 text-emerald-100" />
-              <span>Launch Live App</span>
-              <ArrowRight className="w-4 h-4 text-white/90" />
+              <span>Launch live demo</span>
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
@@ -60,34 +57,34 @@ export const PublicNavbar: React.FC = () => {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-expanded={isMobileMenuOpen}
             aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-            className="md:hidden p-2 rounded-xl text-gray-700 hover:text-green-600 hover:bg-gray-50 min-h-[44px] min-w-[44px] flex items-center justify-center"
+            className="md:hidden p-2 rounded-xl text-charcoal-700 hover:text-navy-900 hover:bg-charcoal-100 min-h-[44px] min-w-[44px] flex items-center justify-center transition-colors"
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
-        {/* Mobile Menu Dropdown */}
+        {/* Mobile Dropdown */}
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-white border-t border-gray-100 py-4 px-2 space-y-3 shadow-xl animate-in fade-in slide-in-from-top-4 duration-200">
-            <nav className="flex flex-col space-y-2">
+          <div className="md:hidden bg-white border-t border-charcoal-100 py-4 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150">
+            <nav className="flex flex-col">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="px-3 py-2 text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50/50 rounded-lg transition-colors"
+                  className="px-3 py-3 text-base font-medium text-charcoal-700 hover:text-navy-900 hover:bg-charcoal-50 rounded-xl transition-colors"
                 >
                   {link.label}
                 </a>
               ))}
             </nav>
-            <div className="pt-2 px-2">
+            <div className="pt-2 px-1">
               <Link
                 to="/app/dashboard"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 text-white font-medium text-sm shadow-md"
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm transition-colors"
               >
-                <span>Launch Live App</span>
+                <span>Launch live demo</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
