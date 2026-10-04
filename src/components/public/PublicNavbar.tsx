@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useStore } from '../../store/useStore';
-import { Sparkles, Menu, X, ArrowRight, User, LogOut, CheckCircle2 } from 'lucide-react';
+import { Sparkles, Menu, X, ArrowRight, ShieldCheck } from 'lucide-react';
 
 export const PublicNavbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { currentUser, isAuthenticated, logout } = useStore();
 
   const navLinks = [
     { label: 'Problem', href: '#problem' },
@@ -67,34 +65,8 @@ export const PublicNavbar: React.FC = () => {
           ))}
         </nav>
 
-        {/* User Auth Controls & Primary CTA */}
+        {/* Primary CTA: Launch Live Demo */}
         <div className="hidden sm:flex items-center gap-3">
-          {isAuthenticated && currentUser ? (
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs">
-                <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                <span className="font-bold text-navy-900">{currentUser.name}</span>
-                <span className="text-charcoal-500 hidden xl:inline">({currentUser.role.split(' ')[0]})</span>
-              </div>
-              <button
-                type="button"
-                onClick={logout}
-                title="Sign Out"
-                className="p-2 rounded-xl border border-charcoal-200 hover:border-red-300 hover:bg-red-50 text-charcoal-500 hover:text-red-700 transition-colors"
-                aria-label="Sign Out"
-              >
-                <LogOut className="w-4 h-4" />
-              </button>
-            </div>
-          ) : (
-            <Link
-              to="/login"
-              className="px-4 py-2 rounded-xl text-xs font-bold text-navy-900 hover:bg-charcoal-100 border border-charcoal-200 hover:border-charcoal-300 transition-all shadow-2xs"
-            >
-              Sign In
-            </Link>
-          )}
-
           <Link
             to="/app/dashboard"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-navy-800 to-navy-900 hover:from-navy-900 hover:to-navy-950 text-white font-bold text-sm shadow-md shadow-navy-900/25 hover:shadow-lg hover:shadow-navy-900/35 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer ring-1 ring-white/20"
@@ -132,31 +104,7 @@ export const PublicNavbar: React.FC = () => {
               </a>
             ))}
           </nav>
-          <div className="pt-3 border-t border-charcoal-200 space-y-2">
-            {isAuthenticated && currentUser ? (
-              <div className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs">
-                <div>
-                  <span className="font-bold text-navy-900 block">{currentUser.name}</span>
-                  <span className="text-charcoal-500 text-[11px]">{currentUser.role}</span>
-                </div>
-                <button
-                  type="button"
-                  onClick={logout}
-                  className="px-2.5 py-1 rounded-lg bg-white border border-red-200 text-red-700 font-bold text-xs"
-                >
-                  Sign Out
-                </button>
-              </div>
-            ) : (
-              <Link
-                to="/login"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full flex items-center justify-center py-2.5 rounded-xl border border-charcoal-200 bg-charcoal-50 text-navy-900 font-bold text-xs"
-              >
-                Sign In to Platform
-              </Link>
-            )}
-
+          <div className="pt-3 border-t border-charcoal-200">
             <Link
               to="/app/dashboard"
               onClick={() => setIsMobileMenuOpen(false)}

@@ -10,25 +10,11 @@ import { ActivePage, SmartBin } from '../types';
 import { SimulationState, createInitialSimulationState, stepSimulation } from '../sim/engine';
 import { SeededPRNG } from '../sim/prng';
 
-export interface UserProfile {
-  name: string;
-  email: string;
-  role: string;
-  organization: string;
-}
-
 interface StoreState {
   // Configuration & Assumptions
   config: ConfigState;
   updateConfig: (newValues: Partial<ConfigState>) => void;
   resetConfig: () => void;
-
-  // Authentication State
-  currentUser: UserProfile | null;
-  isAuthenticated: boolean;
-  login: (user?: Partial<UserProfile>) => void;
-  signup: (user: UserProfile) => void;
-  logout: () => void;
 
   // Simulation State
   simState: SimulationState;
@@ -101,33 +87,6 @@ export const useStore = create<StoreState>((set, get) => ({
   },
   resetConfig: () => {
     set({ config: { ...DEFAULT_CONFIG } });
-  },
-
-  // Auth State & Methods
-  currentUser: null,
-  isAuthenticated: false,
-  login: (user) => {
-    set({
-      isAuthenticated: true,
-      currentUser: {
-        name: user?.name || 'Dr. Sneha Patil',
-        email: user?.email || 's.patil@pcmcindia.gov.in',
-        role: user?.role || 'Municipal Commissioner / Evaluator',
-        organization: user?.organization || 'Pimpri Chinchwad Municipal Corporation (PCMC)',
-      },
-    });
-  },
-  signup: (user) => {
-    set({
-      isAuthenticated: true,
-      currentUser: user,
-    });
-  },
-  logout: () => {
-    set({
-      isAuthenticated: false,
-      currentUser: null,
-    });
   },
 
   simState: createInitialSimulationState(DEFAULT_CONFIG, 422026),
