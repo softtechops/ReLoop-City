@@ -12,7 +12,8 @@ import {
   SlidersHorizontal,
   ChevronDown,
   Info,
-  X
+  X,
+  ArrowLeft
 } from 'lucide-react';
 import { Badge } from './ui/Badge';
 import { Button } from './ui/Button';
@@ -99,13 +100,23 @@ export const Header: React.FC = () => {
           {/* Brand Identity & Simulated Data Badge */}
           <div className="flex items-center gap-3">
             <Link
-              to="/overview"
+              to="/"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-charcoal-200 hover:border-navy-400 bg-white hover:bg-charcoal-50 text-xs font-bold text-navy-900 transition-all shadow-2xs mr-1 group"
+              title="Return to public product website"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 text-charcoal-500 group-hover:-translate-x-0.5 transition-transform" />
+              <span className="hidden sm:inline">Back to website</span>
+              <span className="sm:hidden">Exit</span>
+            </Link>
+
+            <Link
+              to="/app/dashboard"
               className="flex items-center gap-2.5 group rounded-xl p-1 -ml-1 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600"
-              aria-label="ReLoop City - Return to overview"
+              aria-label="ReLoop City - Return to dashboard"
             >
               <div className="w-9 h-9 rounded-xl bg-navy-700 group-hover:bg-navy-800 flex items-center justify-center text-white font-bold shadow-md shadow-navy-700/20 transition-all">
                 <svg
-                  className="w-5 h-5"
+                  className="w-5 h-5 text-emerald-400"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -121,7 +132,7 @@ export const Header: React.FC = () => {
                 </svg>
               </div>
               <div>
-                <span className="font-extrabold text-xl tracking-tight text-navy-900 font-['Outfit'] block leading-none">
+                <span className="font-extrabold text-xl tracking-tight text-navy-900 font-heading block leading-none">
                   ReLoop <span className="text-sage-600">City</span>
                 </span>
                 <span className="text-xs text-charcoal-500 font-medium hidden sm:block mt-0.5">

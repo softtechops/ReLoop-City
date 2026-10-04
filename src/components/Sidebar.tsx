@@ -37,40 +37,39 @@ export const Sidebar: React.FC = () => {
   const [isMoreSheetOpen, setIsMoreSheetOpen] = useState(false);
 
   const mainNavItems: NavItem[] = [
-    { path: '/overview', label: 'Overview & Concept', icon: Compass },
-    { path: '/dashboard', label: 'Waste-to-Value Dashboard', icon: LayoutDashboard, badge: 'Main' },
+    { path: '/app/overview', label: 'Overview & Concept', icon: Compass },
+    { path: '/app/dashboard', label: 'Waste-to-Value Dashboard', icon: LayoutDashboard, badge: 'Main' },
   ];
 
   // The 7 AI Loop steps in plain language (Sense, Predict, Optimize, Classify, Allocate, Forecast, Report)
   const aiLoopSteps: NavItem[] = [
-    { path: '/map', label: '1 · Live Bin Map (Sense)', stepNumber: '1', icon: Radio },
-    { path: '/predict', label: '2 · Waste Forecast (Predict)', stepNumber: '2', icon: TrendingUp },
-    { path: '/optimize', label: '3 · Smart Routes (Optimize)', stepNumber: '3', icon: Route },
-    { path: '/classify', label: '4 · AI Sorting Vision (Classify)', stepNumber: '4', icon: ScanSearch },
-    { path: '/allocate', label: '5 · Facility Balancing (Allocate)', stepNumber: '5', icon: GitFork },
-    { path: '/allocate', label: '6 · Energy & Biogas (Forecast)', stepNumber: '6', icon: Sparkles },
-    { path: '/revenue', label: '7 · Results & Ledger (Report)', stepNumber: '7', icon: Coins },
+    { path: '/app/map', label: '1 · Live Bin Map (Sense)', stepNumber: '1', icon: Radio },
+    { path: '/app/predict', label: '2 · Waste Forecast (Predict)', stepNumber: '2', icon: TrendingUp },
+    { path: '/app/optimize', label: '3 · Smart Routes (Optimize)', stepNumber: '3', icon: Route },
+    { path: '/app/classify', label: '4 · AI Sorting Vision (Classify)', stepNumber: '4', icon: ScanSearch },
+    { path: '/app/allocate', label: '5 · Facility Balancing (Allocate)', stepNumber: '5', icon: GitFork },
+    { path: '/app/allocate', label: '6 · Energy & Biogas (Forecast)', stepNumber: '6', icon: Sparkles },
+    { path: '/app/revenue', label: '7 · Results & Ledger (Report)', stepNumber: '7', icon: Coins },
   ];
 
   const systemNavItems: NavItem[] = [
-    { path: '/assumptions', label: 'Assumptions & Roadmap', icon: Settings2 },
+    { path: '/app/assumptions', label: 'Assumptions & Roadmap', icon: Settings2 },
   ];
 
   // 4 Primary Mobile Tabs + More Sheet
   const mobilePrimaryTabs = [
-    { path: '/overview', label: 'Overview', icon: Compass },
-    { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { path: '/map', label: 'Map', icon: Radio },
-    { path: '/optimize', label: 'Routes', icon: Route },
+    { path: '/app/overview', label: 'Overview', icon: Compass },
+    { path: '/app/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { path: '/app/map', label: 'Map', icon: Radio },
+    { path: '/app/optimize', label: 'Routes', icon: Route },
   ];
 
   const moreSheetItems = [
-    { path: '/predict', label: '2 · Waste Forecast', icon: TrendingUp },
-    { path: '/classify', label: '4 · AI Sorting Vision', icon: ScanSearch },
-    { path: '/allocate', label: '5 · Facility Balancing', icon: GitFork },
-    { path: '/allocate', label: '6 · Energy & Biogas', icon: Sparkles },
-    { path: '/revenue', label: '7 · Results & Ledger', icon: Coins },
-    { path: '/assumptions', label: 'Assumptions & Roadmap', icon: Settings2 },
+    { path: '/app/predict', label: '2 · Waste Forecast', icon: TrendingUp },
+    { path: '/app/classify', label: '4 · AI Sorting Vision', icon: ScanSearch },
+    { path: '/app/allocate', label: '5 · Facility Balancing', icon: GitFork },
+    { path: '/app/revenue', label: '7 · Results & Ledger', icon: Coins },
+    { path: '/app/assumptions', label: 'Assumptions & Roadmap', icon: Settings2 },
   ];
 
   return (

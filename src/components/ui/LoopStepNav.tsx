@@ -28,14 +28,17 @@ export const LoopStepNav: React.FC<LoopStepNavProps> = ({
   nextPath,
   nextLabel,
 }) => {
+  const resolvedPrevPath = prevPath ? (prevPath.startsWith('/app') ? prevPath : `/app${prevPath}`) : undefined;
+  const resolvedNextPath = nextPath ? (nextPath.startsWith('/app') ? nextPath : `/app${nextPath}`) : undefined;
+
   return (
     <nav
       aria-label="7-Step AI Loop navigation"
       className="mt-12 pt-6 border-t border-navy-100 flex flex-col sm:flex-row items-center justify-between gap-4"
     >
       <div>
-        {prevPath ? (
-          <Link to={prevPath} className="w-full sm:w-auto">
+        {resolvedPrevPath ? (
+          <Link to={resolvedPrevPath} className="w-full sm:w-auto">
             <Button
               variant="secondary"
               size="sm"
@@ -47,7 +50,7 @@ export const LoopStepNav: React.FC<LoopStepNavProps> = ({
             </Button>
           </Link>
         ) : (
-          <Link to="/overview" className="w-full sm:w-auto">
+          <Link to="/app/overview" className="w-full sm:w-auto">
             <Button variant="ghost" size="sm" icon={<ArrowLeft className="w-4 h-4" />} iconPosition="left">
               Overview
             </Button>
@@ -65,8 +68,8 @@ export const LoopStepNav: React.FC<LoopStepNavProps> = ({
       </div>
 
       <div>
-        {nextPath ? (
-          <Link to={nextPath} className="w-full sm:w-auto">
+        {resolvedNextPath ? (
+          <Link to={resolvedNextPath} className="w-full sm:w-auto">
             <Button
               variant="primary"
               size="sm"
@@ -78,7 +81,7 @@ export const LoopStepNav: React.FC<LoopStepNavProps> = ({
             </Button>
           </Link>
         ) : (
-          <Link to="/dashboard" className="w-full sm:w-auto">
+          <Link to="/app/dashboard" className="w-full sm:w-auto">
             <Button
               variant="sage"
               size="sm"

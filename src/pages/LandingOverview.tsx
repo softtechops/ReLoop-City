@@ -36,7 +36,7 @@ export const LandingOverview: React.FC = () => {
   const handleJumpToDashboard = () => {
     dismissWelcome();
     setMode('reloop');
-    navigate('/dashboard');
+    navigate('/app/dashboard');
   };
 
   const handleExploreAlone = () => {
@@ -44,13 +44,13 @@ export const LandingOverview: React.FC = () => {
   };
 
   const aiSteps = [
-    { num: '01', name: 'Sense', route: '/map', icon: Radio, desc: 'IoT fill-levels & ultrasonic composition telemetry across city bins' },
-    { num: '02', name: 'Predict', route: '/predict', icon: TrendingUp, desc: 'Time-series volume forecasting & generation hotspot detection' },
-    { num: '03', name: 'Optimize', route: '/optimize', icon: Route, desc: 'Capacity-constrained dynamic routing (CVRP) saving 32%+ fuel' },
-    { num: '04', name: 'Classify', route: '/classify', icon: ScanSearch, desc: 'Computer vision sorting at MRF recovering high-purity commodities' },
-    { num: '05', name: 'Allocate', route: '/allocate', icon: GitFork, desc: 'Dynamic mass allocation to Anaerobic Digestion, Composting & Recycling' },
-    { num: '06', name: 'Forecast', route: '/allocate', icon: Zap, desc: 'Bio-methane & clean electricity generation forecasting for the grid' },
-    { num: '07', name: 'Report', route: '/revenue', icon: Coins, desc: 'Municipal Waste-to-Value Dashboard for transparent circular governance' },
+    { num: '01', name: 'Sense', route: '/app/map', icon: Radio, desc: 'IoT fill-levels & ultrasonic composition telemetry across city bins' },
+    { num: '02', name: 'Predict', route: '/app/predict', icon: TrendingUp, desc: 'Time-series volume forecasting & generation hotspot detection' },
+    { num: '03', name: 'Optimize', route: '/app/optimize', icon: Route, desc: 'Capacity-constrained dynamic routing (CVRP) saving 32%+ fuel' },
+    { num: '04', name: 'Classify', route: '/app/classify', icon: ScanSearch, desc: 'Computer vision sorting at MRF recovering high-purity commodities' },
+    { num: '05', name: 'Allocate', route: '/app/allocate', icon: GitFork, desc: 'Dynamic mass allocation to Anaerobic Digestion, Composting & Recycling' },
+    { num: '06', name: 'Forecast', route: '/app/allocate', icon: Zap, desc: 'Bio-methane & clean electricity generation forecasting for the grid' },
+    { num: '07', name: 'Report', route: '/app/revenue', icon: Coins, desc: 'Municipal Waste-to-Value Dashboard for transparent circular governance' },
   ];
 
   return (

@@ -23,7 +23,7 @@ export const RouteManager: React.FC = () => {
     }, 100);
 
     // 3. Keep activePage in sync in Zustand store
-    const path = location.pathname.replace('/', '') as ActivePage;
+    const path = location.pathname.replace('/app/', '').replace('/', '') as ActivePage;
     const validPages: ActivePage[] = [
       'overview',
       'dashboard',
@@ -38,7 +38,7 @@ export const RouteManager: React.FC = () => {
 
     if (validPages.includes(path)) {
       setActivePage(path);
-    } else if (location.pathname === '/') {
+    } else if (location.pathname === '/' || location.pathname === '') {
       setActivePage('overview');
     }
   }, [location.pathname, setActivePage]);

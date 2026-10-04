@@ -146,23 +146,23 @@ export const Dashboard: React.FC = () => {
         }
       />
 
-      {/* Pre-warm / Start Simulation Banner if paused and early in sim */}
-      {!isSimRunning && simState.elapsedSimulationHours <= 2 && (
+      {/* First-Run Banner: Press Run to start the simulation (Section 5) */}
+      {!isSimRunning && (simState.currentDay === 0 || simState.elapsedSimulationHours <= 2) && (
         <div
           role="region"
           aria-label="Simulation quick start"
-          className="p-4 sm:p-5 rounded-2xl bg-amberGold-50 border border-amberGold-200 text-amberGold-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs"
+          className="p-4 sm:p-5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-950 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs"
         >
           <div className="flex items-center gap-3">
-            <span className="p-2 rounded-xl bg-amberGold-200/80 text-amberGold-800" aria-hidden="true">
+            <span className="p-2.5 rounded-xl bg-emerald-600 text-white shadow-xs" aria-hidden="true">
               <Play className="w-5 h-5 fill-current" />
             </span>
             <div>
-              <span className="font-bold text-sm text-navy-900 block">
-                Simulation is currently paused at Day 1
+              <span className="font-extrabold text-sm text-navy-900 block font-heading">
+                Press Run to start the simulation
               </span>
               <span className="text-xs text-charcoal-600">
-                Press Run to stream live IoT collection telemetry and observe real-time circular recovery in action.
+                Stream live IoT collection telemetry and observe the 7-step circular AI loop in real time.
               </span>
             </div>
           </div>
@@ -171,35 +171,12 @@ export const Dashboard: React.FC = () => {
             size="sm"
             icon={<Play className="w-4 h-4 fill-current" />}
             onClick={startSimulation}
-            className="self-start sm:self-auto"
+            className="self-start sm:self-auto bg-emerald-600 hover:bg-emerald-700"
           >
             Start Simulation
           </Button>
         </div>
       )}
-
-      {/* Mode Status Callout with link to Header toggle (Section 2 & 4) */}
-      <div className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-navy-100 shadow-xs text-xs text-charcoal-600">
-        <div className="flex items-center gap-2">
-          <span className="text-charcoal-400 font-medium">Active Evaluation Mode:</span>
-          <Badge variant={mode === 'reloop' ? 'navy' : 'gray'} size="md">
-            {mode === 'reloop' ? 'ReLoop Active (AI-Optimized)' : 'Baseline Active (Fixed Schedule)'}
-          </Badge>
-          <span className="hidden sm:inline text-charcoal-400">·</span>
-          <span className="hidden sm:inline text-charcoal-500">
-            {mode === 'reloop'
-              ? 'Showing real-time predictive collection and high-purity sorting metrics'
-              : 'Showing legacy unsegregated collection with fixed route schedules'}
-          </span>
-        </div>
-        <button
-          type="button"
-          onClick={() => setMode(mode === 'reloop' ? 'baseline' : 'reloop')}
-          className="font-bold text-navy-700 hover:text-navy-900 hover:underline focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 rounded px-1"
-        >
-          Switch to {mode === 'reloop' ? 'Baseline' : 'ReLoop'}
-        </button>
-      </div>
 
       {/* ========================================================================= */}
       {/* (a) HEADLINE ROW: 3 HERO KPIS (Landfill Avoided, Energy, Revenue) (Section 4) */}

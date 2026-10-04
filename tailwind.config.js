@@ -7,7 +7,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#F8FAFC', // Ultra-clean, modern crisp Slate-50 background
+        background: '#F8FAFC',
+        brand: {
+          navy: '#12305C',
+          sage: '#7BA17D',
+          amber: '#D9A441',
+          charcoal: '#2F3437',
+          offWhite: '#F7F6F2',
+        },
         navy: {
           50: '#F0F5FA',
           100: '#E1EDF7',
@@ -17,7 +24,7 @@ export default {
           500: '#2A76B8',
           600: '#175997',
           700: '#0F3E6D',
-          800: '#0C2B4C',
+          800: '#12305C', // Brand Navy
           900: '#0A1E35', // Deep Executive Sapphire Navy
           950: '#061324',
         },
@@ -25,7 +32,7 @@ export default {
           50: '#ECFDF5',
           100: '#D1FAE5',
           200: '#A7F3D0',
-          300: '#6EE7B7',
+          300: '#7BA17D', // Brand Sage
           400: '#34D399',
           500: '#10B981', // Vibrant Bio-Emerald
           600: '#059669', // Rich Eco Green
@@ -37,11 +44,11 @@ export default {
           50: '#FFFBEB',
           100: '#FEF3C7',
           200: '#FDE68A',
-          300: '#FCD34D',
+          300: '#D9A441', // Brand Amber
           400: '#FBBF24',
           500: '#F59E0B', // Solar Amber
           600: '#D97706',
-          700: '#B45309', // High contrast text on light amber
+          700: '#B45309', // High contrast text
           800: '#92400E',
           900: '#78350F',
         },
@@ -53,9 +60,9 @@ export default {
           400: '#94A3B8',
           500: '#64748B',
           600: '#475569',
-          700: '#334155',
+          700: '#2F3437', // Brand Charcoal
           800: '#1E293B',
-          900: '#0F172A', // Slate 900 primary text
+          900: '#0F172A', // Slate 900
         },
         residual: {
           400: '#94A3B8',
@@ -64,8 +71,24 @@ export default {
         }
       },
       fontFamily: {
+        heading: ['Outfit', 'Inter', 'system-ui', 'sans-serif'],
         sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'monospace']
+      },
+      animation: {
+        'spin-slow': 'spin 30s linear infinite',
+        'spin-reverse-slow': 'spin-reverse 35s linear infinite',
+        'float-slow': 'float 6s ease-in-out infinite',
+        'pulse-subtle': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
+      keyframes: {
+        'spin-reverse': {
+          to: { transform: 'rotate(-360deg)' }
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-10px)' },
+        }
       },
       boxShadow: {
         'blueprint': '0 4px 20px -2px rgba(10, 30, 53, 0.05), 0 2px 6px -1px rgba(10, 30, 53, 0.03)',

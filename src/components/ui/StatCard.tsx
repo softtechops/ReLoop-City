@@ -70,20 +70,36 @@ export const StatCard: React.FC<StatCardProps> = ({
         <InfoPopover content={calculationInfo} label={`Learn how ${title} is calculated`} />
       </div>
 
-      {/* Main Metric Value */}
-      <div className="flex items-baseline gap-2 mb-2 flex-wrap">
-        <span
-          className={`font-black font-['Outfit'] tracking-tight ${
-            isHero ? 'text-3xl sm:text-4xl' : 'text-2xl sm:text-3xl'
-          } ${valueColor}`}
-        >
-          {value}
-        </span>
-        {unit && (
-          <span className="text-sm font-semibold text-charcoal-500">
-            {unit}
+      {/* Main Metric Value with Sparkline */}
+      <div className="flex items-end justify-between gap-3 mb-2 flex-wrap">
+        <div className="flex items-baseline gap-2 flex-wrap">
+          <span
+            className={`font-black font-heading tracking-tight ${
+              isHero ? 'text-3xl sm:text-4xl md:text-5xl' : 'text-2xl sm:text-3xl'
+            } ${valueColor}`}
+          >
+            {value}
           </span>
-        )}
+          {unit && (
+            <span className="text-xs sm:text-sm font-semibold text-charcoal-500">
+              {unit}
+            </span>
+          )}
+        </div>
+
+        {/* Decorative mini sparkline curve */}
+        <div className="w-16 h-7 flex-shrink-0 opacity-80 pb-1" aria-hidden="true">
+          <svg viewBox="0 0 64 28" fill="none" className="w-full h-full">
+            <path
+              d="M 2 22 Q 18 10 32 16 T 62 4"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className={accentColor === 'sage' ? 'text-emerald-500' : accentColor === 'amber' ? 'text-amberGold-500' : 'text-navy-500'}
+            />
+          </svg>
+        </div>
       </div>
 
       {/* Bottom Subtitle / Delta Row */}
