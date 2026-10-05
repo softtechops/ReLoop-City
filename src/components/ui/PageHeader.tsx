@@ -31,39 +31,39 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   const [isHowItWorksOpen, setIsHowItWorksOpen] = useState(false);
 
   return (
-    <div className="flex flex-col gap-3 pb-4 mb-6 border-b border-charcoal-200">
+    <div className="flex flex-col gap-3 pb-4 mb-6 border-b border-slate-200">
       
       {/* Top breadcrumb & navigation strip */}
       <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-charcoal-500">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-slate-500">
           <Link
             to="/app/overview"
-            className="hover:text-navy-900 transition-colors font-medium focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 rounded px-1"
+            className="hover:text-slate-900 transition-colors font-medium focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-600 rounded px-1"
           >
             ReLoop City
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-charcoal-300" aria-hidden="true" />
+          <ChevronRight className="w-3.5 h-3.5 text-slate-300" aria-hidden="true" />
           {showBackToDashboard && title !== 'Waste-to-Value Municipal Dashboard' && (
             <>
               <Link
                 to="/app/dashboard"
-                className="hover:text-navy-900 transition-colors font-medium flex items-center gap-1 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 rounded px-1"
+                className="hover:text-slate-900 transition-colors font-medium flex items-center gap-1 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-600 rounded px-1"
               >
                 <ArrowLeft className="w-3 h-3" aria-hidden="true" />
                 <span>Dashboard</span>
               </Link>
-              <ChevronRight className="w-3.5 h-3.5 text-charcoal-300" aria-hidden="true" />
+              <ChevronRight className="w-3.5 h-3.5 text-slate-300" aria-hidden="true" />
             </>
           )}
-          <span className="font-semibold text-navy-900" aria-current="page">
+          <span className="font-semibold text-slate-900" aria-current="page">
             {title}
           </span>
         </nav>
 
         {stepNumber && (
           <Badge variant="navy" size="md">
-            <span className="font-mono">Step {stepNumber} of {totalSteps}</span>
-            {stepName && <span className="text-navy-600">· {stepName}</span>}
+            <span>Step {stepNumber} of {totalSteps}</span>
+            {stepName && <span className="text-slate-600">· {stepName}</span>}
           </Badge>
         )}
       </div>
@@ -72,25 +72,25 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-start sm:items-center gap-3">
           {icon && (
-            <div className="w-10 h-10 rounded-xl bg-navy-50 text-navy-800 border border-navy-100 flex items-center justify-center flex-shrink-0 shadow-2xs">
+            <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-800 border border-slate-200 flex items-center justify-center flex-shrink-0 shadow-2xs">
               {icon}
             </div>
           )}
           <div>
             <h1
               tabIndex={-1}
-              className="text-2xl sm:text-3xl font-extrabold text-navy-900 tracking-tight font-heading focus:outline-hidden"
+              className="text-3xl font-semibold text-slate-900 tracking-tight focus:outline-hidden"
             >
               {title}
             </h1>
             {subtitle && (
-              <p className="text-sm text-charcoal-600 mt-0.5 max-w-3xl leading-relaxed">
+              <p className="text-sm text-slate-500 mt-1 max-w-3xl leading-relaxed">
                 {subtitle}
               </p>
             )}
             {decisionPrompt && (
-              <div className="mt-2.5 flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs sm:text-sm font-medium text-navy-900 w-fit">
-                <span className="px-2 py-0.5 rounded-md bg-emerald-700 text-white text-[11px] font-bold uppercase tracking-wider flex-shrink-0">
+              <div className="mt-2.5 flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs sm:text-sm font-medium text-slate-900 w-fit">
+                <span className="px-2 py-0.5 rounded-md bg-emerald-700 text-white text-[11px] font-semibold flex-shrink-0">
                   Your decision
                 </span>
                 <span className="text-emerald-950 font-semibold">{decisionPrompt}</span>
@@ -104,7 +104,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
             <button
               type="button"
               onClick={() => setIsHowItWorksOpen(!isHowItWorksOpen)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-charcoal-200 hover:border-emerald-400 bg-white hover:bg-emerald-50/40 text-xs font-bold text-navy-900 transition-all shadow-2xs"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 hover:border-emerald-400 bg-white hover:bg-emerald-50/40 text-xs font-semibold text-slate-900 transition-all shadow-2xs cursor-pointer"
             >
               <HelpCircle className="w-3.5 h-3.5 text-emerald-600" />
               <span>How this works</span>
@@ -117,12 +117,12 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
 
       {/* Collapsible "How this works" Accordion */}
       {howItWorks && isHowItWorksOpen && (
-        <div className="mt-2 p-4 rounded-2xl bg-white border border-emerald-200 shadow-sm text-xs text-charcoal-700 space-y-2 animate-in fade-in slide-in-from-top-2 duration-200">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-800">
+        <div className="mt-2 p-4 rounded-2xl bg-white border border-emerald-200 shadow-sm text-xs text-slate-700 space-y-2 animate-in fade-in slide-in-from-top-2 duration-200">
+          <div className="flex items-center gap-2 text-xs font-semibold text-emerald-800">
             <HelpCircle className="w-4 h-4 text-emerald-600" />
             <span>Operational Architecture & Intelligence Guide</span>
           </div>
-          <div className="leading-relaxed text-charcoal-600">
+          <div className="leading-relaxed text-slate-600">
             {howItWorks}
           </div>
         </div>

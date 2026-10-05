@@ -28,27 +28,11 @@ export const StatCard: React.FC<StatCardProps> = ({
   calculationInfo,
   delta,
   deltaLabel = 'vs Baseline',
-  isHero = false,
-  accentColor = 'navy',
+  accentColor = 'emerald',
   icon,
   subtitle,
 }) => {
-  // Map legacy 'sage' to 'emerald' as per global color palette rules
   const normalizedColor = accentColor === 'sage' ? 'emerald' : accentColor;
-
-  const accentBorder = {
-    navy: 'hover:border-navy-400',
-    emerald: 'hover:border-emerald-400',
-    amber: 'hover:border-amber-400',
-    charcoal: 'hover:border-charcoal-400',
-  }[normalizedColor];
-
-  const valueColor = {
-    navy: 'text-navy-900',
-    emerald: 'text-emerald-700',
-    amber: 'text-amber-700',
-    charcoal: 'text-charcoal-800',
-  }[normalizedColor];
 
   // Brief highlight on value change (respects prefers-reduced-motion)
   const [isHighlighted, setIsHighlighted] = useState(false);
@@ -67,7 +51,7 @@ export const StatCard: React.FC<StatCardProps> = ({
         window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (!prefersReducedMotion) {
         setIsHighlighted(true);
-        const timer = setTimeout(() => setIsHighlighted(false), 900);
+        const timer = setTimeout(() => setIsHighlighted(false), 800);
         return () => clearTimeout(timer);
       }
     }
@@ -75,92 +59,90 @@ export const StatCard: React.FC<StatCardProps> = ({
 
   return (
     <div
-      className={`relative rounded-2xl bg-white border border-charcoal-200 shadow-sm hover:shadow-md transition-all duration-200 ${accentBorder} ${
-        isHero
-          ? 'p-6 sm:p-7 bg-gradient-to-b from-white to-slate-50/60 ring-1 ring-navy-900/5'
-          : 'p-5 sm:p-6'
-      }`}
+      className="relative rounded-2xl bg-white border border-slate-200 shadow-sm p-6 hover:-translate-y-0.5 hover:border-emerald-500 transition-all duration-200 flex flex-col justify-between"
     >
-      {/* Top Row: Title + Info Popover */}
-      <div className="flex items-center justify-between gap-2 mb-2">
-        <div className="flex items-center gap-2">
-          {icon && (
-            <span className="p-1.5 rounded-xl bg-navy-50 text-navy-800 flex-shrink-0" aria-hidden="true">
-              {icon}
+      {/* Top Row: Label + Icon + Info Popover */}
+      <div>
+        <div className="flex items-center justify-between gap-2 mb-2">
+          <div className="flex items-center gap-2">
+            {icon && (
+              <span className="text-slate-400 flex-shrink-0" aria-hidden="true">
+                {icon}
+              </span>
+            )}
+            <span className="text-sm font-medium text-slate-500">
+              {title}
             </span>
-          )}
-          <span className="text-xs font-bold uppercase tracking-wider text-charcoal-600">
-            {title}
-          </span>
+          </div>
+          <InfoPopover content={calculationInfo} label={`Learn how ${title} is calculated`} />
         </div>
-        <InfoPopover content={calculationInfo} label={`Learn how ${title} is calculated`} />
+
+        {/* Main Metric Value with Sparkline */}
+        <div className="flex items-baseline justify-between gap-3 mb-2 flex-wrap">
+          <div className="flex items-baseline gap-2 flex-wrap">
+            <span
+              className={`text-3xl font-semibold tabular-nums text-slate-900 tracking-tight transition-colors duration-200 ${
+                isHighlighted ? 'text-emerald-600' : ''
+              }`}
+            >
+              {value}
+            </span>
+            {unit && (
+              <span className="text-sm font-normal text-slate-500">
+                {unit}
+              </span>
+            )}
+          </div>
+
+          {/* Clean minimal sparkline */}
+          <div className="w-14 h-6 flex-shrink-0 opacity-70 pb-0.5" aria-hidden="true">
+            <svg viewBox="0 0 56 24" fill="none" className="w-full h-full">
+              <path
+                d="M 2 19 C 14 17, 24 8, 36 12 C 44 14, 48 5, 54 4"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className={
+                  normalizedColor === 'amber'
+                    ? 'text-amber-500'
+                    : 'text-emerald-500'
+                }
+              />
+            </svg>
+          </div>
+        </div>
       </div>
 
-      {/* Main Metric Value with Sparkline */}
-      <div className="flex items-end justify-between gap-3 mb-2 flex-wrap">
-        <div className="flex items-baseline gap-2 flex-wrap">
-          <span
-            className={`font-black font-heading tracking-tight transition-all duration-300 rounded-md px-1 -mx-1 ${
-              isHero ? 'text-3xl sm:text-4xl md:text-5xl' : 'text-2xl sm:text-3xl'
-            } ${valueColor} ${
-              isHighlighted
-                ? 'bg-emerald-100 text-emerald-900 ring-2 ring-emerald-400 scale-[1.02]'
-                : ''
-            }`}
-          >
-            {value}
-          </span>
-          {unit && (
-            <span className="text-sm font-semibold text-charcoal-600">
-              {unit}
-            </span>
-          )}
-        </div>
-
-        {/* Decorative mini sparkline curve */}
-        <div className="w-16 h-7 flex-shrink-0 opacity-80 pb-1" aria-hidden="true">
-          <svg viewBox="0 0 64 28" fill="none" className="w-full h-full">
-            <path
-              d="M 2 22 Q 18 10 32 16 T 62 4"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className={normalizedColor === 'emerald' ? 'text-emerald-500' : normalizedColor === 'amber' ? 'text-amber-500' : 'text-navy-600'}
-            />
-          </svg>
-        </div>
-      </div>
-
-      {/* Bottom Subtitle / Delta Row */}
-      <div className="pt-2 border-t border-charcoal-100 flex items-center justify-between gap-2 text-sm">
+      {/* Bottom Row: Delta Badge or Subtitle */}
+      <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-2 text-sm">
         {subtitle ? (
-          <span className="text-charcoal-600 text-sm truncate">{subtitle}</span>
+          <span className="text-slate-500 text-sm truncate">{subtitle}</span>
         ) : delta ? (
-          <div className="flex items-center gap-1.5 flex-wrap">
+          <div className="flex items-center gap-2 flex-wrap">
             {delta.isNeutral ? (
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg font-semibold text-xs bg-charcoal-100 text-charcoal-700">
-                <Minus className="w-3.5 h-3.5" aria-hidden="true" />
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-medium text-xs bg-slate-100 text-slate-700 border border-slate-200">
+                <Minus className="w-3 h-3" aria-hidden="true" />
                 <span>{delta.percentStr}</span>
               </span>
             ) : delta.isImprovement ? (
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg font-bold text-xs bg-emerald-100 text-emerald-800 border border-emerald-200">
-                <ArrowUpRight className="w-3.5 h-3.5 text-emerald-700" aria-hidden="true" />
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-medium text-xs bg-emerald-50 text-emerald-800 border border-emerald-200">
+                <ArrowUpRight className="w-3 h-3 text-emerald-600" aria-hidden="true" />
                 <span>{delta.percentStr}</span>
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg font-bold text-xs bg-red-100 text-red-800 border border-red-200">
-                <ArrowDownRight className="w-3.5 h-3.5 text-red-700" aria-hidden="true" />
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-medium text-xs bg-red-50 text-red-800 border border-red-200">
+                <ArrowDownRight className="w-3 h-3 text-red-600" aria-hidden="true" />
                 <span>{delta.percentStr}</span>
               </span>
             )}
-            <span className="text-charcoal-600 text-sm font-medium" aria-hidden="true">
+            <span className="text-slate-500 text-xs font-medium" aria-hidden="true">
               {deltaLabel}
             </span>
             <span className="sr-only">{delta.ariaLabel}</span>
           </div>
         ) : (
-          <span className="text-charcoal-500 text-sm">Live Pilot Corridor</span>
+          <span className="text-slate-400 text-xs">Pilot corridor</span>
         )}
       </div>
     </div>

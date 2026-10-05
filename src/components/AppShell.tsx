@@ -7,15 +7,19 @@ import { ResetConfirmDialog } from './ResetConfirmDialog';
 import { Toast } from './ui/Toast';
 import { Skeleton } from './ui/Skeleton';
 
-// Accessible loading fallback skeleton
+// Accessible loading fallback skeleton matching catalog card layout
 const PageFallback: React.FC = () => (
-  <div className="space-y-6 py-6" role="status" aria-label="Loading page...">
-    <Skeleton className="h-10 w-2/5" />
-    <Skeleton className="h-6 w-3/5" />
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-4">
-      <Skeleton className="h-32 rounded-2xl" />
-      <Skeleton className="h-32 rounded-2xl" />
-      <Skeleton className="h-32 rounded-2xl" />
+  <div className="space-y-8 py-4" role="status" aria-label="Loading page...">
+    <div className="space-y-2">
+      <Skeleton className="h-8 w-48 rounded-xl" />
+      <Skeleton className="h-4 w-96 rounded-lg" />
+    </div>
+    <Skeleton className="h-14 rounded-xl" />
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <Skeleton className="h-36 rounded-2xl" />
+      <Skeleton className="h-36 rounded-2xl" />
+      <Skeleton className="h-36 rounded-2xl" />
+      <Skeleton className="h-36 rounded-2xl" />
     </div>
     <Skeleton className="h-80 rounded-2xl" />
   </div>
@@ -23,21 +27,21 @@ const PageFallback: React.FC = () => (
 
 export const AppShell: React.FC = () => {
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col text-[#0F172A] font-sans selection:bg-emerald-100 selection:text-emerald-900">
+    <div className="min-h-screen bg-slate-50 flex flex-col text-slate-900 font-sans selection:bg-emerald-100 selection:text-emerald-900">
       
-      {/* Sticky Municipal Header with simulation controls + Back to website */}
+      {/* Slim municipal header with centered mode toggle */}
       <Header />
 
       {/* Main Content Layout Container */}
       <div className="flex-1 flex max-w-[1600px] w-full mx-auto">
         
-        {/* Accessible Left Rail Sidebar + Mobile Navigation */}
+        {/* Left Rail Sidebar + Mobile Navigation */}
         <Sidebar />
 
         {/* Main Content Landmark */}
         <main
           id="main-content"
-          className="flex-1 px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto w-full overflow-x-hidden pb-24 md:pb-8"
+          className="flex-1 px-4 sm:px-6 lg:px-8 py-8 max-w-7xl mx-auto w-full overflow-x-hidden pb-24 md:pb-12"
         >
           <Suspense fallback={<PageFallback />}>
             <Outlet />
