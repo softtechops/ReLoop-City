@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useStore } from '../store/useStore';
 import { SAMPLE_WASTE_ITEMS, classifyImage, SampleWasteItem } from '../lib/classifier';
 import { ImageClassificationResult } from '../types';
 import { PageHeader } from '../components/ui/PageHeader';
@@ -15,10 +16,12 @@ import {
   RefreshCw, 
   Coins, 
   AlertCircle,
-  FileCheck
+  FileCheck,
+  Sparkles
 } from 'lucide-react';
 
 export const ClassifyPage: React.FC = () => {
+  const { classificationOverrides, setClassificationOverride } = useStore();
   const [selectedSample, setSelectedSample] = useState<SampleWasteItem>(SAMPLE_WASTE_ITEMS[0]);
   const [classificationResult, setClassificationResult] = useState<ImageClassificationResult | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -110,6 +113,7 @@ export const ClassifyPage: React.FC = () => {
       <PageHeader
         title="Classify · Waste sorting"
         subtitle="Computer vision neural network scanning conveyor belt streams to recover pure polymers, paper, metals, and organics."
+        decisionPrompt="Which facility should this material go to?"
         stepNumber={4}
         stepName="Classify"
         actions={
@@ -333,11 +337,51 @@ export const ClassifyPage: React.FC = () => {
                       <span>Target Processing Line:</span>
                     </div>
                     <p className="font-bold text-navy-900 text-sm">
-                      {classificationResult.targetProcessingUnit}
+                      {classificationOverrides[classificationResult.id] || classificationResult.targetProcessingUnit}
                     </p>
                     <p className="text-charcoal-700 text-sm mt-1 leading-relaxed">
                       {classificationResult.sortingInstructions}
                     </p>
+                  </div>
+
+                  {/* Manager Routing Decision Selector */}
+                  <div className="pt-2 border-t border-charcoal-200 space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold uppercase tracking-wider text-charcoal-600">
+                        Manager Routing Decision:
+                      </span>
+                      {classificationOverrides[classificationResult.id] && (
+                        <span className="text-[11px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-md">
+                          Override Active
+                        </span>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      {[
+                        { id: 'mrf', label: 'MRF Commodity Baling' },
+                        { id: 'ad', label: 'Anaerobic Digester (Biogas)' },
+                        { id: 'compost', label: 'Municipal Compost Plant' },
+                        { id: 'rdf', label: 'Refuse Derived Fuel (RDF)' },
+                      ].map((facility) => {
+                        const currentVal = classificationOverrides[classificationResult.id] || classificationResult.targetProcessingUnit;
+                        const isSelected = currentVal.toLowerCase().includes(facility.id) || currentVal === facility.label;
+                        return (
+                          <button
+                            key={facility.id}
+                            type="button"
+                            onClick={() => setClassificationOverride(classificationResult.id, facility.label)}
+                            className={`px-3 py-2 rounded-xl text-xs font-bold text-left transition-all min-h-[44px] cursor-pointer flex items-center justify-between ${
+                              isSelected
+                                ? 'bg-navy-900 text-white shadow-xs ring-2 ring-emerald-400'
+                                : 'bg-white hover:bg-charcoal-50 text-charcoal-800 border border-charcoal-200'
+                            }`}
+                          >
+                            <span>{facility.label}</span>
+                            {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
 
                   {/* Economic & Carbon Metrics */}

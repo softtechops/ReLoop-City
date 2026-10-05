@@ -6,6 +6,7 @@ import { Badge } from './Badge';
 export interface PageHeaderProps {
   title: string;
   subtitle?: string;
+  decisionPrompt?: string;
   stepNumber?: number;
   totalSteps?: number;
   stepName?: string;
@@ -18,6 +19,7 @@ export interface PageHeaderProps {
 export const PageHeader: React.FC<PageHeaderProps> = ({
   title,
   subtitle,
+  decisionPrompt,
   stepNumber,
   totalSteps = 7,
   stepName,
@@ -85,6 +87,14 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
               <p className="text-sm text-charcoal-600 mt-0.5 max-w-3xl leading-relaxed">
                 {subtitle}
               </p>
+            )}
+            {decisionPrompt && (
+              <div className="mt-2.5 flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs sm:text-sm font-medium text-navy-900 w-fit">
+                <span className="px-2 py-0.5 rounded-md bg-emerald-700 text-white text-[11px] font-bold uppercase tracking-wider flex-shrink-0">
+                  Your decision
+                </span>
+                <span className="text-emerald-950 font-semibold">{decisionPrompt}</span>
+              </div>
             )}
           </div>
         </div>

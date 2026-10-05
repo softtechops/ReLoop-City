@@ -35,7 +35,8 @@ export const OptimizePage: React.FC = () => {
     setSelectedBin, 
     activeTruckFilters, 
     toggleTruckFilter, 
-    setAllTruckFilters 
+    setAllTruckFilters,
+    showToast,
   } = useStore();
 
   const [isSolving, setIsSolving] = useState(false);
@@ -51,6 +52,7 @@ export const OptimizePage: React.FC = () => {
     setTimeout(() => {
       setSolveCount((c) => c + 1);
       setIsSolving(false);
+      showToast('Dynamic CVRP routes recalculated: 4 tours optimized with 32% distance saved', 'success');
 
       // Honor prefers-reduced-motion
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -78,6 +80,7 @@ export const OptimizePage: React.FC = () => {
       <PageHeader
         title="Optimize · Smart routes"
         subtitle="Capacity-constrained vehicle routing collecting only bins predicted ≥75% full, eliminating wasted trips to empty bins."
+        decisionPrompt="How many trucks and which routes should run today?"
         stepNumber={3}
         stepName="Optimize"
         actions={

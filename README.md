@@ -59,8 +59,8 @@ npm run preview
 ReLoop City is architected into two distinct experiences with client-side React Router (`HashRouter`):
 
 1. **Public Product Website (`/`)**:
-   - Modern, high-conversion landing page matching Reloop Today's aesthetic (royal navy `#243D83`, eco-green `#62BB46`, white).
-   - Sticky navbar, interactive 9-module feature matrix, 30-day pilot impact statistics, interactive 7-step stepper with inline visuals, live in-browser mini-simulation teaser, pilot corridor map, and FAQ accordion.
+   - Modern, executive landing page designed for municipal leadership and city engineers (deep navy, emerald green, crisp white cards).
+   - Sticky navbar, 7-step circular loop feature grid, 30-day pilot impact statistics, interactive step inspector with inline visuals, live in-browser mini-simulation preview, and technical FAQ accordion.
    - Zero admin clutter, no simulation controls, fast loading.
 
 2. **Municipal Operations App (`/app/*`)**:
@@ -74,7 +74,63 @@ ReLoop City is architected into two distinct experiences with client-side React 
      - `/app/allocate` · Step 5: Circular Mass Balance & Material Allocation
      - `/app/forecast` · Step 6: Waste-to-Energy (MWh) & Bio-Methane Yield
      - `/app/revenue` · Step 7: Circular Revenue Streams & Fiscal Return
+     - `/app/scenarios` · Feature 2: Scenario Builder & 3-Way Policy Benchmark
+     - `/app/report` · Feature 3: Executive Print & PDF Briefing Pack
      - `/app/assumptions` · Municipal Assumptions & Scaling Roadmap
+
+---
+
+## 🎛️ How to Use as a Planning Tool
+
+ReLoop City empowers visitors to act directly as the **City Waste Operations Manager** for the Akurdi–Chinchwad–Moshi pilot corridor in Pune (PCMC). Rather than passively observing static metrics, managers make concrete operational choices that propagate throughout the entire simulation client-side:
+
+### 1. Operations Manager Role & Dashboard Cockpit
+- **Role Card**: An actionable operations briefing is presented on the Dashboard (`/app/dashboard`), highlighting your core mission: raise landfill diversion above 95% and slash compactor fleet logistics expenditure. Dismissing the card is remembered via browser `localStorage`.
+- **Your Decisions Panel**: A dedicated cockpit on the Dashboard tracks your live decisions across all loop steps:
+  - Active operational policy scenario (e.g., Default ReLoop vs. Custom Plan)
+  - Starred priority bins flagged for direct compactor dispatch
+  - Material stream allocation strategy (Balanced Diversion, Max Energy, or Max Recovery)
+  - Clean energy off-take policy (MSEDCL Municipal Grid Feed-in vs. PMPML Electric Bus Depot)
+  - Municipal Council briefing certification status
+
+### 2. Decision Prompts & Manager Actions Across the 7 Steps
+Every page in the 7-step circular loop includes a dedicated **"Your decision here"** prompt and an interactive control that affects system state:
+- **Step 1 (Sense · `/app/map`)**: *"Which bins need attention right now?"*  
+  Open any smart bin's telemetry drawer and click **"Mark Bin for Priority Pickup"** to star it and surface it immediately on the Dashboard live alerts list.
+- **Step 2 (Predict · `/app/predict`)**: *"Where will overflow happen in the next 48 hours?"*  
+  Click **"Prioritize for Advance Dispatch"** on any zone forecast card to preempt high-generation morning peaks.
+- **Step 3 (Optimize · `/app/optimize`)**: *"How many trucks and which routes should run today?"*  
+  Click **"Recalculate dynamic routes"** to run the 2-Opt CVRP heuristic, skipping bins <75% full and saving 32% distance.
+- **Step 4 (Classify · `/app/classify`)**: *"Which facility should this material go to?"*  
+  Click optical sorting destination chips (MRF Baling, Anaerobic Digestion, Composting, RDF) to override automated sorting destinations.
+- **Step 5 (Allocate · `/app/allocate`)**: *"How should today's waste be split across facilities?"*  
+  Select between **Balanced Diversion (42% MRF / 38% AD / 15% Compost / 5% RDF)**, **Max Clean Energy**, or **Max Material Recovery**.
+- **Step 6 (Forecast · `/app/forecast`)**: *"How much energy and biogas can we plan on?"*  
+  Commit power between **MSEDCL Grid Feed-in (₹6.80/kWh tariff)** and **PMPML Transit Bus Depot Charging (₹7.20/kWh equivalent)**.
+- **Step 7 (Report · `/app/revenue`)**: *"What should we tell the city council?"*  
+  Click **"Sign & Approve for Council"** to officially certify and seal the circular economic ledger with a municipal verification timestamp.
+
+### 3. Scenario Builder & Policy Benchmark (`/app/scenarios`)
+Model alternative municipal operations before real-world rollouts:
+- **5 Configurable Levers**:
+  - Compactor truck fleet size (2–8 trucks)
+  - Dispatch fill threshold (50%–95% fill trigger)
+  - Truck payload capacity (2.5–8.0 tonnes)
+  - Biogas recovery yield (70–160 m³/t organic)
+  - Grid electricity feed-in tariff (₹4.0–₹10.0/kWh)
+- **Deterministic Simulation**: Click **"Run Scenario"** to simulate outcomes without mutating default assumptions.
+- **3-Way Side-by-Side Comparison Table**:
+  - Compares **1. Baseline (Status Quo)** vs. **2. Default ReLoop AI** vs. **3. My Scenario** across 6 key metrics: Landfill Diversion Rate (%), Fleet Route Distance (km), Fleet Fuel Cost (₹), Clean Energy Generated (MWh), Gross Circular Revenue (₹), and CO₂ Avoided (t).
+  - Highlights superior values with an **`<Award /> Best`** badge and text indicator.
+- **Plain-Language Takeaway**: Automatically computes trade-offs (e.g. *"With 6 trucks and a 70% threshold, diversion rises to 96.1% (+1.0 pts) while fuel cost increases by 12%."*).
+- **Save & Activate**: Save up to 3 named scenarios locally in browser storage, rename or delete them, and set one as the **Active Scenario** reflected across the Dashboard and header.
+
+### 4. Audit-Ready Export & Executive Reporting
+- **Download CSV**: Click **"Export report" → "Download CSV"** from the Dashboard or Revenue page to generate a comprehensive CSV file (UTF-8 encoded with BOM `\uFEFF` for native Microsoft Excel compatibility) containing current KPIs, 3-way scenario benchmarks, and all 12 calibrated config assumptions.
+- **Print / Save as PDF (`/app/report`)**: A dedicated print-optimized briefing view formatted for A4 print and PDF generation:
+  - Hides navigation bars, headers, toasts, and action buttons via print stylesheet
+  - Renders vector Recharts at fixed widths without clipping
+  - Includes generation date, Pune PCMC corridor title, executive summary, 4 primary KPIs, scenario comparison table, donut stream breakdown, cumulative collection area chart, and PCCOE Grand Challenge 2026 footer.
 
 ---
 
@@ -96,10 +152,10 @@ ReLoop City is architected into two distinct experiences with client-side React 
 
 ### **[0:00 – 0:35] Problem & Concept (Public Website - `/`)**
 1. Open the **Public Website** at `http://localhost:5173/#/`.
-2. Point out the headline: *"Autonomous Waste-to-Resource Intelligence for Modern Cities."*
-3. Show the **Hero Impact Badges**: 50K+ Citizens Served, 24,000T Waste Diverted, 95.2% Diversion Rate.
-4. Scroll to the **9 Feature Modules** & **Interactive 7-Step Stepper**: explain how ReLoop replaces linear dumping with closed-loop circular intelligence.
-5. Click **"Launch Live Prototype"** in the top navbar to enter `/app/dashboard`.
+2. Point out the headline: *"Turn city waste into energy, materials and revenue."*
+3. Show the **Hero Impact Badges**: 95.1% Landfill Diversion (vs. 28.0% baseline), −32% Fleet Distance, 71 MWh Clean Energy, ₹34.2L Circular Value.
+4. Scroll to the **7-Step Loop Features Grid** & **Interactive Step Inspector**: explain how ReLoop replaces linear dumping with closed-loop circular intelligence.
+5. Click **"Launch live demo"** in the top navbar to enter `/app/dashboard`.
 
 ### **[0:36 – 1:30] Waste-to-Value Command Center (Dashboard & Map)**
 1. On the **Dashboard (`/app/dashboard`)**:

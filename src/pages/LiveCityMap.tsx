@@ -57,10 +57,12 @@ export const LiveCityMap: React.FC = () => {
     tickSimulation, 
     selectedBin, 
     setSelectedBin, 
-    config 
+    config,
+    priorityBinIds,
+    togglePriorityBin,
   } = useStore();
 
-  const [activeFilter, setActiveFilter] = useState<'all' | 'critical' | 'moderate' | 'low'>('all');
+  const [activeFilter, setActiveFilter] = useState<'all' | 'critical' | 'moderate' | 'low' | 'priority'>('all');
   const [zoneFilter, setZoneFilter] = useState<string>('all');
   const [streamFilter, setStreamFilter] = useState<string>('all');
 
@@ -69,6 +71,7 @@ export const LiveCityMap: React.FC = () => {
   // Filter bins
   const filteredBins = useMemo(() => {
     return bins.filter((bin) => {
+      if (activeFilter === 'priority' && !priorityBinIds.includes(bin.id)) return false;
       if (activeFilter === 'critical' && bin.fillPercent < 80) return false;
       if (activeFilter === 'moderate' && (bin.fillPercent < 50 || bin.fillPercent >= 80)) return false;
       if (activeFilter === 'low' && bin.fillPercent >= 50) return false;
@@ -76,7 +79,7 @@ export const LiveCityMap: React.FC = () => {
       if (streamFilter !== 'all' && bin.primaryStream !== streamFilter) return false;
       return true;
     });
-  }, [bins, activeFilter, zoneFilter, streamFilter]);
+  }, [bins, activeFilter, zoneFilter, streamFilter, priorityBinIds]);
 
   // Find nearest critical bin (Section 5)
   const handleFindNearestCritical = () => {
@@ -99,6 +102,7 @@ export const LiveCityMap: React.FC = () => {
       <PageHeader
         title="Sense · Live bin map"
         subtitle="Real-time ultrasonic fill level and waste stream sensors across 100 smart receptacles in Pune PCMC corridor."
+        decisionPrompt="Which bins need attention right now?"
         stepNumber={1}
         stepName="Sense"
         actions={
@@ -203,6 +207,19 @@ export const LiveCityMap: React.FC = () => {
           >
             <span className="w-2.5 h-2.5 rounded-full bg-sage-500" aria-hidden="true" />
             <span>Normal &lt;50% ({normalCount})</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveFilter('priority')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition-all min-h-[36px] ${
+              activeFilter === 'priority'
+                ? 'bg-amber-600 text-white shadow-xs'
+                : 'bg-amber-50 text-amber-900 hover:bg-amber-100 border border-amber-200'
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-600" aria-hidden="true" />
+            <span>Priority ({priorityBinIds.length})</span>
           </button>
         </div>
 
@@ -350,7 +367,13 @@ export const LiveCityMap: React.FC = () => {
                 <div>
                   <span className="font-mono text-xs font-bold text-navy-600">{selectedBin.id}</span>
                   <h3 className="font-bold text-base text-navy-900">{selectedBin.name}</h3>
-                  <span className="text-xs text-charcoal-500">{selectedBin.zoneName}</span>
+                  <span className="text-xs text-charcoal-500 block">{selectedBin.zoneName}</span>
+                  {priorityBinIds.includes(selectedBin.id) && (
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 text-[11px] font-bold mt-1">
+                      <Sparkles className="w-3 h-3 text-amber-600 fill-current" />
+                      Priority Pickup Flagged
+                    </span>
+                  )}
                 </div>
                 <div className="text-right">
                   <span
@@ -412,6 +435,26 @@ export const LiveCityMap: React.FC = () => {
                       : 'Generation rate is within standard diurnal tolerance.'}
                   </span>
                 </div>
+              </div>
+
+              {/* Manager Decision Action: Priority Pickup Toggle */}
+              <div className="pt-1">
+                <button
+                  type="button"
+                  onClick={() => togglePriorityBin(selectedBin.id)}
+                  className={`w-full py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 min-h-[44px] cursor-pointer shadow-xs ${
+                    priorityBinIds.includes(selectedBin.id)
+                      ? 'bg-amber-100 hover:bg-amber-200 text-amber-950 border border-amber-300'
+                      : 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                  }`}
+                >
+                  <Sparkles className="w-4 h-4 fill-current" aria-hidden="true" />
+                  <span>
+                    {priorityBinIds.includes(selectedBin.id)
+                      ? '★ Priority Flagged (Click to Remove)'
+                      : 'Mark Bin for Priority Pickup'}
+                  </span>
+                </button>
               </div>
 
               {/* Composition Breakdown */}

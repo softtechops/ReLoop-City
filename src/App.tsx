@@ -20,6 +20,8 @@ const AllocatePage = lazy(() => import('./pages/AllocatePage').then(m => ({ defa
 const ForecastPage = lazy(() => import('./pages/ForecastPage').then(m => ({ default: m.ForecastPage })));
 const RevenuePage = lazy(() => import('./pages/RevenuePage').then(m => ({ default: m.RevenuePage })));
 const AssumptionsRoadmap = lazy(() => import('./pages/AssumptionsRoadmap').then(m => ({ default: m.AssumptionsRoadmap })));
+const ScenarioBuilder = lazy(() => import('./pages/ScenarioBuilder').then(m => ({ default: m.ScenarioBuilder })));
+const ExecutiveReportPage = lazy(() => import('./pages/ExecutiveReportPage').then(m => ({ default: m.ExecutiveReportPage })));
 
 // Accessible loading fallback skeleton
 const PageFallback: React.FC = () => (
@@ -57,6 +59,8 @@ export function App() {
             <Route path="forecast" element={<ForecastPage />} />
             <Route path="revenue" element={<RevenuePage />} />
             <Route path="assumptions" element={<AssumptionsRoadmap />} />
+            <Route path="scenarios" element={<ScenarioBuilder />} />
+            <Route path="report" element={<ExecutiveReportPage />} />
             <Route path="*" element={<Navigate to="/app/dashboard" replace />} />
           </Route>
 
@@ -71,6 +75,8 @@ export function App() {
           <Route path="/forecast" element={<Navigate to="/app/forecast" replace />} />
           <Route path="/revenue" element={<Navigate to="/app/revenue" replace />} />
           <Route path="/assumptions" element={<Navigate to="/app/assumptions" replace />} />
+          <Route path="/scenarios" element={<Navigate to="/app/scenarios" replace />} />
+          <Route path="/report" element={<Navigate to="/app/report" replace />} />
 
           {/* Global Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />

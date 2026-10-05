@@ -15,6 +15,8 @@ import {
   ChevronUp,
   ShieldCheck,
   CheckCircle2,
+  FlaskConical,
+  Printer,
 } from 'lucide-react';
 
 interface StepperItem {
@@ -43,6 +45,8 @@ export const Sidebar: React.FC = () => {
 
   // Secondary views kept in collapsible "More"
   const moreViews = [
+    { path: '/app/scenarios', label: 'Scenarios · Policy builder', shortLabel: 'Scenarios', icon: FlaskConical },
+    { path: '/app/report', label: 'Executive Report · Print / PDF', shortLabel: 'Report', icon: Printer },
     { path: '/app/overview', label: 'Overview & Concept', shortLabel: 'Overview', icon: Compass },
     { path: '/app/assumptions', label: 'Assumptions & Roadmap', shortLabel: 'Roadmap', icon: Settings2 },
   ];

@@ -12,8 +12,11 @@ import {
   ArrowLeft,
   MoreHorizontal,
   Compass,
-  Gauge
+  Gauge,
+  HelpCircle,
+  FlaskConical,
 } from 'lucide-react';
+import { WhatCanIDoModal } from './WhatCanIDoModal';
 
 export const Header: React.FC = () => {
   const {
@@ -27,10 +30,18 @@ export const Header: React.FC = () => {
     openResetConfirm,
     setMode,
     startGuidedTour,
+    savedScenarios,
+    activeScenarioId,
   } = useStore();
 
   const [isOverflowOpen, setIsOverflowOpen] = useState(false);
+  const [isWhatCanIDoOpen, setIsWhatCanIDoOpen] = useState(false);
   const [isSimBannerDismissed, setIsSimBannerDismissed] = useState(false);
+
+  const activeScenario = React.useMemo(() => {
+    if (!activeScenarioId) return null;
+    return savedScenarios.find((s) => s.id === activeScenarioId) || null;
+  }, [savedScenarios, activeScenarioId]);
   
   const overflowRef = useRef<HTMLDivElement>(null);
   const overflowButtonRef = useRef<HTMLButtonElement>(null);
@@ -162,6 +173,18 @@ export const Header: React.FC = () => {
               <span>{compactTimeText}</span>
             </div>
 
+            {/* Active Scenario Chip (Feature 2) */}
+            {activeScenario && (
+              <Link
+                to="/app/scenarios"
+                className="hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-emerald-300 bg-emerald-50 text-xs font-bold text-emerald-800 hover:bg-emerald-100 transition-colors shadow-2xs"
+                title="Active operational policy scenario - click to manage"
+              >
+                <FlaskConical className="w-3.5 h-3.5 text-emerald-600" />
+                <span className="truncate max-w-[120px]">Scenario: {activeScenario.name}</span>
+              </Link>
+            )}
+
             {/* Primary Play / Pause Button (≥44px tap target) */}
             <button
               type="button"
@@ -236,9 +259,24 @@ export const Header: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Item: Guided Tour */}
+                  {/* Item: What can I do here? (Operations Manager Guide) */}
                   <button
                     ref={(el) => { menuItemsRef.current[3] = el; }}
+                    role="menuitem"
+                    type="button"
+                    onClick={() => {
+                      setIsOverflowOpen(false);
+                      setIsWhatCanIDoOpen(true);
+                    }}
+                    className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold text-charcoal-700 hover:text-navy-900 hover:bg-emerald-50/70 flex items-center gap-2.5 transition-colors cursor-pointer"
+                  >
+                    <HelpCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                    <span>What can I do here?</span>
+                  </button>
+
+                  {/* Item: Guided Tour */}
+                  <button
+                    ref={(el) => { menuItemsRef.current[4] = el; }}
                     role="menuitem"
                     type="button"
                     onClick={() => {
@@ -253,7 +291,7 @@ export const Header: React.FC = () => {
 
                   {/* Item: Reset Simulation */}
                   <button
-                    ref={(el) => { menuItemsRef.current[4] = el; }}
+                    ref={(el) => { menuItemsRef.current[5] = el; }}
                     role="menuitem"
                     type="button"
                     onClick={() => {
@@ -271,7 +309,7 @@ export const Header: React.FC = () => {
 
                   {/* Item: Back to Public Website */}
                   <Link
-                    ref={(el) => { menuItemsRef.current[5] = el; }}
+                    ref={(el) => { menuItemsRef.current[6] = el; }}
                     role="menuitem"
                     to="/"
                     onClick={() => setIsOverflowOpen(false)}
@@ -316,6 +354,12 @@ export const Header: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* What Can I Do Here? Help Dialog */}
+      <WhatCanIDoModal
+        isOpen={isWhatCanIDoOpen}
+        onClose={() => setIsWhatCanIDoOpen(false)}
+      />
     </header>
   );
 };

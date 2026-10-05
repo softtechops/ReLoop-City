@@ -27,10 +27,10 @@ import {
 } from 'recharts';
 
 export const ForecastPage: React.FC = () => {
-  const { simState, config, mode } = useStore();
+  const { simState, config, mode, energyOfftakeCommitment, setEnergyOfftakeCommitment } = useStore();
 
   const currentMetrics = mode === 'reloop' ? simState.reloopCumulative : simState.baselineCumulative;
-  const homesPowered = Math.round((currentMetrics.energyGeneratedMwh * 1000) / 3.5);
+  const homesPowered = Math.round((currentMetrics.energyGeneratedMwh * 1000) / 90); // 90 kWh/month/home
   const cngCylinderEquivalent = Math.round(currentMetrics.biogasProducedM3 * 0.45);
   const headlineSaving = `${currentMetrics.energyGeneratedMwh.toFixed(1)} MWh clean energy generated, powering ~${homesPowered} Pune homes`;
 
@@ -51,6 +51,7 @@ export const ForecastPage: React.FC = () => {
       <PageHeader
         title="Forecast · Clean energy"
         subtitle="Forecasting anaerobic digestion bio-methane conversion and combined heat-and-power (CHP) grid electricity."
+        decisionPrompt="How much energy and biogas can we plan on?"
         stepNumber={6}
         totalSteps={7}
         stepName="Forecast"
@@ -65,6 +66,66 @@ export const ForecastPage: React.FC = () => {
           </div>
         }
       />
+
+      {/* Manager Decision: Energy Off-Take Commitment */}
+      <div className="p-4 sm:p-5 rounded-2xl bg-white border border-charcoal-200 shadow-sm space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <span className="text-xs font-bold uppercase tracking-wider text-charcoal-500 block">
+              Municipal Energy Off-take Policy
+            </span>
+            <p className="text-sm font-bold text-navy-900">
+              Commit generated renewable electricity and biomethane to a municipal off-taker:
+            </p>
+          </div>
+          <span className="text-xs font-mono text-charcoal-500">
+            Committed to: <strong className="text-navy-900">{energyOfftakeCommitment === 'grid' ? 'MSEDCL Grid Feed-in' : 'PMPML Bus Charging'}</strong>
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            {
+              id: 'grid' as const,
+              title: 'MSEDCL Municipal Grid Feed-in',
+              rate: `₹${config.electricityTariffInrPerKwh.toFixed(2)}/kWh tariff`,
+              desc: 'Feeds clean energy directly into the Pune state utility grid for guaranteed baseline cashflow.',
+            },
+            {
+              id: 'bus_depot' as const,
+              title: 'PMPML EV Transit Bus Depot',
+              rate: '₹7.20/kWh equivalent saving',
+              desc: 'Displaces municipal diesel bus costs by charging electric public transit buses overnight at Nigdi depot.',
+            },
+          ].map((opt) => {
+            const isSelected = energyOfftakeCommitment === opt.id;
+            return (
+              <button
+                key={opt.id}
+                type="button"
+                onClick={() => setEnergyOfftakeCommitment(opt.id)}
+                className={`p-3.5 rounded-xl border text-left transition-all min-h-[44px] cursor-pointer flex flex-col justify-between ${
+                  isSelected
+                    ? 'bg-navy-900 text-white border-navy-900 shadow-sm ring-2 ring-emerald-400'
+                    : 'bg-charcoal-50 hover:bg-charcoal-100 text-charcoal-800 border-charcoal-200'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-xs sm:text-sm">{opt.title}</span>
+                  {isSelected ? (
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                  ) : (
+                    <span className="text-xs font-mono text-charcoal-500">{opt.rate}</span>
+                  )}
+                </div>
+                <p className={`text-xs mt-1 leading-snug ${isSelected ? 'text-charcoal-300' : 'text-charcoal-600'}`}>
+                  {opt.desc}
+                </p>
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
       {/* One-Line Top Headline Result (Phase 4 requirement) */}
       <div className="p-4 sm:p-5 rounded-2xl bg-white border border-charcoal-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">

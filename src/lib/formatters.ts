@@ -73,3 +73,23 @@ export function formatTonnage(tonnes: number): string {
   if (isNaN(tonnes) || tonnes === undefined || tonnes === null) return '0.0 t';
   return `${Number(tonnes).toFixed(1)} t`;
 }
+
+/**
+ * Returns "—" when value is zero or not yet computed, otherwise formats.
+ * Use this for KPIs that should show a dash until the sim has run.
+ */
+export function safeFormatTonnage(tonnes: number): string {
+  if (!Number.isFinite(tonnes) || tonnes <= 0) return '—';
+  return `${Number(tonnes).toFixed(1)} t`;
+}
+
+export function safeFormatCurrencyINR(amountInr: number): string {
+  if (!Number.isFinite(amountInr) || amountInr <= 0) return '—';
+  const lakhs = amountInr / 100000;
+  return `₹${lakhs.toLocaleString('en-IN', { minimumFractionDigits: 1, maximumFractionDigits: 2 })}L`;
+}
+
+export function safeFormatMwh(mwh: number): string {
+  if (!Number.isFinite(mwh) || mwh <= 0) return '—';
+  return `${Number(mwh).toFixed(1)} MWh`;
+}

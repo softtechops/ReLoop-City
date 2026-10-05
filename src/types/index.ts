@@ -153,7 +153,21 @@ export type ActivePage =
   | 'allocate'
   | 'forecast'
   | 'revenue'
-  | 'assumptions';
+  | 'assumptions'
+  | 'scenarios'
+  | 'report';
+
+export interface SavedScenario {
+  id: string;
+  name: string;
+  createdAt: string;
+  config: Partial<import('../config/config').ConfigState>;
+  metrics: import('../lib/metrics').ScenarioMetrics;
+  notes?: string;
+}
+
+export type AllocationStrategy = 'balanced' | 'max_energy' | 'max_recovery';
+export type EnergyCommitment = 'grid' | 'bus_depot';
 
 export interface GuidedTourStep {
   stepNumber: number;
@@ -164,3 +178,4 @@ export interface GuidedTourStep {
   highlightAction: string;
   takeaway: string;
 }
+

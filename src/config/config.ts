@@ -45,6 +45,11 @@ export interface ConfigState {
   kgCo2eAvoidedPerTonneComposted: number; // Assumption: 520 kg CO₂e avoided by preventing anaerobic landfill methane
   kgCo2eAvoidedPerMwhCleanEnergy: number; // Assumption: 820 kg CO₂e avoided per MWh vs coal-heavy Indian grid average
   landfillTippingCostInrPerTonne: number; // Assumption: ₹1,200 per tonne municipal landfill tipping fee (avoided cost)
+
+  // Real-world comparison conversion factors (all labeled assumptions for transparency)
+  kwhPerHomePerMonth: number; // Assumption: ~90 kWh average monthly electricity use per urban Indian home (MNRE 2023)
+  kgCo2ePerCarKm: number;     // Assumption: 0.192 kg CO₂e per passenger-car km (IPCC 2021 petrol car average)
+  kgCo2ePerTreePerYear: number; // Assumption: 21 kg CO₂e sequestered per mature tree per year (FAO estimate)
 }
 
 export const DEFAULT_CONFIG: ConfigState = {
@@ -86,6 +91,11 @@ export const DEFAULT_CONFIG: ConfigState = {
   kgCo2eAvoidedPerTonneComposted: 520,
   kgCo2eAvoidedPerMwhCleanEnergy: 820,
   landfillTippingCostInrPerTonne: 1200,
+
+  // Real-world comparison conversion factors (labeled assumptions)
+  kwhPerHomePerMonth: 90,        // MNRE 2023: ~90 kWh/month per urban Indian home
+  kgCo2ePerCarKm: 0.192,        // IPCC 2021: 0.192 kg CO₂e per km for petrol car
+  kgCo2ePerTreePerYear: 21,     // FAO estimate: 21 kg CO₂e per mature tree per year
 };
 
 // Pilot zones with distinct waste mix profiles matching slide 5:

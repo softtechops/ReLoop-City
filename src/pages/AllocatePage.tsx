@@ -19,7 +19,7 @@ import {
 import { formatTonnage } from '../lib/formatters';
 
 export const AllocatePage: React.FC = () => {
-  const { simState, config, mode } = useStore();
+  const { simState, config, mode, allocationStrategy, setAllocationStrategy } = useStore();
 
   const currentMetrics = mode === 'reloop' ? simState.reloopCumulative : simState.baselineCumulative;
   const todayMetrics = mode === 'reloop' ? simState.todayReloop : simState.todayBaseline;
@@ -30,11 +30,11 @@ export const AllocatePage: React.FC = () => {
       id: 'unit-ad',
       name: 'Thermophilic Anaerobic Digestion Plant',
       category: 'Energy',
-      currentInputTonnesPerDay: Number((todayMetrics.energyRecoveredTonnes * 0.65).toFixed(1)),
+      currentInputTonnesPerDay: Number((todayMetrics.energyRecoveredTonnes * (allocationStrategy === 'max_energy' ? 0.8 : 0.65)).toFixed(1)),
       maxCapacityTonnesPerDay: 25.0,
-      utilizationPercent: Math.min(100, Math.round(((todayMetrics.energyRecoveredTonnes * 0.65) / 25.0) * 100)),
+      utilizationPercent: Math.min(100, Math.round(((todayMetrics.energyRecoveredTonnes * (allocationStrategy === 'max_energy' ? 0.8 : 0.65)) / 25.0) * 100)),
       outputProduct: 'Raw Bio-Methane (CH₄ ~62%) & Clean Electricity',
-      outputYield: `${Math.round(todayMetrics.biogasProducedM3)} m³ Biogas · ${todayMetrics.energyGeneratedMwh.toFixed(1)} MWh`,
+      outputYield: `${Math.round(todayMetrics.biogasProducedM3 * (allocationStrategy === 'max_energy' ? 1.15 : 1))} m³ Biogas · ${(todayMetrics.energyGeneratedMwh * (allocationStrategy === 'max_energy' ? 1.15 : 1)).toFixed(1)} MWh`,
       operationalStatus: 'Optimal',
     },
     {
@@ -52,11 +52,11 @@ export const AllocatePage: React.FC = () => {
       id: 'unit-mrf-recycling',
       name: 'MRF Polymer & Metal Sorting Lines',
       category: 'Recycling',
-      currentInputTonnesPerDay: todayMetrics.recycledTonnes,
+      currentInputTonnesPerDay: Number((todayMetrics.recycledTonnes * (allocationStrategy === 'max_recovery' ? 1.15 : 1.0)).toFixed(1)),
       maxCapacityTonnesPerDay: 20.0,
-      utilizationPercent: Math.min(100, Math.round((todayMetrics.recycledTonnes / 20.0) * 100)),
+      utilizationPercent: Math.min(100, Math.round(((todayMetrics.recycledTonnes * (allocationStrategy === 'max_recovery' ? 1.15 : 1.0)) / 20.0) * 100)),
       outputProduct: 'rPET Flakes, HDPE Pellets, Aluminum Ingots',
-      outputYield: `${todayMetrics.recycledTonnes.toFixed(1)} Tonnes Commodity Recyclates`,
+      outputYield: `${(todayMetrics.recycledTonnes * (allocationStrategy === 'max_recovery' ? 1.15 : 1.0)).toFixed(1)} Tonnes Commodity Recyclates`,
       operationalStatus: 'Optimal',
     },
     {
@@ -102,6 +102,7 @@ export const AllocatePage: React.FC = () => {
       <PageHeader
         title="Allocate · Waste streams"
         subtitle="End-to-end mass balance routing classified municipal streams directly into digestion, composting, and remanufacturing lines."
+        decisionPrompt="How should today's waste be split across facilities?"
         stepNumber={5}
         totalSteps={7}
         stepName="Allocate"
@@ -116,6 +117,65 @@ export const AllocatePage: React.FC = () => {
           </div>
         }
       />
+
+      {/* Manager Decision: Facility Diversion Policy Selector */}
+      <div className="p-4 sm:p-5 rounded-2xl bg-white border border-charcoal-200 shadow-sm space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <span className="text-xs font-bold uppercase tracking-wider text-charcoal-500 block">
+              Operational Mass Allocation Strategy
+            </span>
+            <p className="text-sm font-bold text-navy-900">
+              Select target prioritization for incoming organic &amp; dry municipal streams:
+            </p>
+          </div>
+          <span className="text-xs font-mono text-charcoal-500">
+            Active: <strong className="text-navy-900 uppercase">{allocationStrategy.replace('_', ' ')}</strong>
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {[
+            {
+              id: 'balanced' as const,
+              title: 'Balanced Allocation',
+              desc: 'Standard multi-stream split between MRF, composting & biogas CHP.',
+            },
+            {
+              id: 'max_energy' as const,
+              title: 'Max Biogas & Energy',
+              desc: 'Routes maximum organic digestate to thermophilic AD for power generation.',
+            },
+            {
+              id: 'max_recovery' as const,
+              title: 'Max Commodity Recovery',
+              desc: 'Maximizes high-grade polymer baling & secondary market packaging sales.',
+            },
+          ].map((strat) => {
+            const isSelected = allocationStrategy === strat.id;
+            return (
+              <button
+                key={strat.id}
+                type="button"
+                onClick={() => setAllocationStrategy(strat.id)}
+                className={`p-3.5 rounded-xl border text-left transition-all min-h-[44px] cursor-pointer flex flex-col justify-between ${
+                  isSelected
+                    ? 'bg-navy-900 text-white border-navy-900 shadow-sm ring-2 ring-emerald-400'
+                    : 'bg-charcoal-50 hover:bg-charcoal-100 text-charcoal-800 border-charcoal-200'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-xs sm:text-sm">{strat.title}</span>
+                  {isSelected && <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />}
+                </div>
+                <p className={`text-xs mt-1 leading-snug ${isSelected ? 'text-charcoal-300' : 'text-charcoal-600'}`}>
+                  {strat.desc}
+                </p>
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
       {/* One-Line Top Headline Result (Phase 4 requirement) */}
       <div className="p-4 sm:p-5 rounded-2xl bg-white border border-charcoal-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">

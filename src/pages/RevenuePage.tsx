@@ -4,6 +4,8 @@ import { PageHeader } from '../components/ui/PageHeader';
 import { LoopStepNav } from '../components/ui/LoopStepNav';
 import { SectionCard } from '../components/ui/SectionCard';
 import { Badge } from '../components/ui/Badge';
+import { Button } from '../components/ui/Button';
+import { ExportReportMenu } from '../components/ExportReportMenu';
 import { 
   Coins, 
   Building2, 
@@ -12,7 +14,10 @@ import {
   Recycle, 
   Factory, 
   Award,
-  CheckCircle2
+  CheckCircle2,
+  ShieldCheck,
+  FileCheck2,
+  Sparkles
 } from 'lucide-react';
 import { 
   BarChart, 
@@ -26,7 +31,7 @@ import {
 import { formatCurrencyINR } from '../lib/formatters';
 
 export const RevenuePage: React.FC = () => {
-  const { mode } = useStore();
+  const { mode, councilReportApproved, councilApprovalTimestamp, approveCouncilReport } = useStore();
   const isReloop = mode === 'reloop';
 
   // 6 Circular Revenue Streams breakdown
@@ -118,12 +123,16 @@ export const RevenuePage: React.FC = () => {
         stepNumber={7}
         totalSteps={7}
         stepName="Report"
+        decisionPrompt="What should we tell the city council?"
         actions={
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-charcoal-500 font-medium">Pilot Run-rate:</span>
-            <span className="font-extrabold text-navy-900 text-sm font-['Outfit']">
-              {formatCurrencyINR(totalMonthlyRevenueInr)}/month
-            </span>
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-navy-50 border border-navy-200">
+              <span className="text-xs text-charcoal-500 font-medium">Pilot Run-rate:</span>
+              <span className="font-extrabold text-navy-900 text-sm font-['Outfit']">
+                {formatCurrencyINR(totalMonthlyRevenueInr)}/month
+              </span>
+            </div>
+            <ExportReportMenu />
           </div>
         }
       />
@@ -146,6 +155,76 @@ export const RevenuePage: React.FC = () => {
         <Badge variant={isReloop ? 'emerald' : 'amber'} size="md">
           {isReloop ? 'Self-Financing Active' : 'Cost-Center Baseline'}
         </Badge>
+      </div>
+
+      {/* Decision Card: Council Briefing Approval */}
+      <div className={`p-5 rounded-2xl border transition-all ${
+        councilReportApproved
+          ? 'bg-emerald-50/70 border-emerald-300 shadow-sm'
+          : 'bg-white border-charcoal-200 shadow-sm'
+      }`}>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <div className={`p-2.5 rounded-xl flex-shrink-0 ${
+              councilReportApproved ? 'bg-emerald-500 text-white' : 'bg-navy-50 text-navy-800'
+            }`}>
+              {councilReportApproved ? (
+                <ShieldCheck className="w-5 h-5" />
+              ) : (
+                <FileCheck2 className="w-5 h-5" />
+              )}
+            </div>
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-charcoal-500">
+                  Municipal Decision Action
+                </span>
+                {councilReportApproved ? (
+                  <Badge variant="emerald" size="sm">
+                    Certified for PCMC Standing Committee
+                  </Badge>
+                ) : (
+                  <Badge variant="amber" size="sm">
+                    Draft Pending Operations Manager Sign-off
+                  </Badge>
+                )}
+              </div>
+              <h3 className="text-base font-bold text-navy-900">
+                {councilReportApproved
+                  ? 'Circular Economic Ledger Certified for Municipal Submission'
+                  : 'Approve Corridor Results for PCMC City Council Review'}
+              </h3>
+              <p className="text-xs text-charcoal-600 max-w-2xl leading-relaxed">
+                {councilReportApproved
+                  ? `Sealed by City Waste Operations Manager on ${councilApprovalTimestamp}. Verified 95.8% diversion, net quarterly surplus of ₹20.4 Lakh, and 31.2 t CO₂ abatement under simulated pilot corridor standards.`
+                  : 'Sign off on current simulation outcomes, diversion metrics, and facility economics to release the formal briefing pack to the PCMC Municipal Commissioner.'}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 self-start md:self-center flex-shrink-0">
+            {councilReportApproved ? (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => approveCouncilReport(false)}
+                className="text-xs text-charcoal-600 hover:text-red-700 hover:border-red-300"
+              >
+                Revert to Draft
+              </Button>
+            ) : (
+              <Button
+                variant="primary"
+                size="md"
+                onClick={() => approveCouncilReport(true)}
+                className="gap-2 text-xs font-bold shadow-xs bg-emerald-600 hover:bg-emerald-700 text-white"
+              >
+                <CheckCircle2 className="w-4 h-4" />
+                Sign & Approve for Council
+              </Button>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Slide 9 Architecture: From Cost Center to City-Wide Impact */}

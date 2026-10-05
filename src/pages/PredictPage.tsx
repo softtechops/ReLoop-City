@@ -28,7 +28,7 @@ import {
 } from 'recharts';
 
 export const PredictPage: React.FC = () => {
-  const { simState, setSelectedBin } = useStore();
+  const { simState, setSelectedBin, flaggedZoneId, setFlaggedZoneId } = useStore();
   const navigate = useNavigate();
   const [horizon, setHorizon] = useState<24 | 48 | 72>(48);
 
@@ -63,6 +63,7 @@ export const PredictPage: React.FC = () => {
       <PageHeader
         title="Predict · Waste forecast"
         subtitle="Machine learning time-series model projecting generation surge curves across 5 Pune pilot zones for proactive resource pre-allocation."
+        decisionPrompt="Where will overflow happen in the next 48 hours?"
         stepNumber={2}
         stepName="Predict"
         actions={
@@ -207,6 +208,25 @@ export const PredictPage: React.FC = () => {
                       <span className={`font-semibold ${urgentInZone > 0 ? 'text-red-600' : 'text-sage-700'}`}>
                         {urgentInZone} near overflow
                       </span>
+                    </div>
+
+                    <div className="pt-1 flex items-center justify-between">
+                      <button
+                        type="button"
+                        onClick={() => setFlaggedZoneId(flaggedZoneId === zone.id ? null : zone.id)}
+                        className={`w-full py-1.5 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 min-h-[36px] cursor-pointer ${
+                          flaggedZoneId === zone.id
+                            ? 'bg-amber-600 text-white shadow-xs'
+                            : 'bg-white hover:bg-charcoal-100 text-charcoal-800 border border-charcoal-200'
+                        }`}
+                      >
+                        <Sparkles className="w-3.5 h-3.5" />
+                        <span>
+                          {flaggedZoneId === zone.id
+                            ? '★ Advance Dispatch Prioritized'
+                            : 'Prioritize for Advance Dispatch'}
+                        </span>
+                      </button>
                     </div>
                   </div>
                 );
