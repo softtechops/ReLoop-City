@@ -119,18 +119,18 @@ export const AllocatePage: React.FC = () => {
       />
 
       {/* Manager Decision: Facility Diversion Policy Selector */}
-      <div className="p-4 sm:p-5 rounded-2xl bg-white border border-charcoal-200 shadow-sm space-y-3">
+      <div className="p-4 sm:p-5 rounded-2xl bg-surface border border-line shadow-sm space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-charcoal-500 block">
+            <span className="text-xs font-bold uppercase tracking-wider text-fg-subtle block">
               Operational Mass Allocation Strategy
             </span>
-            <p className="text-sm font-bold text-navy-900">
+            <p className="text-sm font-bold text-fg">
               Select target prioritization for incoming organic &amp; dry municipal streams:
             </p>
           </div>
-          <span className="text-xs font-mono text-charcoal-500">
-            Active: <strong className="text-navy-900 uppercase">{allocationStrategy.replace('_', ' ')}</strong>
+          <span className="text-xs font-mono text-fg-muted">
+            Active: <strong className="text-fg uppercase">{allocationStrategy.replace('_', ' ')}</strong>
           </span>
         </div>
 
@@ -160,15 +160,15 @@ export const AllocatePage: React.FC = () => {
                 onClick={() => setAllocationStrategy(strat.id)}
                 className={`p-3.5 rounded-xl border text-left transition-all min-h-[44px] cursor-pointer flex flex-col justify-between ${
                   isSelected
-                    ? 'bg-navy-900 text-white border-navy-900 shadow-sm ring-2 ring-emerald-400'
-                    : 'bg-charcoal-50 hover:bg-charcoal-100 text-charcoal-800 border-charcoal-200'
+                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm ring-2 ring-emerald-400'
+                    : 'bg-surface-muted hover:bg-surface text-fg border-line'
                 }`}
               >
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-xs sm:text-sm">{strat.title}</span>
-                  {isSelected && <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />}
+                  {isSelected && <CheckCircle2 className="w-4 h-4 text-white flex-shrink-0" />}
                 </div>
-                <p className={`text-xs mt-1 leading-snug ${isSelected ? 'text-charcoal-300' : 'text-charcoal-600'}`}>
+                <p className={`text-xs mt-1 leading-snug ${isSelected ? 'text-emerald-100' : 'text-fg-muted'}`}>
                   {strat.desc}
                 </p>
               </button>
@@ -178,16 +178,16 @@ export const AllocatePage: React.FC = () => {
       </div>
 
       {/* One-Line Top Headline Result (Phase 4 requirement) */}
-      <div className="p-4 sm:p-5 rounded-2xl bg-white border border-charcoal-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="p-4 sm:p-5 rounded-2xl bg-surface border border-line shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <span className="p-2.5 rounded-xl bg-emerald-100 text-emerald-800 flex-shrink-0" aria-hidden="true">
-            <GitFork className="w-5 h-5 text-emerald-700" />
+          <span className="p-2.5 rounded-xl bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 flex-shrink-0" aria-hidden="true">
+            <GitFork className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
           </span>
           <div>
-            <div className="text-xs uppercase font-bold tracking-wider text-charcoal-500">
+            <div className="text-xs uppercase font-bold tracking-wider text-fg-subtle">
               Mass Balance Allocation
             </div>
-            <p className="text-sm sm:text-base font-bold text-navy-900 leading-snug">
+            <p className="text-sm sm:text-base font-bold text-fg leading-snug">
               {headlineResult}
             </p>
           </div>
@@ -206,22 +206,22 @@ export const AllocatePage: React.FC = () => {
           
           {/* Stream Inflows (Left Side) */}
           <div className="lg:col-span-4 space-y-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-charcoal-500 block mb-1">
+            <span className="text-xs font-bold uppercase tracking-wider text-fg-subtle block mb-1">
               Sorted Inflows (Daily)
             </span>
             {[
-              { label: 'Wet Organic Stream', tonnes: todayMetrics.compostedTonnes / config.compostYieldFactor + todayMetrics.energyRecoveredTonnes * 0.65, color: 'bg-sage-600' },
-              { label: 'Dry Recyclables & Polymers', tonnes: todayMetrics.recycledTonnes, color: 'bg-navy-700' },
-              { label: 'C&D Debris & Aggregates', tonnes: todayMetrics.cdAggregateTonnes, color: 'bg-blue-600' },
-              { label: 'Combustible Tailings & RDF', tonnes: todayMetrics.energyRecoveredTonnes * 0.35, color: 'bg-amberGold-600' },
-              { label: 'Unavoidable Residual', tonnes: todayMetrics.landfilledTonnes, color: 'bg-residual-500' },
+              { label: 'Wet Organic Stream', tonnes: todayMetrics.compostedTonnes / config.compostYieldFactor + todayMetrics.energyRecoveredTonnes * 0.65, color: 'bg-emerald-600' },
+              { label: 'Dry Recyclables & Polymers', tonnes: todayMetrics.recycledTonnes, color: 'bg-sky-600' },
+              { label: 'C&D Debris & Aggregates', tonnes: todayMetrics.cdAggregateTonnes, color: 'bg-indigo-600' },
+              { label: 'Combustible Tailings & RDF', tonnes: todayMetrics.energyRecoveredTonnes * 0.35, color: 'bg-amber-500' },
+              { label: 'Unavoidable Residual', tonnes: todayMetrics.landfilledTonnes, color: 'bg-slate-400' },
             ].map((stream) => (
-              <div key={stream.label} className="p-3.5 rounded-xl border border-charcoal-200 bg-[#F8FAFC] space-y-1.5">
+              <div key={stream.label} className="p-3.5 rounded-xl border border-line bg-surface-muted space-y-1.5">
                 <div className="flex justify-between items-center text-sm">
-                  <span className="font-bold text-navy-900">{stream.label}</span>
-                  <span className="font-mono font-bold text-navy-800">{stream.tonnes.toFixed(1)} t/d</span>
+                  <span className="font-bold text-fg">{stream.label}</span>
+                  <span className="font-mono font-bold text-fg">{stream.tonnes.toFixed(1)} t/d</span>
                 </div>
-                <div className="w-full h-2 rounded-full bg-charcoal-200 overflow-hidden">
+                <div className="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
                   <div className={`h-full rounded-full ${stream.color}`} style={{ width: `${Math.min(100, Math.round((stream.tonnes / Math.max(1, todayMetrics.collectedTonnes)) * 100))}%` }} />
                 </div>
               </div>
@@ -229,51 +229,51 @@ export const AllocatePage: React.FC = () => {
           </div>
 
           {/* Allocation Routing Conduits (Center) */}
-          <div className="lg:col-span-2 hidden lg:flex flex-col items-center justify-center space-y-8 text-charcoal-400">
-            <div className="p-2 rounded-full bg-navy-50 text-navy-700 border border-navy-200 shadow-2xs">
+          <div className="lg:col-span-2 hidden lg:flex flex-col items-center justify-center space-y-8 text-fg-subtle">
+            <div className="p-2 rounded-full bg-surface-muted text-fg border border-line shadow-2xs">
               <ArrowRight className="w-5 h-5" />
             </div>
-            <span className="text-[11px] font-mono text-center uppercase tracking-wider font-semibold text-charcoal-500">
+            <span className="text-[11px] font-mono text-center uppercase tracking-wider font-semibold text-fg-muted">
               AI Dynamic Dispatch
             </span>
-            <div className="p-2 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-2xs">
+            <div className="p-2 rounded-full bg-surface-muted text-emerald-600 dark:text-emerald-400 border border-line shadow-2xs">
               <ArrowRight className="w-5 h-5" />
             </div>
           </div>
 
           {/* Processing Facilities List & Utilization (Right Side) */}
           <div className="lg:col-span-6 space-y-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-charcoal-500 block mb-1">
+            <span className="text-xs font-bold uppercase tracking-wider text-fg-subtle block mb-1">
               Receiving Processing Facilities & Daily Load
             </span>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {allocationUnits.map((unit) => (
                 <div 
                   key={unit.id}
-                  className="p-3.5 rounded-xl border border-charcoal-200 bg-white shadow-2xs space-y-2 hover:border-emerald-300 transition-all"
+                  className="p-3.5 rounded-xl border border-line bg-surface shadow-sm space-y-2 hover:border-emerald-500/50 transition-all"
                 >
                   <div className="flex justify-between items-start">
                     <div>
-                      <h4 className="font-bold text-xs text-navy-900 leading-snug">{unit.name}</h4>
-                      <span className="text-xs text-charcoal-500 font-mono">Max: {unit.maxCapacityTonnesPerDay} t/d</span>
+                      <h4 className="font-bold text-xs text-fg leading-snug">{unit.name}</h4>
+                      <span className="text-xs text-fg-muted font-mono">Max: {unit.maxCapacityTonnesPerDay} t/d</span>
                     </div>
                     <Badge variant={unit.utilizationPercent > 85 ? 'amber' : 'sage'} size="sm">
                       {unit.utilizationPercent}% Load
                     </Badge>
                   </div>
 
-                  <div className="w-full h-2 rounded-full bg-charcoal-100 overflow-hidden border border-charcoal-200">
+                  <div className="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
                     <div 
                       className={`h-full rounded-full ${
-                        unit.utilizationPercent > 85 ? 'bg-amberGold-500' : 'bg-sage-500'
+                        unit.utilizationPercent > 85 ? 'bg-amber-500' : 'bg-emerald-600 dark:bg-emerald-500'
                       }`}
                       style={{ width: `${unit.utilizationPercent}%` }}
                     />
                   </div>
 
-                  <div className="pt-1.5 border-t border-charcoal-100 text-xs">
-                    <span className="text-charcoal-500 block text-[10px]">Resource Yield:</span>
-                    <span className="font-bold text-navy-900 truncate block">{unit.outputYield}</span>
+                  <div className="pt-1.5 border-t border-line text-xs">
+                    <span className="text-fg-subtle block text-[10px]">Resource Yield:</span>
+                    <span className="font-bold text-fg truncate block">{unit.outputYield}</span>
                   </div>
                 </div>
               ))}

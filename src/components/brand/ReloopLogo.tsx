@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTheme } from '../../lib/useTheme';
 
 interface ReloopLogoProps {
   className?: string;
@@ -7,9 +8,12 @@ interface ReloopLogoProps {
 
 export const ReloopLogo: React.FC<ReloopLogoProps> = ({
   className = 'h-7 sm:h-8 w-auto',
-  isDark = false,
+  isDark,
 }) => {
-  const blueFill = isDark ? '#FFFFFF' : '#243D83';
+  const { resolvedTheme } = useTheme();
+  const effectiveDark = isDark !== undefined ? isDark : resolvedTheme === 'dark';
+
+  const blueFill = effectiveDark ? '#FFFFFF' : '#243D83';
   const greenFill = '#62BB46';
   const deepGreenFill = '#00A300';
 
@@ -62,7 +66,7 @@ export const ReloopLogo: React.FC<ReloopLogoProps> = ({
           fill={greenFill}
         />
       </svg>
-      <span className="text-[11px] font-bold tracking-widest uppercase bg-green-100 text-green-800 px-1.5 py-0.5 rounded font-mono">
+      <span className="text-[11px] font-bold tracking-widest uppercase bg-green-100 text-green-800 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border dark:border-emerald-800/60 px-1.5 py-0.5 rounded font-mono">
         City
       </span>
     </div>

@@ -27,9 +27,9 @@ const PageFallback: React.FC = () => (
 
 export const AppShell: React.FC = () => {
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col text-slate-900 font-sans selection:bg-emerald-100 selection:text-emerald-900">
+    <div className="min-h-screen bg-page text-fg flex flex-col font-sans selection:bg-emerald-200 selection:text-emerald-950 dark:selection:bg-emerald-900 dark:selection:text-emerald-100">
       
-      {/* Slim municipal header with centered mode toggle */}
+      {/* Slim municipal header with centered mode toggle & theme toggle */}
       <Header />
 
       {/* Main Content Layout Container */}

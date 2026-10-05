@@ -173,21 +173,21 @@ export const ScenarioBuilder: React.FC = () => {
       />
 
       {/* ── Active Scenario Indicator Banner ────────────────────────────── */}
-      <div className="p-4 sm:p-5 rounded-2xl bg-white border border-navy-100 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="p-4 sm:p-5 rounded-2xl bg-surface border border-line shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-navy-50 text-navy-800 flex-shrink-0">
-            <FlaskConical className="w-5 h-5 text-navy-700" />
+          <div className="p-2.5 rounded-xl bg-surface-muted text-fg flex-shrink-0">
+            <FlaskConical className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs uppercase font-bold tracking-wider text-charcoal-500">
+              <span className="text-xs uppercase font-bold tracking-wider text-fg-muted">
                 Active Operational Scenario
               </span>
               <Badge variant={activeScenarioId ? 'emerald' : 'navy'} size="sm">
                 {activeScenarioId ? 'Custom Plan Active' : 'Default ReLoop (4 Trucks / 75%)'}
               </Badge>
             </div>
-            <p className="text-sm font-bold text-navy-900 mt-0.5">
+            <p className="text-sm font-bold text-fg mt-0.5">
               {activeScenarioId
                 ? `Active in Dashboard & Loop Steps: "${savedScenarios.find((s) => s.id === activeScenarioId)?.name || 'Custom Scenario'}"`
                 : 'Default ReLoop AI scenario is currently active on the Dashboard and pilot loop.'}
@@ -200,7 +200,7 @@ export const ScenarioBuilder: React.FC = () => {
             variant="outline"
             size="sm"
             onClick={() => setActiveScenario(null)}
-            className="text-xs text-charcoal-700 hover:text-navy-900 self-start sm:self-auto"
+            className="text-xs text-fg-muted hover:text-fg self-start sm:self-auto"
           >
             Revert to Default
           </Button>
@@ -221,7 +221,7 @@ export const ScenarioBuilder: React.FC = () => {
                 icon={isRunning ? undefined : <Play className="w-4 h-4 fill-current" />}
                 onClick={handleRunScenario}
                 disabled={isRunning}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm gap-2"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs gap-2"
                 aria-label="Run scenario simulation"
               >
                 {isRunning ? (
@@ -237,15 +237,15 @@ export const ScenarioBuilder: React.FC = () => {
           >
             <div className="space-y-6 pt-2">
               {/* Slider 1: Number of Compactor Trucks */}
-              <div className="space-y-2 p-4 rounded-xl bg-charcoal-50/70 border border-charcoal-200">
+              <div className="space-y-2 p-4 rounded-xl bg-surface-muted border border-line">
                 <div className="flex items-center justify-between text-sm">
                   <div className="flex items-center gap-2">
-                    <Truck className="w-4 h-4 text-navy-700" />
-                    <label htmlFor="slider-trucks" className="font-bold text-navy-900">
+                    <Truck className="w-4 h-4 text-fg" />
+                    <label htmlFor="slider-trucks" className="font-bold text-fg">
                       Fleet Size (Compactor Trucks):
                     </label>
                   </div>
-                  <span className="font-mono font-extrabold text-sm text-navy-900 px-2.5 py-0.5 rounded-lg bg-white border border-charcoal-200">
+                  <span className="font-mono font-extrabold text-sm text-fg px-2.5 py-0.5 rounded-lg bg-surface border border-line">
                     {truckCount} trucks
                   </span>
                 </div>
@@ -257,28 +257,28 @@ export const ScenarioBuilder: React.FC = () => {
                   step={1}
                   value={truckCount}
                   onChange={(e) => setTruckCount(Number(e.target.value))}
-                  className="w-full h-2.5 bg-navy-200 rounded-lg appearance-none cursor-pointer accent-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                  className="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 />
-                <div className="flex justify-between text-[11px] text-charcoal-500">
+                <div className="flex justify-between text-[11px] text-fg-subtle">
                   <span>2 trucks (lean)</span>
                   <span>4 trucks (pilot default)</span>
                   <span>8 trucks (high frequency)</span>
                 </div>
-                <p className="text-xs text-charcoal-600 mt-1">
+                <p className="text-xs text-fg-muted mt-1">
                   Higher fleet sizes reduce bin wait times, but increase total fuel burn and driver labor costs.
                 </p>
               </div>
 
               {/* Slider 2: Dispatch Fill Threshold */}
-              <div className="space-y-2 p-4 rounded-xl bg-charcoal-50/70 border border-charcoal-200">
+              <div className="space-y-2 p-4 rounded-xl bg-surface-muted border border-line">
                 <div className="flex items-center justify-between text-sm">
                   <div className="flex items-center gap-2">
-                    <SlidersHorizontal className="w-4 h-4 text-emerald-700" />
-                    <label htmlFor="slider-threshold" className="font-bold text-navy-900">
+                    <SlidersHorizontal className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                    <label htmlFor="slider-threshold" className="font-bold text-fg">
                       Dispatch Fill Threshold (% Fill):
                     </label>
                   </div>
-                  <span className="font-mono font-extrabold text-sm text-navy-900 px-2.5 py-0.5 rounded-lg bg-white border border-charcoal-200">
+                  <span className="font-mono font-extrabold text-sm text-fg px-2.5 py-0.5 rounded-lg bg-surface border border-line">
                     {dispatchThreshold}%
                   </span>
                 </div>
@@ -290,28 +290,28 @@ export const ScenarioBuilder: React.FC = () => {
                   step={5}
                   value={dispatchThreshold}
                   onChange={(e) => setDispatchThreshold(Number(e.target.value))}
-                  className="w-full h-2.5 bg-navy-200 rounded-lg appearance-none cursor-pointer accent-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                  className="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 />
-                <div className="flex justify-between text-[11px] text-charcoal-500">
+                <div className="flex justify-between text-[11px] text-fg-subtle">
                   <span>50% (frequent pickups)</span>
                   <span>75% (optimal default)</span>
                   <span>95% (overflow risk)</span>
                 </div>
-                <p className="text-xs text-charcoal-600 mt-1">
+                <p className="text-xs text-fg-muted mt-1">
                   Bins trigger dynamic CVRP routing when fill level hits this threshold. Lower values prevent overflow; higher values optimize route payload.
                 </p>
               </div>
 
               {/* Slider 3: Truck Capacity */}
-              <div className="space-y-2 p-4 rounded-xl bg-charcoal-50/70 border border-charcoal-200">
+              <div className="space-y-2 p-4 rounded-xl bg-surface-muted border border-line">
                 <div className="flex items-center justify-between text-sm">
                   <div className="flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-navy-700" />
-                    <label htmlFor="slider-capacity" className="font-bold text-navy-900">
+                    <ShieldCheck className="w-4 h-4 text-fg" />
+                    <label htmlFor="slider-capacity" className="font-bold text-fg">
                       Truck Payload Capacity:
                     </label>
                   </div>
-                  <span className="font-mono font-extrabold text-sm text-navy-900 px-2.5 py-0.5 rounded-lg bg-white border border-charcoal-200">
+                  <span className="font-mono font-extrabold text-sm text-fg px-2.5 py-0.5 rounded-lg bg-surface border border-line">
                     {truckCapacity.toFixed(1)} tonnes
                   </span>
                 </div>
@@ -323,14 +323,14 @@ export const ScenarioBuilder: React.FC = () => {
                   step={0.5}
                   value={truckCapacity}
                   onChange={(e) => setTruckCapacity(Number(e.target.value))}
-                  className="w-full h-2.5 bg-navy-200 rounded-lg appearance-none cursor-pointer accent-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                  className="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 />
-                <div className="flex justify-between text-[11px] text-charcoal-500">
+                <div className="flex justify-between text-[11px] text-fg-subtle">
                   <span>2.5 t (mini compactor)</span>
                   <span>4.5 t (standard pilot)</span>
                   <span>8.0 t (heavy hydraulic)</span>
                 </div>
-                <p className="text-xs text-charcoal-600 mt-1">
+                <p className="text-xs text-fg-muted mt-1">
                   Larger payload capacities allow trucks to visit more smart bins before returning to the MRF or depot to dump.
                 </p>
               </div>
@@ -338,12 +338,12 @@ export const ScenarioBuilder: React.FC = () => {
               {/* 2-Column Mini Sliders: Biogas Yield & Tariff */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Biogas Yield */}
-                <div className="space-y-2 p-4 rounded-xl bg-charcoal-50/70 border border-charcoal-200">
+                <div className="space-y-2 p-4 rounded-xl bg-surface-muted border border-line">
                   <div className="flex items-center justify-between text-sm">
-                    <label htmlFor="slider-biogas" className="font-bold text-navy-900">
+                    <label htmlFor="slider-biogas" className="font-bold text-fg">
                       Biogas Yield (m³/t organic):
                     </label>
-                    <span className="font-mono font-bold text-xs text-navy-900 px-2 py-0.5 rounded bg-white border border-charcoal-200">
+                    <span className="font-mono font-bold text-xs text-fg px-2 py-0.5 rounded bg-surface border border-line">
                       {biogasYield} m³/t
                     </span>
                   </div>
@@ -355,9 +355,9 @@ export const ScenarioBuilder: React.FC = () => {
                     step={5}
                     value={biogasYield}
                     onChange={(e) => setBiogasYield(Number(e.target.value))}
-                    className="w-full h-2 bg-navy-200 rounded-lg appearance-none cursor-pointer accent-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                    className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                   />
-                  <div className="flex justify-between text-[10px] text-charcoal-500">
+                  <div className="flex justify-between text-[10px] text-fg-subtle">
                     <span>70 m³ (low)</span>
                     <span>110 m³ (default)</span>
                     <span>160 m³ (pure organic)</span>
@@ -365,12 +365,12 @@ export const ScenarioBuilder: React.FC = () => {
                 </div>
 
                 {/* Electricity Tariff */}
-                <div className="space-y-2 p-4 rounded-xl bg-charcoal-50/70 border border-charcoal-200">
+                <div className="space-y-2 p-4 rounded-xl bg-surface-muted border border-line">
                   <div className="flex items-center justify-between text-sm">
-                    <label htmlFor="slider-tariff" className="font-bold text-navy-900">
+                    <label htmlFor="slider-tariff" className="font-bold text-fg">
                       Grid Feed-in Tariff:
                     </label>
-                    <span className="font-mono font-bold text-xs text-navy-900 px-2 py-0.5 rounded bg-white border border-charcoal-200">
+                    <span className="font-mono font-bold text-xs text-fg px-2 py-0.5 rounded bg-surface border border-line">
                       ₹{tariffInr.toFixed(2)}/kWh
                     </span>
                   </div>
@@ -382,9 +382,9 @@ export const ScenarioBuilder: React.FC = () => {
                     step={0.2}
                     value={tariffInr}
                     onChange={(e) => setTariffInr(Number(e.target.value))}
-                    className="w-full h-2 bg-navy-200 rounded-lg appearance-none cursor-pointer accent-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                    className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                   />
-                  <div className="flex justify-between text-[10px] text-charcoal-500">
+                  <div className="flex justify-between text-[10px] text-fg-subtle">
                     <span>₹4.00</span>
                     <span>₹6.80 (MERC default)</span>
                     <span>₹10.00 (peak)</span>
@@ -393,17 +393,17 @@ export const ScenarioBuilder: React.FC = () => {
               </div>
 
               {/* Action Bar */}
-              <div className="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-charcoal-100">
-                <span className="text-xs text-charcoal-500">
-                  Last simulated: <span className="font-mono font-semibold text-navy-900">{lastRunTimestamp}</span>
+              <div className="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-line">
+                <span className="text-xs text-fg-muted">
+                  Last simulated: <span className="font-mono font-semibold text-fg">{lastRunTimestamp}</span>
                 </span>
                 <div className="flex items-center gap-2">
                   <Button
                     variant="outline"
                     size="sm"
-                    icon={<Save className="w-4 h-4 text-emerald-700" />}
+                    icon={<Save className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />}
                     onClick={() => setShowSaveModal(true)}
-                    className="text-xs font-bold text-emerald-800 border-emerald-300 hover:bg-emerald-50"
+                    className="text-xs font-bold text-emerald-700 dark:text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/10"
                   >
                     Save as Named Scenario
                   </Button>
@@ -426,10 +426,10 @@ export const ScenarioBuilder: React.FC = () => {
           >
             <div className="space-y-3">
               {savedScenarios.length === 0 ? (
-                <div className="p-6 rounded-xl border border-dashed border-charcoal-300 text-center space-y-2">
-                  <FlaskConical className="w-8 h-8 text-charcoal-400 mx-auto" />
-                  <p className="text-sm font-semibold text-charcoal-700">No saved scenarios yet</p>
-                  <p className="text-xs text-charcoal-500 leading-relaxed">
+                <div className="p-6 rounded-xl border border-dashed border-line text-center space-y-2">
+                  <FlaskConical className="w-8 h-8 text-fg-subtle mx-auto" />
+                  <p className="text-sm font-semibold text-fg">No saved scenarios yet</p>
+                  <p className="text-xs text-fg-muted leading-relaxed">
                     Tune the levers on the left and click "Save as Named Scenario" to benchmark your policies.
                   </p>
                 </div>
@@ -443,8 +443,8 @@ export const ScenarioBuilder: React.FC = () => {
                       key={scen.id}
                       className={`p-4 rounded-xl border transition-all space-y-3 ${
                         isActive
-                          ? 'bg-emerald-50/70 border-emerald-300 shadow-xs ring-1 ring-emerald-400'
-                          : 'bg-white border-charcoal-200 hover:border-navy-200'
+                          ? 'bg-emerald-500/10 border-emerald-500/30 shadow-xs ring-1 ring-emerald-500/40'
+                          : 'bg-surface border-line hover:border-emerald-500/30'
                       }`}
                     >
                       {/* Scenario Title / Rename */}
@@ -455,14 +455,14 @@ export const ScenarioBuilder: React.FC = () => {
                               type="text"
                               value={editingName}
                               onChange={(e) => setEditingName(e.target.value)}
-                              className="text-xs font-bold px-2 py-1 border border-charcoal-300 rounded w-full focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                              className="text-xs font-bold px-2 py-1 border border-line rounded w-full bg-surface text-fg focus:outline-none focus:ring-1 focus:ring-emerald-500"
                               placeholder="New scenario name"
                               autoFocus
                             />
                             <button
                               type="button"
                               onClick={() => handleSaveRename(scen.id)}
-                              className="p-1 rounded text-emerald-700 hover:bg-emerald-100"
+                              className="p-1 rounded text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10"
                               aria-label="Confirm rename"
                             >
                               <Check className="w-4 h-4" />
@@ -470,7 +470,7 @@ export const ScenarioBuilder: React.FC = () => {
                             <button
                               type="button"
                               onClick={() => setEditingScenarioId(null)}
-                              className="p-1 rounded text-charcoal-500 hover:bg-charcoal-100"
+                              className="p-1 rounded text-fg-subtle hover:bg-surface-muted"
                               aria-label="Cancel rename"
                             >
                               <X className="w-4 h-4" />
@@ -479,14 +479,14 @@ export const ScenarioBuilder: React.FC = () => {
                         ) : (
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2">
-                              <h3 className="text-sm font-bold text-navy-900 truncate">{scen.name}</h3>
+                              <h3 className="text-sm font-bold text-fg truncate">{scen.name}</h3>
                               {isActive && (
                                 <Badge variant="emerald" size="sm">
                                   Active
                                 </Badge>
                               )}
                             </div>
-                            <span className="text-[11px] text-charcoal-400">Created {scen.createdAt}</span>
+                            <span className="text-[11px] text-fg-subtle">Created {scen.createdAt}</span>
                           </div>
                         )}
 
@@ -498,7 +498,7 @@ export const ScenarioBuilder: React.FC = () => {
                                 setEditingScenarioId(scen.id);
                                 setEditingName(scen.name);
                               }}
-                              className="p-1.5 rounded-lg text-charcoal-400 hover:text-navy-900 hover:bg-charcoal-100 min-h-[32px]"
+                              className="p-1.5 rounded-lg text-fg-subtle hover:text-fg hover:bg-surface-muted min-h-[32px]"
                               title="Rename scenario"
                               aria-label={`Rename ${scen.name}`}
                             >
@@ -507,7 +507,7 @@ export const ScenarioBuilder: React.FC = () => {
                             <button
                               type="button"
                               onClick={() => deleteScenario(scen.id)}
-                              className="p-1.5 rounded-lg text-charcoal-400 hover:text-red-700 hover:bg-red-50 min-h-[32px]"
+                              className="p-1.5 rounded-lg text-fg-subtle hover:text-rose-600 hover:bg-rose-500/10 min-h-[32px]"
                               title="Delete scenario"
                               aria-label={`Delete ${scen.name}`}
                             >
@@ -518,14 +518,14 @@ export const ScenarioBuilder: React.FC = () => {
                       </div>
 
                       {/* Summary Specs */}
-                      <div className="grid grid-cols-2 gap-2 text-xs font-mono text-charcoal-600 bg-charcoal-50/70 p-2 rounded-lg">
+                      <div className="grid grid-cols-2 gap-2 text-xs font-mono text-fg-muted bg-surface-muted p-2 rounded-lg">
                         <div>
-                          <span className="text-charcoal-400 block text-[10px]">Fleet / Cap</span>
+                          <span className="text-fg-subtle block text-[10px]">Fleet / Cap</span>
                           <span>{scen.config.numberOfTrucks || 4}t · {scen.config.truckCapacityTonnes || 4.5}t</span>
                         </div>
                         <div>
-                          <span className="text-charcoal-400 block text-[10px]">Diversion</span>
-                          <span className="font-bold text-emerald-800">{scen.metrics.diversionRatePercent.toFixed(1)}%</span>
+                          <span className="text-fg-subtle block text-[10px]">Diversion</span>
+                          <span className="font-bold text-emerald-600 dark:text-emerald-400">{scen.metrics.diversionRatePercent.toFixed(1)}%</span>
                         </div>
                       </div>
 
@@ -534,7 +534,7 @@ export const ScenarioBuilder: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => handleLoadSavedScenario(scen.id)}
-                          className="flex-1 py-1.5 px-2.5 rounded-lg text-xs font-semibold bg-charcoal-100 hover:bg-charcoal-200 text-charcoal-700 transition-colors text-center min-h-[36px]"
+                          className="flex-1 py-1.5 px-2.5 rounded-lg text-xs font-semibold bg-surface-muted hover:bg-line text-fg transition-colors text-center min-h-[36px]"
                         >
                           Load Levers
                         </button>
@@ -544,7 +544,7 @@ export const ScenarioBuilder: React.FC = () => {
                           className={`flex-1 py-1.5 px-2.5 rounded-lg text-xs font-bold transition-colors text-center min-h-[36px] ${
                             isActive
                               ? 'bg-emerald-600 text-white hover:bg-emerald-700'
-                              : 'bg-navy-800 text-white hover:bg-navy-900'
+                              : 'bg-slate-800 dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600'
                           }`}
                         >
                           {isActive ? 'Active on City' : 'Set as Active'}
@@ -565,31 +565,31 @@ export const ScenarioBuilder: React.FC = () => {
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-save-title"
-          className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4"
         >
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl space-y-4 border border-charcoal-200">
+          <div className="bg-surface rounded-2xl max-w-md w-full p-6 shadow-xl space-y-4 border border-line text-fg">
             <div className="flex items-center justify-between">
-              <h3 id="modal-save-title" className="text-base font-bold text-navy-900 flex items-center gap-2">
-                <FlaskConical className="w-5 h-5 text-emerald-600" />
+              <h3 id="modal-save-title" className="text-base font-bold text-fg flex items-center gap-2">
+                <FlaskConical className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                 Save Custom Scenario
               </h3>
               <button
                 type="button"
                 onClick={() => setShowSaveModal(false)}
-                className="text-charcoal-400 hover:text-navy-900 p-1 rounded-lg min-h-[44px]"
+                className="text-fg-subtle hover:text-fg p-1 rounded-lg min-h-[44px]"
                 aria-label="Close dialog"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <p className="text-sm text-charcoal-600">
+            <p className="text-sm text-fg-muted">
               Save your current levers ({truckCount} trucks, {dispatchThreshold}% threshold, {truckCapacity} t capacity) as a named operational scenario.
             </p>
 
             <form onSubmit={handleSaveScenarioConfirm} className="space-y-4">
               <div>
-                <label htmlFor="input-scenario-name" className="text-xs font-bold uppercase tracking-wider text-charcoal-600 block mb-1">
+                <label htmlFor="input-scenario-name" className="text-xs font-bold uppercase tracking-wider text-fg-muted block mb-1">
                   Scenario Name:
                 </label>
                 <input
@@ -599,7 +599,7 @@ export const ScenarioBuilder: React.FC = () => {
                   placeholder="e.g. 6 Trucks Lean Corridor"
                   value={scenarioNameInput}
                   onChange={(e) => setScenarioNameInput(e.target.value)}
-                  className="w-full text-sm font-semibold px-3 py-2 border border-charcoal-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className="w-full text-sm font-semibold px-3 py-2 border border-line bg-surface text-fg rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   autoFocus
                 />
               </div>
@@ -628,15 +628,15 @@ export const ScenarioBuilder: React.FC = () => {
       )}
 
       {/* ── Plain-Language Takeaway Banner (Feature 2 Requirement) ──────── */}
-      <div className="p-4 sm:p-5 rounded-2xl bg-emerald-50/80 border border-emerald-300 shadow-sm flex items-start gap-3.5">
+      <div className="p-4 sm:p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 shadow-xs flex items-start gap-3.5">
         <div className="p-2 rounded-xl bg-emerald-600 text-white flex-shrink-0 mt-0.5">
           <Sparkles className="w-5 h-5" />
         </div>
         <div className="space-y-0.5">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-900">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">
             Model Takeaway & Trade-off Assessment
           </span>
-          <p className="text-sm sm:text-base font-bold text-navy-950 leading-snug">
+          <p className="text-sm sm:text-base font-bold text-fg leading-snug">
             {takeaway}
           </p>
         </div>
@@ -647,9 +647,9 @@ export const ScenarioBuilder: React.FC = () => {
         title="3-Way Scenario Benchmark"
         subtitle="Side-by-side comparison of municipal baseline status quo, default ReLoop AI, and your configured scenario"
         headerAction={
-          <div className="flex items-center gap-2 text-xs text-charcoal-500">
-            <span className="flex items-center gap-1 font-semibold text-emerald-800">
-              <Award className="w-3.5 h-3.5 text-emerald-600" />
+          <div className="flex items-center gap-2 text-xs text-fg-muted">
+            <span className="flex items-center gap-1 font-semibold text-emerald-600 dark:text-emerald-400">
+              <Award className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
               Highlighted with icon + badge
             </span>
           </div>
@@ -659,7 +659,7 @@ export const ScenarioBuilder: React.FC = () => {
           <table className="w-full text-left text-sm border-collapse min-w-[640px]">
             <caption className="sr-only">Operational and Fiscal Comparison of Waste Scenarios</caption>
             <thead>
-              <tr className="border-b border-charcoal-200 bg-charcoal-50/70 text-xs text-charcoal-600 uppercase font-semibold">
+              <tr className="border-b border-line bg-surface-muted text-xs text-fg-muted uppercase font-semibold">
                 <th scope="col" className="py-3 px-4">Municipal Metric</th>
                 <th scope="col" className="py-3 px-4">1. Baseline (Status Quo)</th>
                 <th scope="col" className="py-3 px-4">2. Default ReLoop AI</th>
@@ -667,26 +667,26 @@ export const ScenarioBuilder: React.FC = () => {
                 <th scope="col" className="py-3 px-4 text-right">Delta vs Default</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-charcoal-100">
+            <tbody className="divide-y divide-line">
               {comparisonRows.map((row) => {
                 const isCustomBest = row.bestScenario === 'custom';
                 const isDefaultBest = row.bestScenario === 'default';
                 const isBaselineBest = row.bestScenario === 'baseline';
 
                 return (
-                  <tr key={row.key} className="hover:bg-charcoal-50/50 transition-colors">
+                  <tr key={row.key} className="hover:bg-surface-muted/50 transition-colors">
                     {/* Metric Label */}
-                    <td className="py-3.5 px-4 font-semibold text-navy-900">
+                    <td className="py-3.5 px-4 font-semibold text-fg">
                       {row.label}
                     </td>
 
                     {/* Column 1: Baseline */}
-                    <td className="py-3.5 px-4 font-mono text-charcoal-700">
+                    <td className="py-3.5 px-4 font-mono text-fg-muted">
                       <div className="flex items-center gap-1.5">
                         <span>{row.baselineFormatted}</span>
                         {isBaselineBest && (
-                          <span className="inline-flex items-center gap-1 text-[11px] font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-900">
-                            <Award className="w-3 h-3 text-amber-700" />
+                          <span className="inline-flex items-center gap-1 text-[11px] font-bold px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-700 dark:text-amber-300">
+                            <Award className="w-3 h-3 text-amber-600 dark:text-amber-400" />
                             Best
                           </span>
                         )}
@@ -694,12 +694,12 @@ export const ScenarioBuilder: React.FC = () => {
                     </td>
 
                     {/* Column 2: Default ReLoop */}
-                    <td className="py-3.5 px-4 font-mono text-navy-900 font-medium">
+                    <td className="py-3.5 px-4 font-mono text-fg font-medium">
                       <div className="flex items-center gap-1.5">
                         <span>{row.defaultReloopFormatted}</span>
                         {isDefaultBest && (
-                          <span className="inline-flex items-center gap-1 text-[11px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-900">
-                            <Award className="w-3 h-3 text-emerald-700" />
+                          <span className="inline-flex items-center gap-1 text-[11px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">
+                            <Award className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
                             Best
                           </span>
                         )}
@@ -708,7 +708,7 @@ export const ScenarioBuilder: React.FC = () => {
 
                     {/* Column 3: My Scenario */}
                     <td className={`py-3.5 px-4 font-mono font-bold ${
-                      isCustomBest ? 'bg-emerald-50/60 text-emerald-900' : 'text-navy-950'
+                      isCustomBest ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300' : 'text-fg'
                     }`}>
                       <div className="flex items-center gap-1.5">
                         <span>{row.myScenarioFormatted}</span>
@@ -727,11 +727,11 @@ export const ScenarioBuilder: React.FC = () => {
                         className={`inline-block px-2 py-0.5 rounded-md font-bold ${
                           (row.higherIsBetter && row.deltaVsDefault.value > 0) ||
                           (!row.higherIsBetter && row.deltaVsDefault.value < 0)
-                            ? 'bg-emerald-100 text-emerald-900'
+                            ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
                             : (row.higherIsBetter && row.deltaVsDefault.value < 0) ||
                               (!row.higherIsBetter && row.deltaVsDefault.value > 0)
-                            ? 'bg-amber-100 text-amber-900'
-                            : 'bg-charcoal-100 text-charcoal-600'
+                            ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300'
+                            : 'bg-surface-muted text-fg-muted'
                         }`}
                       >
                         {row.deltaVsDefault.formattedDelta}
@@ -745,11 +745,11 @@ export const ScenarioBuilder: React.FC = () => {
         </div>
 
         {/* Footnote */}
-        <div className="pt-4 border-t border-charcoal-100 flex flex-wrap items-center justify-between text-xs text-charcoal-500 gap-2">
+        <div className="pt-4 border-t border-line flex flex-wrap items-center justify-between text-xs text-fg-muted gap-2">
           <span>
             Simulated pilot corridor data · Calibrated against Pune PCMC ward telemetry.
           </span>
-          <span className="font-medium text-navy-800">
+          <span className="font-medium text-fg">
             Green badges highlight superior operational performance.
           </span>
         </div>

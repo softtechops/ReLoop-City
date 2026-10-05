@@ -34,7 +34,7 @@ export const LoopStepNav: React.FC<LoopStepNavProps> = ({
   return (
     <nav
       aria-label="7-Step AI Loop navigation"
-      className="mt-12 pt-6 border-t border-charcoal-200 flex flex-col sm:flex-row items-center justify-between gap-4"
+      className="mt-12 pt-6 border-t border-line flex flex-col sm:flex-row items-center justify-between gap-4"
     >
       <div className="w-full sm:w-auto">
         {resolvedPrevPath ? (
@@ -59,10 +59,10 @@ export const LoopStepNav: React.FC<LoopStepNavProps> = ({
       </div>
 
       <div className="flex flex-col items-center text-center py-1">
-        <span className="text-xs font-bold uppercase tracking-wider text-navy-800">
+        <span className="text-xs font-bold uppercase tracking-wider text-fg-muted">
           The 7-Step AI Loop · Step {currentStep} of 7
         </span>
-        <span className="text-sm font-semibold text-charcoal-700">
+        <span className="text-sm font-semibold text-fg">
           {STEP_NAMES[currentStep - 1] || 'Loop Step'}
         </span>
       </div>

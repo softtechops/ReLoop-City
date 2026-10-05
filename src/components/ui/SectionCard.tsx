@@ -30,20 +30,20 @@ export const SectionCard: React.FC<SectionCardProps> = ({
   return (
     <section
       id={id}
-      className={`rounded-2xl bg-white border border-slate-200 shadow-sm transition-shadow duration-200 overflow-hidden ${className}`}
+      className={`rounded-2xl bg-surface border border-line shadow-sm transition-shadow duration-200 overflow-hidden ${className}`}
     >
       {(title || headerAction) && (
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 pt-6 pb-4 border-b border-slate-100">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 pt-6 pb-4 border-b border-line">
           <div>
             {typeof title === 'string' ? (
-              <h2 className="text-xl font-semibold text-slate-900">
+              <h2 className="text-xl font-semibold text-fg">
                 {title}
               </h2>
             ) : (
               title
             )}
             {subtitle && (
-              <div className="text-sm text-slate-500 mt-0.5">
+              <div className="text-sm text-fg-muted mt-0.5">
                 {subtitle}
               </div>
             )}
@@ -59,7 +59,7 @@ export const SectionCard: React.FC<SectionCardProps> = ({
       <div className={paddingClass}>{children}</div>
 
       {footer && (
-        <div className="px-6 py-3.5 bg-slate-50 border-t border-slate-100 text-xs text-slate-500">
+        <div className="px-6 py-3.5 bg-surface-muted border-t border-line text-xs text-fg-muted">
           {footer}
         </div>
       )}

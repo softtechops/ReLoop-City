@@ -64,23 +64,23 @@ export const Sidebar: React.FC = () => {
   const navLinkClasses = (isActive: boolean) =>
     `relative flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm transition-colors min-h-[40px] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-600 ${
       isActive
-        ? 'bg-emerald-50 text-emerald-900 font-semibold before:absolute before:left-0 before:top-1.5 before:bottom-1.5 before:w-[3px] before:bg-emerald-600 before:rounded-r'
-        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-medium'
+        ? 'bg-emerald-50 text-emerald-900 dark:bg-emerald-500/15 dark:text-emerald-300 font-semibold before:absolute before:left-0 before:top-1.5 before:bottom-1.5 before:w-[3px] before:bg-emerald-600 before:rounded-r'
+        : 'text-fg-muted hover:text-fg hover:bg-surface-muted font-medium'
     }`;
 
   return (
     <>
-      {/* Desktop Left Rail Sidebar: White, 264px wide */}
+      {/* Desktop Left Rail Sidebar: Themed surface, 264px wide */}
       <aside
         aria-label="Main Navigation"
-        className="hidden md:flex flex-col w-[264px] bg-white border-r border-slate-200 flex-shrink-0 h-[calc(100vh-4rem)] sticky top-16 select-none"
+        className="hidden md:flex flex-col w-[264px] bg-surface border-r border-line flex-shrink-0 h-[calc(100vh-4rem)] sticky top-16 select-none"
       >
         <div className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
           
           {/* Group 1: Overview */}
           <div>
             <div className="px-3 mb-1.5">
-              <span className="text-xs font-semibold text-slate-500">
+              <span className="text-xs font-semibold text-fg-subtle">
                 Overview
               </span>
             </div>
@@ -93,7 +93,7 @@ export const Sidebar: React.FC = () => {
                 {({ isActive }) => (
                   <>
                     <LayoutDashboard
-                      className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-emerald-600' : 'text-slate-500'}`}
+                      className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-fg-subtle'}`}
                       aria-hidden="true"
                     />
                     <span>Dashboard</span>
@@ -106,10 +106,10 @@ export const Sidebar: React.FC = () => {
           {/* Group 2: Circular loop (7 Steps) */}
           <div>
             <div className="px-3 mb-1.5 flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-500">
+              <span className="text-xs font-semibold text-fg-subtle">
                 Circular loop
               </span>
-              <span className="text-[11px] font-medium text-slate-400">
+              <span className="text-[11px] font-medium text-fg-subtle">
                 7 steps
               </span>
             </div>
@@ -117,7 +117,7 @@ export const Sidebar: React.FC = () => {
             {/* Stepper with quiet connecting line */}
             <nav aria-label="7-Step Circular Loop" className="relative space-y-0.5">
               <div
-                className="absolute left-[21px] top-3 bottom-3 w-px bg-slate-200"
+                className="absolute left-[21px] top-3 bottom-3 w-px bg-line"
                 aria-hidden="true"
               />
 
@@ -137,7 +137,7 @@ export const Sidebar: React.FC = () => {
                       className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[11px] transition-colors relative z-10 ${
                         isActive
                           ? 'bg-emerald-600 text-white font-bold'
-                          : 'bg-white text-slate-600 border border-slate-300'
+                          : 'bg-surface text-fg-muted border border-line'
                       }`}
                       aria-hidden="true"
                     >
@@ -146,7 +146,7 @@ export const Sidebar: React.FC = () => {
 
                     <Icon
                       className={`w-4 h-4 flex-shrink-0 relative z-10 ${
-                        isActive ? 'text-emerald-600' : 'text-slate-500'
+                        isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-fg-subtle'
                       }`}
                       aria-hidden="true"
                     />
@@ -163,7 +163,7 @@ export const Sidebar: React.FC = () => {
           {/* Group 3: Plan */}
           <div>
             <div className="px-3 mb-1.5">
-              <span className="text-xs font-semibold text-slate-500">
+              <span className="text-xs font-semibold text-fg-subtle">
                 Plan
               </span>
             </div>
@@ -179,7 +179,7 @@ export const Sidebar: React.FC = () => {
                     className={navLinkClasses(isActive)}
                   >
                     <Icon
-                      className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-emerald-600' : 'text-slate-500'}`}
+                      className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-fg-subtle'}`}
                       aria-hidden="true"
                     />
                     <span>{item.label}</span>
@@ -192,7 +192,7 @@ export const Sidebar: React.FC = () => {
           {/* Group 4: More */}
           <div>
             <div className="px-3 mb-1.5">
-              <span className="text-xs font-semibold text-slate-500">
+              <span className="text-xs font-semibold text-fg-subtle">
                 More
               </span>
             </div>
@@ -208,7 +208,7 @@ export const Sidebar: React.FC = () => {
                     className={navLinkClasses(isActive)}
                   >
                     <Icon
-                      className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-emerald-600' : 'text-slate-500'}`}
+                      className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-fg-subtle'}`}
                       aria-hidden="true"
                     />
                     <span>{item.label}</span>
@@ -224,7 +224,7 @@ export const Sidebar: React.FC = () => {
       {/* Mobile Horizontal Scrollable Step Bar */}
       <nav
         aria-label="Mobile Step Navigation"
-        className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-2 py-2 safe-bottom-padding shadow-lg"
+        className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-surface/95 backdrop-blur-md border-t border-line px-2 py-2 safe-bottom-padding shadow-lg"
       >
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar scroll-smooth px-1">
           {/* Dashboard pill */}
@@ -236,11 +236,11 @@ export const Sidebar: React.FC = () => {
                 ref={isDashActive ? activePillRef : null}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap min-h-[38px] transition-all flex-shrink-0 ${
                   isDashActive
-                    ? 'bg-emerald-50 text-emerald-900 border border-emerald-300 shadow-2xs'
-                    : 'text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200'
+                    ? 'bg-emerald-50 text-emerald-900 border border-emerald-300 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-500/30 shadow-2xs'
+                    : 'text-fg-muted bg-surface-muted hover:bg-slate-200 dark:hover:bg-slate-800 border border-line'
                 }`}
               >
-                <LayoutDashboard className={`w-3.5 h-3.5 ${isDashActive ? 'text-emerald-600' : 'text-slate-500'}`} aria-hidden="true" />
+                <LayoutDashboard className={`w-3.5 h-3.5 ${isDashActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-fg-subtle'}`} aria-hidden="true" />
                 <span>Dashboard</span>
               </NavLink>
             );
@@ -258,19 +258,19 @@ export const Sidebar: React.FC = () => {
                 ref={isActive ? activePillRef : null}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap min-h-[38px] transition-all flex-shrink-0 ${
                   isActive
-                    ? 'bg-emerald-50 text-emerald-900 border border-emerald-300 shadow-2xs'
-                    : 'text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200'
+                    ? 'bg-emerald-50 text-emerald-900 border border-emerald-300 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-500/30 shadow-2xs'
+                    : 'text-fg-muted bg-surface-muted hover:bg-slate-200 dark:hover:bg-slate-800 border border-line'
                 }`}
               >
                 <span
                   className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                    isActive ? 'bg-emerald-600 text-white' : 'bg-white text-slate-700 border border-slate-300'
+                    isActive ? 'bg-emerald-600 text-white' : 'bg-surface text-fg-muted border border-line'
                   }`}
                   aria-hidden="true"
                 >
                   {step.stepNumber}
                 </span>
-                <Icon className={`w-3 h-3 ${isActive ? 'text-emerald-600' : 'text-slate-500'}`} aria-hidden="true" />
+                <Icon className={`w-3 h-3 ${isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-fg-subtle'}`} aria-hidden="true" />
                 <span>{step.label}</span>
               </NavLink>
             );
@@ -288,11 +288,11 @@ export const Sidebar: React.FC = () => {
                 ref={isActive ? activePillRef : null}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap min-h-[38px] transition-all flex-shrink-0 ${
                   isActive
-                    ? 'bg-emerald-50 text-emerald-900 border border-emerald-300 font-semibold shadow-2xs'
-                    : 'text-slate-600 bg-slate-50 hover:bg-slate-100 border border-slate-200'
+                    ? 'bg-emerald-50 text-emerald-900 border border-emerald-300 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-500/30 font-semibold shadow-2xs'
+                    : 'text-fg-muted bg-surface hover:bg-surface-muted border border-line'
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-emerald-600' : 'text-slate-500'}`} aria-hidden="true" />
+                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-fg-subtle'}`} aria-hidden="true" />
                 <span>{item.label}</span>
               </NavLink>
             );
@@ -310,11 +310,11 @@ export const Sidebar: React.FC = () => {
                 ref={isActive ? activePillRef : null}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap min-h-[38px] transition-all flex-shrink-0 ${
                   isActive
-                    ? 'bg-emerald-50 text-emerald-900 border border-emerald-300 font-semibold shadow-2xs'
-                    : 'text-slate-600 bg-slate-50 hover:bg-slate-100 border border-slate-200'
+                    ? 'bg-emerald-50 text-emerald-900 border border-emerald-300 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-500/30 font-semibold shadow-2xs'
+                    : 'text-fg-muted bg-surface hover:bg-surface-muted border border-line'
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-emerald-600' : 'text-slate-500'}`} aria-hidden="true" />
+                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-fg-subtle'}`} aria-hidden="true" />
                 <span>{item.label}</span>
               </NavLink>
             );

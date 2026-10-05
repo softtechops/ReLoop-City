@@ -81,7 +81,7 @@ export const Modal: React.FC<ModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/60 backdrop-blur-xs animate-in fade-in duration-150"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs animate-in fade-in duration-150"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -93,27 +93,27 @@ export const Modal: React.FC<ModalProps> = ({
         aria-labelledby={title ? 'modal-dialog-title' : undefined}
         aria-describedby={description ? 'modal-dialog-desc' : undefined}
         tabIndex={-1}
-        className={`bg-white rounded-2xl w-full ${maxWidthClass} border border-navy-100 shadow-2xl overflow-hidden flex flex-col focus:outline-hidden animate-in zoom-in-95 duration-150`}
+        className={`bg-surface rounded-2xl w-full ${maxWidthClass} border border-line shadow-2xl overflow-hidden flex flex-col focus:outline-hidden animate-in zoom-in-95 duration-150`}
       >
-        <div className="flex items-center justify-between px-6 pt-5 pb-3 border-b border-navy-50">
+        <div className="flex items-center justify-between px-6 pt-5 pb-3 border-b border-line">
             <div>
               {title && (
                 <h2
                   id="modal-dialog-title"
-                  className="text-lg font-bold text-navy-800 font-['Outfit']"
+                  className="text-lg font-bold text-fg font-['Outfit']"
                 >
                   {title}
                 </h2>
               )}
               {description && (
-                <p id="modal-dialog-desc" className="text-xs text-charcoal-500 mt-0.5">
+                <p id="modal-dialog-desc" className="text-xs text-fg-muted mt-0.5">
                   {description}
                 </p>
               )}
             </div>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg text-charcoal-400 hover:text-navy-800 hover:bg-navy-50 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600"
+              className="p-1.5 rounded-lg text-fg-subtle hover:text-fg hover:bg-surface-muted transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-500"
               aria-label="Close dialog"
             >
               <X className="w-5 h-5" />
@@ -125,7 +125,7 @@ export const Modal: React.FC<ModalProps> = ({
         </div>
 
         {footer && (
-          <div className="px-6 py-4 bg-[#F8FAFC]/90 border-t border-navy-50 flex items-center justify-end gap-2.5">
+          <div className="px-6 py-4 bg-surface-muted border-t border-line flex items-center justify-end gap-2.5">
             {footer}
           </div>
         )}

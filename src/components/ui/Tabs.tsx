@@ -36,7 +36,7 @@ export function Tabs<T extends string>({
     <div
       role="tablist"
       aria-label={ariaLabel}
-      className={`inline-flex items-center p-1 bg-navy-50/90 rounded-xl border border-navy-100 ${className}`}
+      className={`inline-flex items-center p-1 bg-surface-muted rounded-xl border border-line ${className}`}
     >
       {tabs.map((tab, idx) => {
         const isActive = activeTab === tab.id;
@@ -48,10 +48,10 @@ export function Tabs<T extends string>({
             tabIndex={isActive ? 0 : -1}
             onClick={() => onChange(tab.id)}
             onKeyDown={(e) => handleKeyDown(e, idx)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all select-none focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all select-none focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-500 ${
               isActive
-                ? 'bg-navy-700 text-white shadow-xs'
-                : 'text-charcoal-600 hover:text-navy-900 hover:bg-white/60'
+                ? 'bg-slate-900 dark:bg-emerald-600 text-white shadow-xs'
+                : 'text-fg-muted hover:text-fg hover:bg-surface'
             }`}
           >
             {tab.icon && <span aria-hidden="true">{tab.icon}</span>}
@@ -59,7 +59,7 @@ export function Tabs<T extends string>({
             {tab.badge !== undefined && (
               <span
                 className={`ml-1 px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
-                  isActive ? 'bg-white/20 text-white' : 'bg-navy-200/60 text-navy-800'
+                  isActive ? 'bg-white/20 text-white' : 'bg-surface text-fg-muted border border-line'
                 }`}
               >
                 {tab.badge}

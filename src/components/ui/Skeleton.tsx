@@ -19,7 +19,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({
     <div
       role="progressbar"
       aria-label="Loading content..."
-      className={`bg-navy-100/60 animate-pulse ${rounded} ${className}`}
+      className={`bg-slate-200/80 dark:bg-slate-800/80 animate-pulse ${rounded} ${className}`}
     />
   );
 };

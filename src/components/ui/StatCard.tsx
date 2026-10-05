@@ -59,18 +59,18 @@ export const StatCard: React.FC<StatCardProps> = ({
 
   return (
     <div
-      className="relative rounded-2xl bg-white border border-slate-200 shadow-sm p-6 hover:-translate-y-0.5 hover:border-emerald-500 transition-all duration-200 flex flex-col justify-between"
+      className="relative rounded-2xl bg-surface border border-line shadow-sm p-6 hover:-translate-y-0.5 hover:border-emerald-500 transition-all duration-200 flex flex-col justify-between"
     >
       {/* Top Row: Label + Icon + Info Popover */}
       <div>
         <div className="flex items-center justify-between gap-2 mb-2">
           <div className="flex items-center gap-2">
             {icon && (
-              <span className="text-slate-400 flex-shrink-0" aria-hidden="true">
+              <span className="text-fg-subtle flex-shrink-0" aria-hidden="true">
                 {icon}
               </span>
             )}
-            <span className="text-sm font-medium text-slate-500">
+            <span className="text-sm font-medium text-fg-muted">
               {title}
             </span>
           </div>
@@ -81,14 +81,14 @@ export const StatCard: React.FC<StatCardProps> = ({
         <div className="flex items-baseline justify-between gap-3 mb-2 flex-wrap">
           <div className="flex items-baseline gap-2 flex-wrap">
             <span
-              className={`text-3xl font-semibold tabular-nums text-slate-900 tracking-tight transition-colors duration-200 ${
-                isHighlighted ? 'text-emerald-600' : ''
+              className={`text-3xl font-semibold tabular-nums text-fg tracking-tight transition-colors duration-200 ${
+                isHighlighted ? 'text-emerald-500' : ''
               }`}
             >
               {value}
             </span>
             {unit && (
-              <span className="text-sm font-normal text-slate-500">
+              <span className="text-sm font-normal text-fg-muted">
                 {unit}
               </span>
             )}
@@ -115,34 +115,34 @@ export const StatCard: React.FC<StatCardProps> = ({
       </div>
 
       {/* Bottom Row: Delta Badge or Subtitle */}
-      <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-2 text-sm">
+      <div className="pt-3 border-t border-line flex items-center justify-between gap-2 text-sm">
         {subtitle ? (
-          <span className="text-slate-500 text-sm truncate">{subtitle}</span>
+          <span className="text-fg-muted text-sm truncate">{subtitle}</span>
         ) : delta ? (
           <div className="flex items-center gap-2 flex-wrap">
             {delta.isNeutral ? (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-medium text-xs bg-slate-100 text-slate-700 border border-slate-200">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-medium text-xs bg-surface-muted text-fg-muted border border-line">
                 <Minus className="w-3 h-3" aria-hidden="true" />
                 <span>{delta.percentStr}</span>
               </span>
             ) : delta.isImprovement ? (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-medium text-xs bg-emerald-50 text-emerald-800 border border-emerald-200">
-                <ArrowUpRight className="w-3 h-3 text-emerald-600" aria-hidden="true" />
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-medium text-xs bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-500/30">
+                <ArrowUpRight className="w-3 h-3 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
                 <span>{delta.percentStr}</span>
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-medium text-xs bg-red-50 text-red-800 border border-red-200">
-                <ArrowDownRight className="w-3 h-3 text-red-600" aria-hidden="true" />
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-medium text-xs bg-rose-50 text-rose-800 border border-rose-200 dark:bg-rose-500/15 dark:text-rose-300 dark:border-rose-500/30">
+                <ArrowDownRight className="w-3 h-3 text-rose-600 dark:text-rose-400" aria-hidden="true" />
                 <span>{delta.percentStr}</span>
               </span>
             )}
-            <span className="text-slate-500 text-xs font-medium" aria-hidden="true">
+            <span className="text-fg-subtle text-xs font-medium" aria-hidden="true">
               {deltaLabel}
             </span>
             <span className="sr-only">{delta.ariaLabel}</span>
           </div>
         ) : (
-          <span className="text-slate-400 text-xs">Pilot corridor</span>
+          <span className="text-fg-subtle text-xs">Pilot corridor</span>
         )}
       </div>
     </div>

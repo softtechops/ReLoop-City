@@ -216,12 +216,12 @@ export const PublicWebsite: React.FC = () => {
     : snap.revenueInr;
 
   return (
-    <div className="min-h-screen bg-white text-navy-900 font-sans selection:bg-emerald-100 selection:text-emerald-950 pt-16">
+    <div className="min-h-screen bg-page text-fg font-sans selection:bg-emerald-500/20 selection:text-emerald-300 pt-16">
 
       {/* Skip link */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-20 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-navy-900 focus:text-white focus:rounded-xl focus:shadow-lg"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-20 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-slate-900 focus:text-white focus:rounded-xl focus:shadow-lg"
       >
         Skip to main content
       </a>
@@ -236,7 +236,7 @@ export const PublicWebsite: React.FC = () => {
         <section
           id="home"
           aria-label="Hero: ReLoop City overview"
-          className="py-20 lg:py-28 border-b border-charcoal-100 bg-white"
+          className="py-20 lg:py-28 border-b border-line bg-page"
         >
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
 
@@ -247,17 +247,17 @@ export const PublicWebsite: React.FC = () => {
               <div className="lg:col-span-6 space-y-7 text-center lg:text-left">
 
                 {/* Eyebrow (used at most 3× site-wide) */}
-                <p className="text-sm font-medium text-charcoal-500 tracking-wide uppercase">
+                <p className="text-sm font-medium text-fg-subtle tracking-wide uppercase">
                   AI for circular cities · Pune pilot
                 </p>
 
-                <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-semibold text-navy-900 tracking-tight leading-[1.07] font-heading">
+                <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-semibold text-fg tracking-tight leading-[1.07] font-heading">
                   Turn city waste into{' '}
-                  <span className="text-emerald-600">energy, materials</span>{' '}
+                  <span className="text-emerald-600 dark:text-emerald-400">energy, materials</span>{' '}
                   and revenue.
                 </h1>
 
-                <p className="text-lg text-charcoal-600 max-w-xl leading-relaxed mx-auto lg:mx-0">
+                <p className="text-lg text-fg-muted max-w-xl leading-relaxed mx-auto lg:mx-0">
                   ReLoop City is a 7-step AI platform for municipal solid-waste management — calibrated
                   to the Pune PCMC pilot corridor. It senses bin levels, predicts overflow, optimises
                   truck routes, classifies materials and settles circular revenue in a single closed loop.
@@ -266,7 +266,7 @@ export const PublicWebsite: React.FC = () => {
                 <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
                   <Link
                     to="/app/dashboard"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-base transition-colors cursor-pointer min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 shadow-sm"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-base transition-colors cursor-pointer min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900 shadow-sm"
                   >
                     <span>Launch live demo</span>
                     <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -275,7 +275,7 @@ export const PublicWebsite: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => { startGuidedTour(); navigate('/app/dashboard'); }}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 text-navy-900 font-medium text-base hover:text-emerald-700 transition-colors cursor-pointer min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 rounded-lg px-3"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 text-fg font-medium text-base hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors cursor-pointer min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-lg px-3"
                   >
                     <span>Take the 2-min tour</span>
                     <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -286,15 +286,15 @@ export const PublicWebsite: React.FC = () => {
               {/* Right visual panel — 6 cols */}
               <div className="lg:col-span-6 flex items-center justify-center">
                 <div
-                  className="relative w-full rounded-3xl border border-charcoal-200 bg-gradient-to-b from-white to-charcoal-50 aspect-[4/3] flex items-center justify-center overflow-hidden shadow-sm"
+                  className="relative w-full rounded-3xl border border-line bg-gradient-to-b from-surface to-surface-muted aspect-[4/3] flex items-center justify-center overflow-hidden shadow-sm"
                   role="img"
                   aria-label="Isometric illustration of a smart city circular waste loop"
                 >
-                  {/* Subtle dot pattern (one decorative effect) */}
-                  <svg aria-hidden="true" className="absolute inset-0 w-full h-full opacity-[0.04] pointer-events-none">
+                  {/* Subtle dot pattern */}
+                  <svg aria-hidden="true" className="absolute inset-0 w-full h-full opacity-[0.06] pointer-events-none">
                     <defs>
                       <pattern id="hero-dots" width="20" height="20" patternUnits="userSpaceOnUse">
-                        <circle cx="1" cy="1" r="1" fill="#12305C" />
+                        <circle cx="1" cy="1" r="1" fill="currentColor" className="text-fg" />
                       </pattern>
                     </defs>
                     <rect width="100%" height="100%" fill="url(#hero-dots)" />
@@ -302,12 +302,12 @@ export const PublicWebsite: React.FC = () => {
 
                   <IsometricCityLoop size={380} className="relative z-10 mx-auto" />
 
-                  {/* Two quiet chips only */}
-                  <div className="absolute top-4 left-4 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-charcoal-200 shadow-sm text-xs font-medium text-charcoal-600">
+                  {/* Two quiet chips */}
+                  <div className="absolute top-4 left-4 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface border border-line shadow-sm text-xs font-medium text-fg">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
                     IoT Sensors
                   </div>
-                  <div className="absolute bottom-4 right-4 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-charcoal-200 shadow-sm text-xs font-medium text-charcoal-600">
+                  <div className="absolute bottom-4 right-4 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface border border-line shadow-sm text-xs font-medium text-fg">
                     <span className="w-1.5 h-1.5 rounded-full bg-amber-500" aria-hidden="true" />
                     Biogas CHP
                   </div>
@@ -316,52 +316,52 @@ export const PublicWebsite: React.FC = () => {
             </div>
 
             {/* Hero stats strip — all from PILOT_30DAY_SNAPSHOT */}
-            <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 divide-y lg:divide-y-0 lg:divide-x divide-charcoal-200 border border-charcoal-200 rounded-2xl bg-white shadow-sm overflow-hidden">
+            <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 divide-y lg:divide-y-0 lg:divide-x divide-line border border-line rounded-2xl bg-surface shadow-sm overflow-hidden">
 
               <div className="px-6 py-6 text-center">
-                <span className="text-xs font-semibold uppercase tracking-wider text-charcoal-500 block mb-1">
+                <span className="text-xs font-semibold uppercase tracking-wider text-fg-subtle block mb-1">
                   Landfill Diversion
                 </span>
-                <span className="text-3xl font-semibold text-navy-900 tabular-nums block font-heading">
+                <span className="text-3xl font-semibold text-fg tabular-nums block font-heading">
                   {snap.diversionRatePercent.toFixed(1)}%
                 </span>
-                <span className="text-sm text-charcoal-500 mt-1 block">
+                <span className="text-sm text-fg-muted mt-1 block">
                   vs {snapBase.diversionRatePercent.toFixed(0)}% fixed-schedule baseline
                 </span>
               </div>
 
               <div className="px-6 py-6 text-center">
-                <span className="text-xs font-semibold uppercase tracking-wider text-charcoal-500 block mb-1">
+                <span className="text-xs font-semibold uppercase tracking-wider text-fg-subtle block mb-1">
                   Fleet Distance Cut
                 </span>
-                <span className="text-3xl font-semibold text-emerald-700 tabular-nums block font-heading">
+                <span className="text-3xl font-semibold text-emerald-600 dark:text-emerald-400 tabular-nums block font-heading">
                   −32%
                 </span>
-                <span className="text-sm text-charcoal-500 mt-1 block">
+                <span className="text-sm text-fg-muted mt-1 block">
                   diesel &amp; km vs static baseline
                 </span>
               </div>
 
               <div className="px-6 py-6 text-center border-t lg:border-t-0">
-                <span className="text-xs font-semibold uppercase tracking-wider text-charcoal-500 block mb-1">
+                <span className="text-xs font-semibold uppercase tracking-wider text-fg-subtle block mb-1">
                   Clean Energy Generated
                 </span>
-                <span className="text-3xl font-semibold text-navy-900 tabular-nums block font-heading">
+                <span className="text-3xl font-semibold text-fg tabular-nums block font-heading">
                   {snap.energyMwh.toFixed(0)} MWh
                 </span>
-                <span className="text-sm text-charcoal-500 mt-1 block">
+                <span className="text-sm text-fg-muted mt-1 block">
                   biomethane CHP, 30-day pilot
                 </span>
               </div>
 
               <div className="px-6 py-6 text-center border-t lg:border-t-0">
-                <span className="text-xs font-semibold uppercase tracking-wider text-charcoal-500 block mb-1">
+                <span className="text-xs font-semibold uppercase tracking-wider text-fg-subtle block mb-1">
                   Circular Value Created
                 </span>
-                <span className="text-3xl font-semibold text-navy-900 tabular-nums block font-heading">
+                <span className="text-3xl font-semibold text-fg tabular-nums block font-heading">
                   ₹{(snap.revenueInr / 100000).toFixed(1)}L
                 </span>
-                <span className="text-sm text-charcoal-500 mt-1 block">
+                <span className="text-sm text-fg-muted mt-1 block">
                   commodities monetised, 30-day
                 </span>
               </div>
@@ -375,7 +375,7 @@ export const PublicWebsite: React.FC = () => {
         <section
           id="problem"
           aria-label="The waste management problem"
-          className="py-20 lg:py-24 bg-[#F8FAFC] border-t border-charcoal-100"
+          className="py-20 lg:py-24 bg-surface-muted border-t border-line"
         >
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
 
@@ -383,17 +383,17 @@ export const PublicWebsite: React.FC = () => {
             <div className="grid lg:grid-cols-2 gap-16 items-start">
 
               <div className="space-y-6">
-                <h2 className="text-4xl lg:text-5xl font-semibold text-navy-900 font-heading leading-tight">
+                <h2 className="text-4xl lg:text-5xl font-semibold text-fg font-heading leading-tight">
                   Most Indian cities landfill{' '}
-                  <span className="text-amber-600">72% of what they collect.</span>
+                  <span className="text-amber-600 dark:text-amber-400">72% of what they collect.</span>
                 </h2>
-                <p className="text-lg text-charcoal-600 leading-relaxed">
+                <p className="text-lg text-fg-muted leading-relaxed">
                   Fixed truck schedules visit bins that are half-empty and miss ones that are overflowing.
                   Mixed waste reaches the dumpsite unsorted, destroying the commodity value of plastic,
                   metal and organics that could generate revenue for the municipality.
                 </p>
-                <p className="text-base text-charcoal-500 font-mono">
-                  Baseline diversion in our Pune pilot corridor: <span className="font-bold text-amber-700">{snapBase.diversionRatePercent.toFixed(0)}%</span>{' '}
+                <p className="text-base text-fg-subtle font-mono">
+                  Baseline diversion in our Pune pilot corridor: <span className="font-bold text-amber-700 dark:text-amber-400">{snapBase.diversionRatePercent.toFixed(0)}%</span>{' '}
                   (PCMC ward audit, same data used in the dashboard and assumptions page).
                 </p>
               </div>
@@ -401,26 +401,26 @@ export const PublicWebsite: React.FC = () => {
               <div className="space-y-4">
                 {[
                   {
-                    icon: <AlertTriangle className="w-5 h-5 text-amber-600" aria-hidden="true" />,
+                    icon: <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400" aria-hidden="true" />,
                     title: 'Overflow events and sanitation hazards',
                     body: `Without predictive fill data, trucks often miss full bins. In our baseline scenario, ${snapBase.overflowEvents} overflow events occur per pilot period versus ${snap.overflowEvents} under ReLoop.`,
                   },
                   {
-                    icon: <Truck className="w-5 h-5 text-navy-600" aria-hidden="true" />,
+                    icon: <Truck className="w-5 h-5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />,
                     title: 'Wasted diesel on empty-bin trips',
                     body: `Baseline static routes drive ${Math.round(snapBase.routeKm)} km to collect the same waste that ReLoop collects in ${Math.round(snap.routeKm)} km — a 32% fuel penalty.`,
                   },
                   {
-                    icon: <Coins className="w-5 h-5 text-emerald-700" aria-hidden="true" />,
+                    icon: <Coins className="w-5 h-5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />,
                     title: 'Lost circular value in mixed waste',
                     body: `Mixed dumping destroys commodity purity. The baseline earns ₹${(snapBase.revenueInr / 100000).toFixed(1)}L vs ₹${(snap.revenueInr / 100000).toFixed(1)}L with clean-stream sorting — a ₹${((snap.revenueInr - snapBase.revenueInr) / 100000).toFixed(1)}L gap per pilot month.`,
                   },
                 ].map(({ icon, title, body }) => (
-                  <div key={title} className="flex items-start gap-3 p-4 rounded-2xl bg-white border border-charcoal-200 shadow-sm">
-                    <span className="p-2 rounded-xl bg-charcoal-50 flex-shrink-0">{icon}</span>
+                  <div key={title} className="flex items-start gap-3 p-4 rounded-2xl bg-surface border border-line shadow-sm">
+                    <span className="p-2 rounded-xl bg-surface-muted flex-shrink-0">{icon}</span>
                     <div>
-                      <h3 className="text-sm font-bold text-navy-900">{title}</h3>
-                      <p className="text-sm text-charcoal-600 mt-0.5 leading-relaxed">{body}</p>
+                      <h3 className="text-sm font-bold text-fg">{title}</h3>
+                      <p className="text-sm text-fg-muted mt-0.5 leading-relaxed">{body}</p>
                     </div>
                   </div>
                 ))}
@@ -435,18 +435,18 @@ export const PublicWebsite: React.FC = () => {
         <section
           id="how-it-works"
           aria-label="The 7-step AI circular loop"
-          className="py-20 lg:py-24 bg-white border-t border-charcoal-100"
+          className="py-20 lg:py-24 bg-page border-t border-line"
         >
           <div className="mx-auto max-w-7xl px-6 lg:px-8 space-y-14">
 
             <div className="text-center space-y-3 max-w-2xl mx-auto">
-              <p className="text-xs font-bold uppercase tracking-widest text-emerald-600">
+              <p className="text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
                 How it works
               </p>
-              <h2 className="text-3xl lg:text-4xl font-semibold text-navy-900 font-heading leading-tight">
+              <h2 className="text-3xl lg:text-4xl font-semibold text-fg font-heading leading-tight">
                 The closed-loop city engine
               </h2>
-              <p className="text-base text-charcoal-600 leading-relaxed">
+              <p className="text-base text-fg-muted leading-relaxed">
                 Seven steps that turn raw municipal waste into clean energy, sorted commodities and
                 city revenue — running continuously and autonomously.
               </p>
@@ -457,20 +457,20 @@ export const PublicWebsite: React.FC = () => {
               {LOOP_STEPS.map(({ step, name, headline, path, icon: Icon, desc }) => (
                 <div
                   key={step}
-                  className="group rounded-2xl bg-white border border-charcoal-200 shadow-sm hover:shadow-md hover:border-emerald-300 transition-all p-5 flex flex-col gap-3"
+                  className="group rounded-2xl bg-surface border border-line shadow-sm hover:shadow-md hover:border-emerald-500 transition-all p-5 flex flex-col gap-3"
                 >
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-emerald-100 flex items-center justify-center text-xs font-bold text-emerald-800 flex-shrink-0">
+                    <div className="w-7 h-7 rounded-full bg-emerald-50 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30 flex items-center justify-center text-xs font-bold flex-shrink-0">
                       {step}
                     </div>
-                    <Icon className="w-4 h-4 text-charcoal-500 flex-shrink-0" aria-hidden="true" />
-                    <span className="text-sm font-bold text-navy-900">{name}</span>
+                    <Icon className="w-4 h-4 text-fg-subtle flex-shrink-0" aria-hidden="true" />
+                    <span className="text-sm font-bold text-fg">{name}</span>
                   </div>
-                  <p className="text-xs font-semibold text-charcoal-500 uppercase tracking-wider">{headline}</p>
-                  <p className="text-sm text-charcoal-600 leading-snug flex-1">{desc}</p>
+                  <p className="text-xs font-semibold text-fg-subtle uppercase tracking-wider">{headline}</p>
+                  <p className="text-sm text-fg-muted leading-snug flex-1">{desc}</p>
                   <Link
                     to={path}
-                    className="mt-auto text-xs font-bold text-emerald-700 hover:text-navy-900 flex items-center gap-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded"
+                    className="mt-auto text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:text-fg flex items-center gap-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded"
                     aria-label={`See step ${step}: ${name} live in app`}
                   >
                     See it live <ArrowRight className="w-3 h-3" aria-hidden="true" />
@@ -480,11 +480,11 @@ export const PublicWebsite: React.FC = () => {
             </div>
 
             {/* Interactive step detail panel */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start pt-4 border-t border-charcoal-100">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start pt-4 border-t border-line">
 
               {/* Step selector */}
               <div className="lg:col-span-5 space-y-1.5">
-                <p className="text-xs font-mono font-bold uppercase text-charcoal-500 mb-2">
+                <p className="text-xs font-mono font-bold uppercase text-fg-subtle mb-2">
                   Select a step to explore
                 </p>
                 {LOOP_STEPS.map((step, idx) => {
@@ -497,61 +497,61 @@ export const PublicWebsite: React.FC = () => {
                       onClick={() => setActiveLoopStep(idx)}
                       className={`w-full text-left p-3.5 rounded-2xl border transition-all flex items-center justify-between cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 min-h-[44px] ${
                         isActive
-                          ? 'bg-emerald-50 border-emerald-400 shadow-sm ring-1 ring-emerald-400/30'
-                          : 'bg-white border-charcoal-200 hover:border-charcoal-300 hover:bg-charcoal-50/50'
+                          ? 'bg-emerald-50/80 dark:bg-emerald-500/15 border-emerald-500 dark:border-emerald-500/40 shadow-sm ring-1 ring-emerald-500/30'
+                          : 'bg-surface border-line hover:border-slate-300 dark:hover:border-slate-700 hover:bg-surface-muted'
                       }`}
                     >
                       <div className="flex items-center gap-3">
-                        <div className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors ${isActive ? 'bg-emerald-600 text-white' : 'bg-charcoal-100 text-charcoal-700'}`}>
+                        <div className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors ${isActive ? 'bg-emerald-600 text-white' : 'bg-surface-muted text-fg-muted'}`}>
                           <Icon className="w-4 h-4" aria-hidden="true" />
                         </div>
                         <div>
-                          <span className="text-xs font-mono font-bold text-charcoal-500 block">STEP {step.step}</span>
-                          <span className="font-semibold text-sm text-navy-900">{step.name} · {step.headline}</span>
+                          <span className="text-xs font-mono font-bold text-fg-subtle block">STEP {step.step}</span>
+                          <span className="font-semibold text-sm text-fg">{step.name} · {step.headline}</span>
                         </div>
                       </div>
-                      <ChevronRight className={`w-4 h-4 flex-shrink-0 transition-transform ${isActive ? 'text-emerald-600 rotate-90' : 'text-charcoal-400'}`} aria-hidden="true" />
+                      <ChevronRight className={`w-4 h-4 flex-shrink-0 transition-transform ${isActive ? 'text-emerald-600 dark:text-emerald-400 rotate-90' : 'text-fg-subtle'}`} aria-hidden="true" />
                     </button>
                   );
                 })}
               </div>
 
               {/* Step detail */}
-              <div className="lg:col-span-7 bg-white border border-charcoal-200 rounded-2xl p-6 shadow-sm space-y-5">
-                <div className="flex items-center justify-between border-b border-charcoal-100 pb-4">
+              <div className="lg:col-span-7 bg-surface border border-line rounded-2xl p-6 shadow-sm space-y-5">
+                <div className="flex items-center justify-between border-b border-line pb-4">
                   <div>
-                    <span className="text-xs font-mono font-bold text-emerald-700 uppercase block">
+                    <span className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 uppercase block">
                       Step {LOOP_STEPS[activeLoopStep].step} of 7
                     </span>
-                    <h3 className="text-xl font-semibold text-navy-900 font-heading">
+                    <h3 className="text-xl font-semibold text-fg font-heading">
                       {LOOP_STEPS[activeLoopStep].name}: {LOOP_STEPS[activeLoopStep].headline}
                     </h3>
                   </div>
                   <Link
                     to={LOOP_STEPS[activeLoopStep].path}
-                    className="text-xs font-bold text-navy-700 hover:text-emerald-700 flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded whitespace-nowrap"
+                    className="text-xs font-bold text-fg-muted hover:text-emerald-600 dark:hover:text-emerald-400 flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded whitespace-nowrap"
                   >
                     Open in app <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                   </Link>
                 </div>
 
-                <p className="text-sm text-charcoal-600 leading-relaxed">
+                <p className="text-sm text-fg-muted leading-relaxed">
                   {LOOP_STEPS[activeLoopStep].desc}
                 </p>
 
                 {/* Step-specific visual */}
-                <div className="h-56 rounded-2xl bg-charcoal-50 border border-charcoal-200 p-3 flex items-center justify-center overflow-hidden">
+                <div className="h-56 rounded-2xl bg-surface-muted border border-line p-3 flex items-center justify-center overflow-hidden">
                   {activeLoopStep === 0 && (
                     <SmartBinIllustration className="max-h-52 h-full" />
                   )}
                   {activeLoopStep === 1 && (
                     <div className="w-full h-full flex flex-col justify-center">
-                      <p className="text-xs font-mono text-charcoal-500 text-center mb-2">Ward generation forecast vs actual (tonnes)</p>
+                      <p className="text-xs font-mono text-fg-muted text-center mb-2">Ward generation forecast vs actual (tonnes)</p>
                       <ResponsiveContainer width="100%" height={160}>
                         <AreaChart data={FORECAST_DATA} margin={{ left: -16, right: 4, top: 4, bottom: 0 }}>
-                          <Area type="monotone" dataKey="predicted" name="Forecast" stroke="#059669" fill="#D1FAE5" />
-                          <Area type="monotone" dataKey="actual" name="Actual" stroke="#12305C" fill="#E1EDF7" />
-                          <RechartsTooltip contentStyle={{ fontSize: '12px', borderRadius: '8px' }} />
+                          <Area type="monotone" dataKey="predicted" name="Forecast" stroke="#059669" fill="#10B981" fillOpacity={0.2} />
+                          <Area type="monotone" dataKey="actual" name="Actual" stroke="#3B82F6" fill="#3B82F6" fillOpacity={0.2} />
+                          <RechartsTooltip contentStyle={{ fontSize: '12px', borderRadius: '8px', backgroundColor: '#1E293B', color: '#F8FAFC', border: '1px solid rgba(255,255,255,0.1)' }} />
                           <XAxis dataKey="time" stroke="#94A3B8" fontSize={10} tickLine={false} />
                         </AreaChart>
                       </ResponsiveContainer>
@@ -566,31 +566,31 @@ export const PublicWebsite: React.FC = () => {
                   {activeLoopStep === 4 && (
                     <div className="w-full h-full p-2 grid grid-cols-2 gap-2 content-center">
                       {[
-                        { label: 'Wet Organic (45%)', dest: '→ AD Biogas', bg: 'bg-emerald-50 border-emerald-200', text: 'text-emerald-900', badge: 'bg-white text-emerald-700' },
-                        { label: 'Dry Polymers (30%)', dest: '→ MRF Baling', bg: 'bg-navy-50 border-navy-200', text: 'text-navy-900', badge: 'bg-white text-navy-700' },
-                        { label: 'C&D Rubble (15%)', dest: '→ M-Sand', bg: 'bg-amber-50 border-amber-200', text: 'text-amber-900', badge: 'bg-white text-amber-700' },
-                        { label: 'Inert Ash (<5%)', dest: '→ Landfill', bg: 'bg-charcoal-50 border-charcoal-200', text: 'text-charcoal-700', badge: 'bg-white text-charcoal-600' },
+                        { label: 'Wet Organic (45%)', dest: '→ AD Biogas', bg: 'bg-emerald-50 dark:bg-emerald-500/15 border-emerald-200 dark:border-emerald-500/30', text: 'text-emerald-900 dark:text-emerald-200', badge: 'bg-surface text-emerald-700 dark:text-emerald-300' },
+                        { label: 'Dry Polymers (30%)', dest: '→ MRF Baling', bg: 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700', text: 'text-slate-900 dark:text-slate-200', badge: 'bg-surface text-slate-700 dark:text-slate-300' },
+                        { label: 'C&D Rubble (15%)', dest: '→ M-Sand', bg: 'bg-amber-50 dark:bg-amber-400/15 border-amber-200 dark:border-amber-400/30', text: 'text-amber-900 dark:text-amber-200', badge: 'bg-surface text-amber-700 dark:text-amber-300' },
+                        { label: 'Inert Ash (<5%)', dest: '→ Landfill', bg: 'bg-surface-muted border-line', text: 'text-fg-muted', badge: 'bg-surface text-fg-subtle' },
                       ].map(({ label, dest, bg, text, badge }) => (
                         <div key={label} className={`p-3 rounded-xl border ${bg} ${text} flex items-center justify-between text-xs`}>
                           <span className="font-bold">{label}</span>
-                          <span className={`text-[11px] font-mono font-bold ${badge} px-1.5 py-0.5 rounded shadow-sm`}>{dest}</span>
+                          <span className={`text-[11px] font-mono font-bold ${badge} px-1.5 py-0.5 rounded shadow-sm border border-line`}>{dest}</span>
                         </div>
                       ))}
                     </div>
                   )}
                   {activeLoopStep === 5 && (
                     <div className="w-full h-full flex flex-col justify-center">
-                      <div className="flex items-center justify-between text-xs font-mono text-charcoal-600 mb-2 px-1">
+                      <div className="flex items-center justify-between text-xs font-mono text-fg-muted mb-2 px-1">
                         <span>Biogas power output (MWh)</span>
-                        <span className="text-emerald-700 font-bold">~{snap.energyMwh.toFixed(0)} MWh / 30 days</span>
+                        <span className="text-emerald-600 dark:text-emerald-400 font-bold">~{snap.energyMwh.toFixed(0)} MWh / 30 days</span>
                       </div>
                       <ResponsiveContainer width="100%" height={160}>
                         <AreaChart data={ENERGY_DATA} margin={{ left: -16, right: 4, top: 4, bottom: 0 }}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
+                          <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.15)" />
                           <XAxis dataKey="hour" stroke="#94A3B8" fontSize={10} tickLine={false} />
                           <YAxis stroke="#94A3B8" fontSize={10} tickLine={false} />
-                          <RechartsTooltip contentStyle={{ fontSize: '12px', borderRadius: '8px' }} />
-                          <Area type="monotone" dataKey="mwh" name="Clean MWh" stroke="#059669" fill="#D1FAE5" />
+                          <RechartsTooltip contentStyle={{ fontSize: '12px', borderRadius: '8px', backgroundColor: '#1E293B', color: '#F8FAFC', border: '1px solid rgba(255,255,255,0.1)' }} />
+                          <Area type="monotone" dataKey="mwh" name="Clean MWh" stroke="#059669" fill="#10B981" fillOpacity={0.2} />
                         </AreaChart>
                       </ResponsiveContainer>
                     </div>
@@ -600,13 +600,13 @@ export const PublicWebsite: React.FC = () => {
                       <table className="w-full text-left text-xs">
                         <caption className="sr-only">Monthly circular revenue ledger</caption>
                         <thead>
-                          <tr className="border-b border-charcoal-200 text-charcoal-500 uppercase font-mono">
+                          <tr className="border-b border-line text-fg-subtle uppercase font-mono">
                             <th className="pb-2">Stream</th>
                             <th className="pb-2">Off-take</th>
                             <th className="pb-2 text-right">Monthly (₹)</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-charcoal-100 text-charcoal-800">
+                        <tbody className="divide-y divide-line text-fg">
                           {[
                             { s: 'Polymers & Metals', d: 'MRF commodity bales', v: '₹14.2L' },
                             { s: 'Grid electricity', d: 'MSEDCL feed-in', v: '₹5.8L' },
@@ -614,9 +614,9 @@ export const PublicWebsite: React.FC = () => {
                             { s: 'Compost & M-Sand', d: 'Agri & PWD roads', v: '₹6.6L' },
                           ].map(({ s, d, v }) => (
                             <tr key={s}>
-                              <td className="py-1.5 font-semibold text-navy-900">{s}</td>
-                              <td className="py-1.5 text-charcoal-600">{d}</td>
-                              <td className="py-1.5 text-right font-mono font-bold text-emerald-700">{v}</td>
+                              <td className="py-1.5 font-semibold text-fg">{s}</td>
+                              <td className="py-1.5 text-fg-muted">{d}</td>
+                              <td className="py-1.5 text-right font-mono font-bold text-emerald-600 dark:text-emerald-400">{v}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -630,7 +630,7 @@ export const PublicWebsite: React.FC = () => {
                     type="button"
                     disabled={activeLoopStep === 0}
                     onClick={() => setActiveLoopStep(p => Math.max(0, p - 1))}
-                    className="px-3.5 py-1.5 rounded-xl border border-charcoal-200 text-xs font-bold text-charcoal-700 disabled:opacity-40 hover:bg-charcoal-50 min-h-[36px]"
+                    className="px-3.5 py-1.5 rounded-xl border border-line text-xs font-bold text-fg disabled:opacity-40 hover:bg-surface-muted min-h-[36px]"
                   >
                     ← Previous
                   </button>
@@ -638,7 +638,7 @@ export const PublicWebsite: React.FC = () => {
                     type="button"
                     disabled={activeLoopStep === 6}
                     onClick={() => setActiveLoopStep(p => Math.min(6, p + 1))}
-                    className="px-3.5 py-1.5 rounded-xl bg-navy-900 text-white text-xs font-bold disabled:opacity-40 hover:bg-navy-800 min-h-[36px]"
+                    className="px-3.5 py-1.5 rounded-xl bg-slate-900 dark:bg-emerald-600 text-white text-xs font-bold disabled:opacity-40 hover:bg-slate-800 dark:hover:bg-emerald-500 min-h-[36px]"
                   >
                     Next →
                   </button>
@@ -655,18 +655,18 @@ export const PublicWebsite: React.FC = () => {
           id="preview"
           ref={previewSectionRef}
           aria-label="Live dashboard preview"
-          className="py-20 lg:py-24 bg-[#F8FAFC] border-t border-charcoal-100"
+          className="py-20 lg:py-24 bg-surface-muted border-t border-line"
         >
           <div className="mx-auto max-w-7xl px-6 lg:px-8 space-y-10">
 
             <div className="space-y-2">
-              <p className="text-xs font-bold uppercase tracking-widest text-emerald-600">
+              <p className="text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
                 Live simulation
               </p>
-              <h2 className="text-3xl lg:text-4xl font-semibold text-navy-900 font-heading">
+              <h2 className="text-3xl lg:text-4xl font-semibold text-fg font-heading">
                 Interactive live dashboard
               </h2>
-              <p className="text-base text-charcoal-600 max-w-xl leading-relaxed">
+              <p className="text-base text-fg-muted max-w-xl leading-relaxed">
                 A real deterministic simulation ticks in real-time below. Toggle between
                 the status-quo baseline and ReLoop AI to see the numbers diverge.
                 The sim starts only when this panel is visible.
@@ -674,29 +674,29 @@ export const PublicWebsite: React.FC = () => {
             </div>
 
             {/* Browser chrome frame */}
-            <div className="max-w-[1080px] mx-auto rounded-2xl bg-white border border-charcoal-200 shadow-xl overflow-hidden ring-1 ring-charcoal-900/5">
+            <div className="max-w-[1080px] mx-auto rounded-2xl bg-surface border border-line shadow-xl overflow-hidden">
 
               {/* Chrome bar */}
-              <div className="bg-charcoal-50 border-b border-charcoal-200 px-4 py-3 flex items-center justify-between">
+              <div className="bg-surface-muted border-b border-line px-4 py-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="w-3 h-3 rounded-full bg-red-400" aria-hidden="true" />
                   <span className="w-3 h-3 rounded-full bg-amber-400" aria-hidden="true" />
                   <span className="w-3 h-3 rounded-full bg-emerald-400" aria-hidden="true" />
-                  <span className="text-xs font-mono text-charcoal-500 ml-2 hidden sm:inline">reloop.city/pilot/pune/dashboard</span>
+                  <span className="text-xs font-mono text-fg-subtle ml-2 hidden sm:inline">reloop.city/pilot/pune/dashboard</span>
                 </div>
 
                 {/* Mode toggle inside preview */}
                 <div
                   role="radiogroup"
                   aria-label="Preview mode"
-                  className="flex items-center bg-white px-1 py-1 rounded-xl border border-charcoal-200 shadow-sm"
+                  className="flex items-center bg-surface px-1 py-1 rounded-xl border border-line shadow-sm"
                 >
                   <button
                     type="button"
                     role="radio"
                     aria-checked={mode === 'baseline'}
                     onClick={() => setMode('baseline')}
-                    className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold transition-all min-h-[36px] ${mode === 'baseline' ? 'bg-amber-600 text-white shadow-sm' : 'text-charcoal-600 hover:text-navy-900'}`}
+                    className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold transition-all min-h-[36px] ${mode === 'baseline' ? 'bg-amber-600 text-white shadow-sm' : 'text-fg-muted hover:text-fg'}`}
                   >
                     <Clock className="w-3 h-3" aria-hidden="true" />
                     <span>Baseline</span>
@@ -706,7 +706,7 @@ export const PublicWebsite: React.FC = () => {
                     role="radio"
                     aria-checked={mode === 'reloop'}
                     onClick={() => setMode('reloop')}
-                    className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold transition-all min-h-[36px] ${mode === 'reloop' ? 'bg-emerald-600 text-white shadow-sm' : 'text-charcoal-600 hover:text-navy-900'}`}
+                    className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold transition-all min-h-[36px] ${mode === 'reloop' ? 'bg-emerald-600 text-white shadow-sm' : 'text-fg-muted hover:text-fg'}`}
                   >
                     <Sparkles className="w-3 h-3" aria-hidden="true" />
                     <span>ReLoop AI</span>
@@ -715,57 +715,57 @@ export const PublicWebsite: React.FC = () => {
               </div>
 
               {/* Dashboard surface */}
-              <div className="p-5 sm:p-7 space-y-5 bg-white">
+              <div className="p-5 sm:p-7 space-y-5 bg-surface">
 
                 {/* 3 KPI cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="p-4 rounded-2xl bg-charcoal-50 border border-charcoal-200">
-                    <span className="text-xs font-bold uppercase tracking-wider text-charcoal-500 block mb-1">Landfill Diversion Rate</span>
+                  <div className="p-4 rounded-2xl bg-surface-muted border border-line">
+                    <span className="text-xs font-bold uppercase tracking-wider text-fg-subtle block mb-1">Landfill Diversion Rate</span>
                     <div className="flex items-baseline gap-2">
-                      <span className="text-2xl font-extrabold tabular-nums font-heading text-emerald-700">
+                      <span className="text-2xl font-extrabold tabular-nums font-heading text-emerald-600 dark:text-emerald-400">
                         {liveReloopDiv.toFixed(1)}%
                       </span>
-                      <span className={`text-xs font-bold px-2 py-0.5 rounded ${mode === 'reloop' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}`}>
+                      <span className={`text-xs font-bold px-2 py-0.5 rounded ${mode === 'reloop' ? 'bg-emerald-50 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-300' : 'bg-amber-50 text-amber-800 dark:bg-amber-400/15 dark:text-amber-300'}`}>
                         {mode === 'reloop' ? 'AI loop' : 'Fixed'}
                       </span>
                     </div>
-                    <span className="text-xs text-charcoal-500 mt-1 block">Live simulation ticker · Day {simState.currentDay}</span>
+                    <span className="text-xs text-fg-muted mt-1 block">Live simulation ticker · Day {simState.currentDay}</span>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-charcoal-50 border border-charcoal-200">
-                    <span className="text-xs font-bold uppercase tracking-wider text-charcoal-500 block mb-1">Clean Energy Yield</span>
+                  <div className="p-4 rounded-2xl bg-surface-muted border border-line">
+                    <span className="text-xs font-bold uppercase tracking-wider text-fg-subtle block mb-1">Clean Energy Yield</span>
                     <div className="flex items-baseline gap-2">
-                      <span className="text-2xl font-extrabold tabular-nums font-heading text-amber-600">
+                      <span className="text-2xl font-extrabold tabular-nums font-heading text-amber-600 dark:text-amber-400">
                         {mode === 'reloop' ? `${liveEnergy.toFixed(1)} MWh` : '—'}
                       </span>
-                      <span className="text-xs font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded">Bio-CHP</span>
+                      <span className="text-xs font-bold text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-400/15 px-2 py-0.5 rounded">Bio-CHP</span>
                     </div>
-                    <span className="text-xs text-charcoal-500 mt-1 block">From organic digestate</span>
+                    <span className="text-xs text-fg-muted mt-1 block">From organic digestate</span>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-charcoal-50 border border-charcoal-200">
-                    <span className="text-xs font-bold uppercase tracking-wider text-charcoal-500 block mb-1">Circular Revenue</span>
+                  <div className="p-4 rounded-2xl bg-surface-muted border border-line">
+                    <span className="text-xs font-bold uppercase tracking-wider text-fg-subtle block mb-1">Circular Revenue</span>
                     <div className="flex items-baseline gap-2">
-                      <span className="text-2xl font-extrabold tabular-nums font-heading text-navy-900">
+                      <span className="text-2xl font-extrabold tabular-nums font-heading text-fg">
                         {mode === 'reloop' ? `₹${(liveRevenue / 100000).toFixed(1)}L` : '—'}
                       </span>
-                      <span className="text-xs font-bold text-navy-800 bg-navy-50 px-2 py-0.5 rounded">Daily settled</span>
+                      <span className="text-xs font-bold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">Daily settled</span>
                     </div>
-                    <span className="text-xs text-charcoal-500 mt-1 block">Polymers + compost + power</span>
+                    <span className="text-xs text-fg-muted mt-1 block">Polymers + compost + power</span>
                   </div>
                 </div>
 
                 {/* Donut + CTA */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <div className="p-4 rounded-2xl border border-charcoal-200 bg-charcoal-50 space-y-2">
-                    <h4 className="font-semibold text-sm text-navy-900">Material stream allocation</h4>
+                  <div className="p-4 rounded-2xl border border-line bg-surface-muted space-y-2">
+                    <h4 className="font-semibold text-sm text-fg">Material stream allocation</h4>
                     <div className="h-36 flex items-center justify-center">
                       <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
                           <Pie
                             data={[
                               { name: 'Organic Biogas', value: 45, color: '#059669' },
-                              { name: 'Recycled Polymers', value: 30, color: '#12305C' },
+                              { name: 'Recycled Polymers', value: 30, color: '#3B82F6' },
                               { name: 'Compost', value: 20, color: '#D97706' },
                               { name: 'Residual', value: mode === 'reloop' ? 5 : 45, color: '#94A3B8' },
                             ]}
@@ -775,18 +775,18 @@ export const PublicWebsite: React.FC = () => {
                             dataKey="value"
                           >
                             {[
-                              '#059669', '#12305C', '#D97706', '#94A3B8',
+                              '#059669', '#3B82F6', '#D97706', '#94A3B8',
                             ].map((color, idx) => (
                               <Cell key={idx} fill={color} />
                             ))}
                           </Pie>
-                          <RechartsTooltip contentStyle={{ fontSize: '12px', borderRadius: '8px' }} />
+                          <RechartsTooltip contentStyle={{ fontSize: '12px', borderRadius: '8px', backgroundColor: '#1E293B', color: '#F8FAFC', border: '1px solid rgba(255,255,255,0.1)' }} />
                         </PieChart>
                       </ResponsiveContainer>
                     </div>
                   </div>
 
-                  <div className="p-5 rounded-2xl border border-charcoal-200 bg-navy-950 text-white flex flex-col justify-between gap-4">
+                  <div className="p-5 rounded-2xl border border-line bg-slate-900 text-white flex flex-col justify-between gap-4">
                     <div className="space-y-2">
                       <div className="flex items-center gap-2 text-xs text-emerald-400 font-semibold">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" aria-hidden="true" />
@@ -795,7 +795,7 @@ export const PublicWebsite: React.FC = () => {
                       <h4 className="text-base font-semibold text-white font-heading">
                         Explore the full operational dashboard
                       </h4>
-                      <p className="text-sm text-charcoal-300 leading-snug">
+                      <p className="text-sm text-slate-300 leading-snug">
                         Leaflet IoT bin map, CVRP route solver, AI vision classifier, assumptions and all 7 step pages.
                       </p>
                     </div>
@@ -908,15 +908,15 @@ export const PublicWebsite: React.FC = () => {
         <section
           id="roadmap"
           aria-label="Deployment roadmap"
-          className="py-20 lg:py-24 bg-white border-t border-charcoal-100"
+          className="py-20 lg:py-24 bg-page border-t border-line"
         >
           <div className="mx-auto max-w-7xl px-6 lg:px-8 space-y-12">
 
             <div className="max-w-2xl space-y-3">
-              <h2 className="text-3xl lg:text-4xl font-semibold text-navy-900 font-heading">
+              <h2 className="text-3xl lg:text-4xl font-semibold text-fg font-heading">
                 Deployment roadmap
               </h2>
-              <p className="text-base text-charcoal-600 leading-relaxed">
+              <p className="text-base text-fg-muted leading-relaxed">
                 Five phases from a single-corridor pilot to a pan-India municipal SaaS platform.
                 Phase 4 introduces a citizen-facing app for pickup booking and personal impact tracking.
               </p>
@@ -928,25 +928,25 @@ export const PublicWebsite: React.FC = () => {
                   key={phase}
                   className={`rounded-2xl border p-5 flex flex-col gap-3 ${
                     status === 'active'
-                      ? 'bg-emerald-50 border-emerald-300 shadow-sm'
-                      : 'bg-white border-charcoal-200'
+                      ? 'bg-emerald-50/70 dark:bg-emerald-500/10 border-emerald-300 dark:border-emerald-500/30 shadow-sm'
+                      : 'bg-surface border-line'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className={`text-xs font-bold uppercase tracking-wider ${status === 'active' ? 'text-emerald-700' : 'text-charcoal-500'}`}>
+                    <span className={`text-xs font-bold uppercase tracking-wider ${status === 'active' ? 'text-emerald-700 dark:text-emerald-400' : 'text-fg-subtle'}`}>
                       {label}
                     </span>
                     {status === 'active' && (
-                      <span className="flex items-center gap-1 text-xs font-semibold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-200">
+                      <span className="flex items-center gap-1 text-xs font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-500/20 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-500/30">
                         <ShieldCheck className="w-3 h-3" aria-hidden="true" />
                         Active pilot
                       </span>
                     )}
                   </div>
-                  <h3 className="text-base font-bold text-navy-900">{title}</h3>
-                  <p className="text-sm text-charcoal-600 leading-snug flex-1">{desc}</p>
+                  <h3 className="text-base font-bold text-fg">{title}</h3>
+                  <p className="text-sm text-fg-muted leading-snug flex-1">{desc}</p>
                   {phase === 4 && (
-                    <p className="text-xs font-semibold text-navy-700 bg-navy-50 px-3 py-1.5 rounded-xl border border-navy-200">
+                    <p className="text-xs font-semibold text-fg bg-surface-muted px-3 py-1.5 rounded-xl border border-line">
                       📱 Citizen app — pickup booking, drop-point map &amp; personal impact ledger
                     </p>
                   )}
@@ -962,15 +962,15 @@ export const PublicWebsite: React.FC = () => {
         <section
           id="faq"
           aria-label="Frequently asked questions"
-          className="py-20 lg:py-24 bg-[#F8FAFC] border-t border-charcoal-100"
+          className="py-20 lg:py-24 bg-surface-muted border-t border-line"
         >
           <div className="mx-auto max-w-7xl px-6 lg:px-8 space-y-12">
 
             <div className="text-center max-w-2xl mx-auto space-y-3">
-              <h2 className="text-3xl lg:text-4xl font-semibold text-navy-900 font-heading">
+              <h2 className="text-3xl lg:text-4xl font-semibold text-fg font-heading">
                 Frequently asked questions
               </h2>
-              <p className="text-base text-charcoal-600 leading-relaxed">
+              <p className="text-base text-fg-muted leading-relaxed">
                 Technical and operational questions about the ReLoop City platform.
               </p>
             </div>
@@ -979,17 +979,17 @@ export const PublicWebsite: React.FC = () => {
               {FAQS.map(({ q, a }, idx) => {
                 const isOpen = activeFaq === idx;
                 return (
-                  <div key={idx} className="bg-white border border-charcoal-200 rounded-2xl overflow-hidden hover:shadow-sm transition-shadow">
+                  <div key={idx} className="bg-surface border border-line rounded-2xl overflow-hidden hover:shadow-sm transition-shadow">
                     <button
                       type="button"
                       id={`faq-btn-${idx}`}
                       aria-expanded={isOpen}
                       aria-controls={`faq-panel-${idx}`}
                       onClick={() => setActiveFaq(isOpen ? null : idx)}
-                      className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-charcoal-50/50 transition-colors cursor-pointer min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                      className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-surface-muted transition-colors cursor-pointer min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                     >
-                      <span className="text-sm font-semibold text-navy-900 pr-4">{q}</span>
-                      <div className={`w-8 h-8 rounded-full border flex items-center justify-center flex-shrink-0 transition-all ${isOpen ? 'bg-emerald-600 text-white border-emerald-600' : 'text-emerald-600 border-emerald-400'}`} aria-hidden="true">
+                      <span className="text-sm font-semibold text-fg pr-4">{q}</span>
+                      <div className={`w-8 h-8 rounded-full border flex items-center justify-center flex-shrink-0 transition-all ${isOpen ? 'bg-emerald-600 text-white border-emerald-600' : 'text-emerald-600 dark:text-emerald-400 border-emerald-400 dark:border-emerald-500/40'}`} aria-hidden="true">
                         {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                       </div>
                     </button>
@@ -998,9 +998,9 @@ export const PublicWebsite: React.FC = () => {
                         id={`faq-panel-${idx}`}
                         role="region"
                         aria-labelledby={`faq-btn-${idx}`}
-                        className="px-6 pb-5 pt-1 text-sm text-charcoal-600 leading-relaxed border-t border-charcoal-100 motion-safe:animate-in motion-safe:fade-in duration-200"
+                        className="px-6 pb-5 pt-1 text-sm text-fg-muted leading-relaxed border-t border-line motion-safe:animate-in motion-safe:fade-in duration-200"
                       >
-                        <div className="border-l-4 border-emerald-400 pl-4 py-1">
+                        <div className="border-l-4 border-emerald-500 dark:border-emerald-400 pl-4 py-1">
                           {a}
                         </div>
                       </div>

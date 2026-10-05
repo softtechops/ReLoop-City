@@ -70,20 +70,20 @@ export const ExportReportMenu: React.FC<ExportReportMenuProps> = ({ variant = 's
         onClick={() => setIsOpen((prev) => !prev)}
         aria-haspopup="menu"
         aria-expanded={isOpen}
-        className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white hover:bg-charcoal-50 text-navy-900 border border-charcoal-200 hover:border-charcoal-300 shadow-2xs transition-all cursor-pointer min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-600"
+        className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-surface hover:bg-surface-muted text-fg border border-line shadow-2xs transition-all cursor-pointer min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
       >
-        <Download className="w-4 h-4 text-emerald-600" aria-hidden="true" />
+        <Download className="w-4 h-4 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
         <span>Export Report</span>
-        <ChevronDown className={`w-3.5 h-3.5 text-charcoal-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
+        <ChevronDown className={`w-3.5 h-3.5 text-fg-subtle transition-transform ${isOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
       </button>
 
       {isOpen && (
         <div
           role="menu"
           aria-label="Report Export Options"
-          className="absolute right-0 top-full mt-2 z-50 w-60 rounded-2xl bg-white border border-charcoal-200 shadow-xl p-2 space-y-1 animate-in fade-in zoom-in-95 duration-100"
+          className="absolute right-0 top-full mt-2 z-50 w-60 rounded-2xl bg-surface border border-line shadow-xl p-2 space-y-1 animate-in fade-in zoom-in-95 duration-100"
         >
-          <div className="px-3 py-1.5 border-b border-charcoal-100 text-[11px] font-bold uppercase tracking-wider text-charcoal-400">
+          <div className="px-3 py-1.5 border-b border-line text-[11px] font-bold uppercase tracking-wider text-fg-subtle">
             Export Municipal Report
           </div>
 
@@ -91,12 +91,12 @@ export const ExportReportMenu: React.FC<ExportReportMenuProps> = ({ variant = 's
             role="menuitem"
             type="button"
             onClick={handleDownloadCsv}
-            className="w-full text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-charcoal-800 hover:text-navy-900 hover:bg-emerald-50 flex items-center gap-2.5 transition-colors cursor-pointer"
+            className="w-full text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-fg hover:bg-surface-muted flex items-center gap-2.5 transition-colors cursor-pointer"
           >
-            <Download className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+            <Download className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
             <div>
               <span className="block font-bold">Download CSV</span>
-              <span className="text-[11px] text-charcoal-500 font-normal">Excel / Sheets with BOM</span>
+              <span className="text-[11px] text-fg-muted font-normal">Excel / Sheets with BOM</span>
             </div>
           </button>
 
@@ -104,12 +104,12 @@ export const ExportReportMenu: React.FC<ExportReportMenuProps> = ({ variant = 's
             role="menuitem"
             type="button"
             onClick={handlePrintPdf}
-            className="w-full text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-charcoal-800 hover:text-navy-900 hover:bg-navy-50 flex items-center gap-2.5 transition-colors cursor-pointer"
+            className="w-full text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-fg hover:bg-surface-muted flex items-center gap-2.5 transition-colors cursor-pointer"
           >
-            <Printer className="w-4 h-4 text-navy-700 flex-shrink-0" />
+            <Printer className="w-4 h-4 text-fg-muted flex-shrink-0" />
             <div>
               <span className="block font-bold">Print / Save as PDF</span>
-              <span className="text-[11px] text-charcoal-500 font-normal">Dedicated print-ready view</span>
+              <span className="text-[11px] text-fg-muted font-normal">Dedicated print-ready view</span>
             </div>
           </button>
         </div>

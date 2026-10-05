@@ -104,14 +104,14 @@ export const LandingOverview: React.FC = () => {
               <button
                 type="button"
                 onClick={handleJumpToDashboard}
-                className="flex flex-col items-start p-4 rounded-2xl bg-white hover:bg-navy-50 text-navy-900 font-semibold text-left shadow-md transition-all active:scale-[0.98] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white"
+                className="flex flex-col items-start p-4 rounded-2xl bg-white hover:bg-slate-100 text-slate-900 font-semibold text-left shadow-md transition-all active:scale-[0.98] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white"
               >
                 <div className="flex items-center justify-between w-full mb-1">
-                  <LayoutDashboard className="w-5 h-5 text-navy-700" aria-hidden="true" />
-                  <span className="text-xs text-charcoal-400 font-mono">Live KPIs</span>
+                  <LayoutDashboard className="w-5 h-5 text-slate-800" aria-hidden="true" />
+                  <span className="text-xs text-slate-500 font-mono">Live KPIs</span>
                 </div>
                 <span className="font-bold text-sm">Live Dashboard</span>
-                <span className="text-xs text-charcoal-600 font-normal mt-0.5">
+                <span className="text-xs text-slate-600 font-normal mt-0.5">
                   Real-time mass balance, power, & fiscal returns
                 </span>
               </button>
@@ -206,93 +206,93 @@ export const LandingOverview: React.FC = () => {
       {/* The Paradigm Shift: Linear Reality vs Circular Future (Slide 3) */}
       <section className="space-y-4">
         <div className="text-center max-w-2xl mx-auto space-y-1">
-          <span className="text-xs font-bold uppercase tracking-wider text-navy-700">The Paradigm Shift</span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-navy-900 font-['Outfit']">
+          <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">The Paradigm Shift</span>
+          <h2 className="text-2xl sm:text-3xl font-bold text-fg font-['Outfit']">
             Minimizing Landfill Dependency
           </h2>
-          <p className="text-sm text-charcoal-600">
+          <p className="text-sm text-fg-muted">
             Transforming municipal waste from an uncontrollable cost center into an economically self-sustaining loop.
           </p>
         </div>
 
-        <div className="bg-white rounded-2xl border border-navy-100 shadow-blueprint overflow-hidden">
-          <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-navy-100">
+        <div className="bg-surface rounded-2xl border border-line shadow-xs overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-line">
             
             {/* Linear Reality */}
-            <div className="p-6 sm:p-7 space-y-4 bg-red-50/20">
-              <div className="flex items-center justify-between pb-3 border-b border-red-100">
+            <div className="p-6 sm:p-7 space-y-4 bg-rose-500/5">
+              <div className="flex items-center justify-between pb-3 border-b border-rose-500/20">
                 <div>
-                  <h3 className="text-base font-bold text-charcoal-800 flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-red-500" aria-hidden="true" />
+                  <h3 className="text-base font-bold text-fg flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-rose-500" aria-hidden="true" />
                     Linear Reality (Waste to Landfill)
                   </h3>
-                  <span className="text-xs text-charcoal-500">Current status quo across global municipalities</span>
+                  <span className="text-xs text-fg-muted">Current status quo across global municipalities</span>
                 </div>
                 <Badge variant="red" size="sm">Unsustainable</Badge>
               </div>
 
               <div className="space-y-3 text-sm">
-                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white border border-red-100 shadow-xs">
-                  <div className="w-6 h-6 rounded-full bg-red-100 text-red-700 flex items-center justify-center font-bold text-xs flex-shrink-0" aria-hidden="true">✕</div>
+                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-surface border border-rose-500/20 shadow-xs">
+                  <div className="w-6 h-6 rounded-full bg-rose-500/15 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold text-xs flex-shrink-0" aria-hidden="true">✕</div>
                   <div>
-                    <h4 className="font-bold text-charcoal-800 text-sm">Resource Inefficient</h4>
-                    <p className="text-charcoal-600 text-xs mt-0.5">High-grade recyclable plastic, paper, and glass lost in mixed dumpsites.</p>
+                    <h4 className="font-bold text-fg text-sm">Resource Inefficient</h4>
+                    <p className="text-fg-muted text-xs mt-0.5">High-grade recyclable plastic, paper, and glass lost in mixed dumpsites.</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white border border-red-100 shadow-xs">
-                  <div className="w-6 h-6 rounded-full bg-red-100 text-red-700 flex items-center justify-center font-bold text-xs flex-shrink-0" aria-hidden="true">✕</div>
+                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-surface border border-rose-500/20 shadow-xs">
+                  <div className="w-6 h-6 rounded-full bg-rose-500/15 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold text-xs flex-shrink-0" aria-hidden="true">✕</div>
                   <div>
-                    <h4 className="font-bold text-charcoal-800 text-sm">Heavy Landfill Overload</h4>
-                    <p className="text-charcoal-600 text-xs mt-0.5">Rapidly shrinking landfill airspace and severe subterranean methane leaks.</p>
+                    <h4 className="font-bold text-fg text-sm">Heavy Landfill Overload</h4>
+                    <p className="text-fg-muted text-xs mt-0.5">Rapidly shrinking landfill airspace and severe subterranean methane leaks.</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white border border-red-100 shadow-xs">
-                  <div className="w-6 h-6 rounded-full bg-red-100 text-red-700 flex items-center justify-center font-bold text-xs flex-shrink-0" aria-hidden="true">✕</div>
+                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-surface border border-rose-500/20 shadow-xs">
+                  <div className="w-6 h-6 rounded-full bg-rose-500/15 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold text-xs flex-shrink-0" aria-hidden="true">✕</div>
                   <div>
-                    <h4 className="font-bold text-charcoal-800 text-sm">Perpetual Cost Center</h4>
-                    <p className="text-charcoal-600 text-xs mt-0.5">Taxpayer funds burn on fuel for fixed routes visiting half-empty bins.</p>
+                    <h4 className="font-bold text-fg text-sm">Perpetual Cost Center</h4>
+                    <p className="text-fg-muted text-xs mt-0.5">Taxpayer funds burn on fuel for fixed routes visiting half-empty bins.</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Circular Future */}
-            <div className="p-6 sm:p-7 space-y-4 bg-sage-50/30">
-              <div className="flex items-center justify-between pb-3 border-b border-sage-200">
+            <div className="p-6 sm:p-7 space-y-4 bg-emerald-500/5">
+              <div className="flex items-center justify-between pb-3 border-b border-emerald-500/20">
                 <div>
-                  <h3 className="text-base font-bold text-navy-900 flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-sage-500" aria-hidden="true" />
+                  <h3 className="text-base font-bold text-fg flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" aria-hidden="true" />
                     Circular Future (Waste to Resource & Energy)
                   </h3>
-                  <span className="text-xs text-charcoal-500">ReLoop AI-Driven Closed-Loop Architecture</span>
+                  <span className="text-xs text-fg-muted">ReLoop AI-Driven Closed-Loop Architecture</span>
                 </div>
-                <Badge variant="sage" size="sm">Closed Loop</Badge>
+                <Badge variant="emerald" size="sm">Closed Loop</Badge>
               </div>
 
               <div className="space-y-3 text-sm">
-                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white border border-sage-200 shadow-xs">
-                  <div className="w-6 h-6 rounded-full bg-sage-100 text-sage-800 flex items-center justify-center font-bold text-xs flex-shrink-0" aria-hidden="true">✓</div>
+                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-surface border border-emerald-500/20 shadow-xs">
+                  <div className="w-6 h-6 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold text-xs flex-shrink-0" aria-hidden="true">✓</div>
                   <div>
-                    <h4 className="font-bold text-charcoal-800 text-sm">Resource-Efficient Recovery</h4>
-                    <p className="text-charcoal-600 text-xs mt-0.5">Automated MRF computer vision sorts clean streams for remanufacturing.</p>
+                    <h4 className="font-bold text-fg text-sm">Resource-Efficient Recovery</h4>
+                    <p className="text-fg-muted text-xs mt-0.5">Automated MRF computer vision sorts clean streams for remanufacturing.</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white border border-sage-200 shadow-xs">
-                  <div className="w-6 h-6 rounded-full bg-sage-100 text-sage-800 flex items-center justify-center font-bold text-xs flex-shrink-0" aria-hidden="true">✓</div>
+                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-surface border border-emerald-500/20 shadow-xs">
+                  <div className="w-6 h-6 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold text-xs flex-shrink-0" aria-hidden="true">✓</div>
                   <div>
-                    <h4 className="font-bold text-charcoal-800 text-sm">95%+ Landfill Diversion</h4>
-                    <p className="text-charcoal-600 text-xs mt-0.5">Only non-combustible unavoidable inert residuals reach sanitary landfills.</p>
+                    <h4 className="font-bold text-fg text-sm">95%+ Landfill Diversion</h4>
+                    <p className="text-fg-muted text-xs mt-0.5">Only non-combustible unavoidable inert residuals reach sanitary landfills.</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white border border-sage-200 shadow-xs">
-                  <div className="w-6 h-6 rounded-full bg-sage-100 text-sage-800 flex items-center justify-center font-bold text-xs flex-shrink-0" aria-hidden="true">✓</div>
+                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-surface border border-emerald-500/20 shadow-xs">
+                  <div className="w-6 h-6 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold text-xs flex-shrink-0" aria-hidden="true">✓</div>
                   <div>
-                    <h4 className="font-bold text-charcoal-800 text-sm">Economically Self-Sustaining</h4>
-                    <p className="text-charcoal-600 text-xs mt-0.5">6 diversified revenue streams (recycled pellets, power, compost, EPR credits).</p>
+                    <h4 className="font-bold text-fg text-sm">Economically Self-Sustaining</h4>
+                    <p className="text-fg-muted text-xs mt-0.5">6 diversified revenue streams (recycled pellets, power, compost, EPR credits).</p>
                   </div>
                 </div>
               </div>
@@ -306,15 +306,15 @@ export const LandingOverview: React.FC = () => {
       <section className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-navy-700">The 7 AI Steps</span>
-            <h2 className="text-2xl font-bold text-navy-900 font-['Outfit']">
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">The 7 AI Steps</span>
+            <h2 className="text-2xl font-bold text-fg font-['Outfit']">
               Where AI Adds Intelligence
             </h2>
           </div>
           <Button
             variant="secondary"
             size="sm"
-            icon={<Sparkles className="w-4 h-4 text-amberGold-600" />}
+            icon={<Sparkles className="w-4 h-4 text-amber-500" />}
             onClick={handleStartTour}
           >
             Launch Step-by-Step Walkthrough
@@ -328,25 +328,25 @@ export const LandingOverview: React.FC = () => {
               <Link
                 key={step.num}
                 to={step.route}
-                className="group p-4 rounded-2xl bg-white border border-navy-100 shadow-blueprint hover:border-navy-400 hover:shadow-blueprint-lg transition-all flex flex-col justify-between focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600"
+                className="group p-4 rounded-2xl bg-surface border border-line shadow-xs hover:border-emerald-500/40 hover:shadow-md transition-all flex flex-col justify-between focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-500"
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="font-mono text-xs font-bold text-charcoal-500 group-hover:text-navy-700">
+                    <span className="font-mono text-xs font-bold text-fg-subtle group-hover:text-emerald-600 dark:group-hover:text-emerald-400">
                       {step.num}
                     </span>
-                    <div className="w-8 h-8 rounded-lg bg-navy-50 group-hover:bg-navy-700 group-hover:text-white text-navy-700 flex items-center justify-center transition-colors" aria-hidden="true">
+                    <div className="w-8 h-8 rounded-lg bg-surface-muted group-hover:bg-emerald-600 group-hover:text-white text-fg flex items-center justify-center transition-colors" aria-hidden="true">
                       <Icon className="w-4 h-4" />
                     </div>
                   </div>
-                  <h3 className="font-bold text-sm text-navy-900 mb-1">
+                  <h3 className="font-bold text-sm text-fg mb-1">
                     {step.name}
                   </h3>
-                  <p className="text-xs text-charcoal-600 leading-snug">
+                  <p className="text-xs text-fg-muted leading-snug">
                     {step.desc}
                   </p>
                 </div>
-                <div className="pt-3 mt-3 border-t border-navy-50 flex items-center text-xs font-bold text-navy-700 group-hover:text-navy-900">
+                <div className="pt-3 mt-3 border-t border-line flex items-center text-xs font-bold text-emerald-600 dark:text-emerald-400 group-hover:text-emerald-500">
                   <span>Explore step</span>
                   <ArrowRight className="w-3.5 h-3.5 ml-1 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                 </div>

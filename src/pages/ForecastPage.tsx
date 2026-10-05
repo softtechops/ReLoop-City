@@ -25,9 +25,11 @@ import {
   Tooltip as RechartsTooltip,
   ResponsiveContainer
 } from 'recharts';
+import { useChartTheme } from '../lib/chartTheme';
 
 export const ForecastPage: React.FC = () => {
   const { simState, config, mode, energyOfftakeCommitment, setEnergyOfftakeCommitment } = useStore();
+  const chartTheme = useChartTheme();
 
   const currentMetrics = mode === 'reloop' ? simState.reloopCumulative : simState.baselineCumulative;
   const homesPowered = Math.round((currentMetrics.energyGeneratedMwh * 1000) / 90); // 90 kWh/month/home
@@ -68,18 +70,18 @@ export const ForecastPage: React.FC = () => {
       />
 
       {/* Manager Decision: Energy Off-Take Commitment */}
-      <div className="p-4 sm:p-5 rounded-2xl bg-white border border-charcoal-200 shadow-sm space-y-3">
+      <div className="p-4 sm:p-5 rounded-2xl bg-surface border border-line shadow-sm space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-charcoal-500 block">
+            <span className="text-xs font-bold uppercase tracking-wider text-fg-subtle block">
               Municipal Energy Off-take Policy
             </span>
-            <p className="text-sm font-bold text-navy-900">
+            <p className="text-sm font-bold text-fg">
               Commit generated renewable electricity and biomethane to a municipal off-taker:
             </p>
           </div>
-          <span className="text-xs font-mono text-charcoal-500">
-            Committed to: <strong className="text-navy-900">{energyOfftakeCommitment === 'grid' ? 'MSEDCL Grid Feed-in' : 'PMPML Bus Charging'}</strong>
+          <span className="text-xs font-mono text-fg-muted">
+            Committed to: <strong className="text-fg">{energyOfftakeCommitment === 'grid' ? 'MSEDCL Grid Feed-in' : 'PMPML Bus Charging'}</strong>
           </span>
         </div>
 
@@ -106,19 +108,19 @@ export const ForecastPage: React.FC = () => {
                 onClick={() => setEnergyOfftakeCommitment(opt.id)}
                 className={`p-3.5 rounded-xl border text-left transition-all min-h-[44px] cursor-pointer flex flex-col justify-between ${
                   isSelected
-                    ? 'bg-navy-900 text-white border-navy-900 shadow-sm ring-2 ring-emerald-400'
-                    : 'bg-charcoal-50 hover:bg-charcoal-100 text-charcoal-800 border-charcoal-200'
+                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm ring-2 ring-emerald-400'
+                    : 'bg-surface-muted hover:bg-surface text-fg border-line'
                 }`}
               >
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-xs sm:text-sm">{opt.title}</span>
                   {isSelected ? (
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-white flex-shrink-0" />
                   ) : (
-                    <span className="text-xs font-mono text-charcoal-500">{opt.rate}</span>
+                    <span className="text-xs font-mono text-fg-muted">{opt.rate}</span>
                   )}
                 </div>
-                <p className={`text-xs mt-1 leading-snug ${isSelected ? 'text-charcoal-300' : 'text-charcoal-600'}`}>
+                <p className={`text-xs mt-1 leading-snug ${isSelected ? 'text-emerald-100' : 'text-fg-muted'}`}>
                   {opt.desc}
                 </p>
               </button>
@@ -128,16 +130,16 @@ export const ForecastPage: React.FC = () => {
       </div>
 
       {/* One-Line Top Headline Result (Phase 4 requirement) */}
-      <div className="p-4 sm:p-5 rounded-2xl bg-white border border-charcoal-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="p-4 sm:p-5 rounded-2xl bg-surface border border-line shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <span className="p-2.5 rounded-xl bg-emerald-100 text-emerald-800 flex-shrink-0" aria-hidden="true">
-            <Zap className="w-5 h-5 text-emerald-700" />
+          <span className="p-2.5 rounded-xl bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 flex-shrink-0" aria-hidden="true">
+            <Zap className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
           </span>
           <div>
-            <div className="text-xs uppercase font-bold tracking-wider text-charcoal-500">
+            <div className="text-xs uppercase font-bold tracking-wider text-fg-subtle">
               Clean Energy Forecast
             </div>
-            <p className="text-sm sm:text-base font-bold text-navy-900 leading-snug">
+            <p className="text-sm sm:text-base font-bold text-fg leading-snug">
               {headlineSaving}
             </p>
           </div>
@@ -197,10 +199,10 @@ export const ForecastPage: React.FC = () => {
                   <stop offset="95%" stopColor="#D97706" stopOpacity={0.0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
-              <XAxis dataKey="timestamp" stroke="#64748B" fontSize={12} tickLine={false} />
-              <YAxis stroke="#64748B" fontSize={12} tickLine={false} unit=" MWh" />
-              <RechartsTooltip />
+              <CartesianGrid strokeDasharray="3 3" stroke={chartTheme.gridColor} />
+              <XAxis dataKey="timestamp" stroke={chartTheme.axisColor} fontSize={12} tickLine={false} />
+              <YAxis stroke={chartTheme.axisColor} fontSize={12} tickLine={false} unit=" MWh" />
+              <RechartsTooltip contentStyle={chartTheme.tooltipStyle} />
               <Area
                 type="monotone"
                 dataKey="mwh"
@@ -226,12 +228,12 @@ export const ForecastPage: React.FC = () => {
               { label: 'MRF Facility Mechanical Operations', share: '25%', detail: 'Supplies optical vision sorters and conveyor motors' },
               { label: 'MSEDCL Municipal Grid Export', share: '40%', detail: 'Fed into Maharashtra grid at feed-in tariff' },
             ].map((item) => (
-              <div key={item.label} className="p-3.5 rounded-xl bg-charcoal-50 border border-charcoal-200 space-y-1">
+              <div key={item.label} className="p-3.5 rounded-xl bg-surface-muted border border-line space-y-1">
                 <div className="flex justify-between items-center text-sm">
-                  <span className="font-bold text-navy-900">{item.label}</span>
-                  <span className="font-mono font-bold text-amber-700">{item.share}</span>
+                  <span className="font-bold text-fg">{item.label}</span>
+                  <span className="font-mono font-bold text-amber-600 dark:text-amber-400">{item.share}</span>
                 </div>
-                <p className="text-xs text-charcoal-600">{item.detail}</p>
+                <p className="text-xs text-fg-muted">{item.detail}</p>
               </div>
             ))}
           </div>
@@ -242,20 +244,20 @@ export const ForecastPage: React.FC = () => {
           subtitle="Direct atmospheric greenhouse gas avoidance metrics"
         >
           <div className="space-y-3 pt-2">
-            <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 space-y-1.5">
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">
+            <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 dark:bg-emerald-500/15 dark:border-emerald-500/30 space-y-1.5">
+              <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300">
                 Greenhouse Gas Mitigation Impact
               </span>
-              <span className="text-2xl font-black font-heading text-emerald-700 block">
+              <span className="text-2xl font-black font-heading text-emerald-700 dark:text-emerald-400 block">
                 {currentMetrics.co2AvoidedTonnes.toFixed(1)} Tonnes CO₂e Avoided
               </span>
-              <p className="text-xs text-charcoal-600 leading-relaxed">
+              <p className="text-xs text-fg-muted leading-relaxed">
                 Methane has 28x higher global warming potential than carbon dioxide. Capturing raw digestate inside sealed AD tanks completely halts uncontrolled open-air landfill emissions.
               </p>
             </div>
             
-            <div className="flex items-center gap-2 p-3 rounded-xl bg-charcoal-50 border border-charcoal-200 text-xs text-charcoal-700">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+            <div className="flex items-center gap-2 p-3 rounded-xl bg-surface-muted border border-line text-xs text-fg-muted">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
               <span>Calibrated to CPCB and Maharashtra State Energy Regulatory Guidelines.</span>
             </div>
           </div>

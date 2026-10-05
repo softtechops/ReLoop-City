@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useStore } from '../store/useStore';
+import { useTheme } from '../lib/useTheme';
 import { ReloopLogo } from './brand/ReloopLogo';
+import { ThemeToggle } from './ui/ThemeToggle';
 import { 
   Play, 
   Pause, 
@@ -12,6 +14,9 @@ import {
   MoreHorizontal,
   Gauge,
   HelpCircle,
+  Sun,
+  Moon,
+  Monitor,
 } from 'lucide-react';
 import { WhatCanIDoModal } from './WhatCanIDoModal';
 
@@ -28,6 +33,8 @@ export const Header: React.FC = () => {
     setMode,
     startGuidedTour,
   } = useStore();
+
+  const { theme, setTheme } = useTheme();
 
   const [isOverflowOpen, setIsOverflowOpen] = useState(false);
   const [isWhatCanIDoOpen, setIsWhatCanIDoOpen] = useState(false);
@@ -74,7 +81,7 @@ export const Header: React.FC = () => {
   const statusPillText = `${isSimRunning ? 'Running' : 'Paused'} · Day ${simState.currentDay}, ${String(simState.currentHour).padStart(2, '0')}:00`;
 
   return (
-    <header className="sticky top-0 z-30 bg-white border-b border-slate-200 transition-all select-none">
+    <header className="sticky top-0 z-30 bg-surface border-b border-line text-fg transition-all select-none">
       {/* Skip to main content link for screen readers */}
       <a
         href="#main-content"
@@ -102,7 +109,7 @@ export const Header: React.FC = () => {
           <div
             role="radiogroup"
             aria-label="Operational Strategy Mode"
-            className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200"
+            className="flex items-center bg-surface-muted p-1 rounded-xl border border-line"
           >
             <button
               id="header-toggle-baseline"
@@ -113,7 +120,7 @@ export const Header: React.FC = () => {
               className={`flex items-center gap-1.5 px-3 sm:px-4 py-1.5 min-h-[38px] rounded-lg text-sm font-semibold transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-amber-500 cursor-pointer ${
                 mode === 'baseline'
                   ? 'bg-amber-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+                  : 'text-fg-muted hover:text-fg hover:bg-surface/60'
               }`}
             >
               <Clock className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
@@ -130,7 +137,7 @@ export const Header: React.FC = () => {
               className={`flex items-center gap-1.5 px-3 sm:px-4 py-1.5 min-h-[38px] rounded-lg text-sm font-semibold transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-600 cursor-pointer ${
                 mode === 'reloop'
                   ? 'bg-emerald-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+                  : 'text-fg-muted hover:text-fg hover:bg-surface/60'
               }`}
             >
               <Sparkles className="w-4 h-4 text-emerald-100 flex-shrink-0" aria-hidden="true" />
@@ -139,21 +146,21 @@ export const Header: React.FC = () => {
             </button>
           </div>
 
-          {/* Right: Single Status Pill, Play/Pause Button, and "⋯" Menu */}
+          {/* Right: Status Pill, Play/Pause, ThemeToggle, and "⋯" Menu */}
           <div className="flex items-center gap-2 sm:gap-3">
             
             {/* Single Status Pill ("Running · Day 1, 14:00") */}
             <div
               className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-medium ${
                 isSimRunning
-                  ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
-                  : 'bg-slate-50 text-slate-600 border-slate-200'
+                  ? 'bg-emerald-50 text-emerald-800 border-emerald-200 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-500/30'
+                  : 'bg-surface-muted text-fg-subtle border-line'
               }`}
               title={isSimRunning ? 'Simulation running' : 'Simulation paused'}
             >
               <span
                 className={`w-2 h-2 rounded-full flex-shrink-0 ${
-                  isSimRunning ? 'bg-emerald-600' : 'bg-slate-400'
+                  isSimRunning ? 'bg-emerald-600 dark:bg-emerald-400' : 'bg-slate-400'
                 }`}
                 aria-hidden="true"
               />
@@ -166,7 +173,7 @@ export const Header: React.FC = () => {
               onClick={() => (isSimRunning ? pauseSimulation() : startSimulation())}
               className={`min-h-[40px] px-3.5 sm:px-4 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-600 cursor-pointer ${
                 isSimRunning
-                  ? 'bg-amber-50 text-amber-900 hover:bg-amber-100 border border-amber-200'
+                  ? 'bg-amber-50 text-amber-900 hover:bg-amber-100 border border-amber-200 dark:bg-amber-400/15 dark:text-amber-300 dark:border-amber-400/30'
                   : 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-xs'
               }`}
               aria-label={isSimRunning ? 'Pause simulation' : 'Run simulation'}
@@ -184,6 +191,9 @@ export const Header: React.FC = () => {
               )}
             </button>
 
+            {/* Day / Night ThemeToggle Component */}
+            <ThemeToggle />
+
             {/* "⋯" Overflow Menu */}
             <div className="relative" ref={overflowRef}>
               <button
@@ -193,7 +203,7 @@ export const Header: React.FC = () => {
                 aria-haspopup="menu"
                 aria-expanded={isOverflowOpen}
                 aria-label="More simulation and navigation options"
-                className="min-h-[40px] min-w-[40px] p-2 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 transition-all flex items-center justify-center cursor-pointer shadow-xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-600"
+                className="min-h-[40px] min-w-[40px] p-2 rounded-xl border border-line hover:border-slate-300 dark:hover:border-slate-600 bg-surface hover:bg-surface-muted text-fg transition-all flex items-center justify-center cursor-pointer shadow-xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-600"
               >
                 <MoreHorizontal className="w-5 h-5" aria-hidden="true" />
               </button>
@@ -203,12 +213,51 @@ export const Header: React.FC = () => {
                 <div
                   role="menu"
                   aria-label="Simulation Settings and Navigation"
-                  className="absolute right-0 top-full mt-2 z-50 w-64 rounded-2xl bg-white border border-slate-200 shadow-xl p-2 space-y-1 animate-in fade-in zoom-in-95 duration-100"
+                  className="absolute right-0 top-full mt-2 z-50 w-64 rounded-2xl bg-surface border border-line shadow-xl p-2 space-y-1 animate-in fade-in zoom-in-95 duration-100 text-fg"
                 >
+                  {/* Section: Day / Night / System Theme */}
+                  <div className="px-3 py-2 border-b border-line">
+                    <span className="text-xs font-semibold text-fg-subtle block mb-1.5 flex items-center gap-1.5">
+                      <Sun className="w-3.5 h-3.5 text-amber-500" />
+                      <span>Theme mode</span>
+                    </span>
+                    <div className="grid grid-cols-3 gap-1">
+                      {(['light', 'dark', 'system'] as const).map((t) => (
+                        <button
+                          key={t}
+                          type="button"
+                          onClick={() => setTheme(t)}
+                          className={`min-h-[30px] px-2 py-1 rounded-lg text-xs font-semibold transition-all capitalize cursor-pointer flex items-center justify-center gap-1 ${
+                            theme === t
+                              ? 'bg-emerald-600 text-white shadow-2xs'
+                              : 'bg-surface-muted text-fg-muted hover:text-fg hover:bg-slate-200 dark:hover:bg-slate-700'
+                          }`}
+                        >
+                          {t === 'light' ? (
+                            <>
+                              <Sun className="w-3 h-3" />
+                              <span>Day</span>
+                            </>
+                          ) : t === 'dark' ? (
+                            <>
+                              <Moon className="w-3 h-3" />
+                              <span>Night</span>
+                            </>
+                          ) : (
+                            <>
+                              <Monitor className="w-3 h-3" />
+                              <span>Auto</span>
+                            </>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
                   {/* Section: Simulation Speed */}
-                  <div className="px-3 py-2 border-b border-slate-100">
-                    <span className="text-xs font-semibold text-slate-500 block mb-1.5 flex items-center gap-1.5">
-                      <Gauge className="w-3.5 h-3.5 text-slate-700" />
+                  <div className="px-3 py-2 border-b border-line">
+                    <span className="text-xs font-semibold text-fg-subtle block mb-1.5 flex items-center gap-1.5">
+                      <Gauge className="w-3.5 h-3.5 text-fg-muted" />
                       <span>Simulation speed</span>
                     </span>
                     <div className="grid grid-cols-3 gap-1">
@@ -222,10 +271,10 @@ export const Header: React.FC = () => {
                             setSimSpeed(spd);
                             setIsOverflowOpen(false);
                           }}
-                          className={`min-h-[34px] px-2 py-1 rounded-lg text-xs font-semibold transition-all ${
+                          className={`min-h-[34px] px-2 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                             simSpeed === spd
-                              ? 'bg-slate-900 text-white'
-                              : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                              ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900'
+                              : 'bg-surface-muted text-fg-muted hover:text-fg hover:bg-slate-200 dark:hover:bg-slate-700'
                           }`}
                         >
                           {spd}x
@@ -243,7 +292,7 @@ export const Header: React.FC = () => {
                       setIsOverflowOpen(false);
                       setIsWhatCanIDoOpen(true);
                     }}
-                    className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-emerald-50/70 flex items-center gap-2.5 transition-colors cursor-pointer"
+                    className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium text-fg hover:bg-emerald-50/70 dark:hover:bg-emerald-950/40 flex items-center gap-2.5 transition-colors cursor-pointer"
                   >
                     <HelpCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
                     <span>What can I do here?</span>
@@ -258,7 +307,7 @@ export const Header: React.FC = () => {
                       setIsOverflowOpen(false);
                       startGuidedTour();
                     }}
-                    className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50 flex items-center gap-2.5 transition-colors cursor-pointer"
+                    className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium text-fg hover:bg-surface-muted flex items-center gap-2.5 transition-colors cursor-pointer"
                   >
                     <Sparkles className="w-4 h-4 text-emerald-600 flex-shrink-0" />
                     <span>Guided Tour</span>
@@ -273,14 +322,14 @@ export const Header: React.FC = () => {
                       setIsOverflowOpen(false);
                       openResetConfirm();
                     }}
-                    className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:text-red-700 hover:bg-red-50 flex items-center gap-2.5 transition-colors cursor-pointer"
+                    className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium text-fg hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 flex items-center gap-2.5 transition-colors cursor-pointer"
                   >
-                    <RotateCcw className="w-4 h-4 text-slate-500 hover:text-red-600 flex-shrink-0" />
+                    <RotateCcw className="w-4 h-4 text-fg-subtle hover:text-red-600 flex-shrink-0" />
                     <span>Reset to Day 1</span>
                   </button>
 
                   {/* Divider */}
-                  <div className="border-t border-slate-100 my-1" />
+                  <div className="border-t border-line my-1" />
 
                   {/* Item: Back to Public Website */}
                   <Link
@@ -288,9 +337,9 @@ export const Header: React.FC = () => {
                     role="menuitem"
                     to="/"
                     onClick={() => setIsOverflowOpen(false)}
-                    className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50 flex items-center gap-2.5 transition-colors cursor-pointer"
+                    className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium text-fg hover:bg-surface-muted flex items-center gap-2.5 transition-colors cursor-pointer"
                   >
-                    <ArrowLeft className="w-4 h-4 text-slate-500 flex-shrink-0" />
+                    <ArrowLeft className="w-4 h-4 text-fg-subtle flex-shrink-0" />
                     <span>Back to Website</span>
                   </Link>
                 </div>

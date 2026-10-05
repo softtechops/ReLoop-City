@@ -33,9 +33,9 @@ export const ResetConfirmDialog: React.FC = () => {
         </>
       }
     >
-      <div className="space-y-3 text-sm text-charcoal-600">
-        <div className="p-3.5 rounded-xl bg-amberGold-50 border border-amberGold-200 text-amberGold-900 text-xs flex items-start gap-2.5">
-          <AlertCircle className="w-4 h-4 text-amberGold-700 flex-shrink-0 mt-0.5" />
+      <div className="space-y-3 text-sm text-fg-muted">
+        <div className="p-3.5 rounded-xl bg-amber-50 dark:bg-amber-400/10 border border-amber-200 dark:border-amber-400/30 text-amber-900 dark:text-amber-200 text-xs flex items-start gap-2.5">
+          <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
           <div>
             <span className="font-bold block mb-0.5">Assumptions are preserved:</span>
             <span>
@@ -43,7 +43,7 @@ export const ResetConfirmDialog: React.FC = () => {
             </span>
           </div>
         </div>
-        <p className="text-xs text-charcoal-500">
+        <p className="text-xs text-fg-muted">
           The simulation clock will return to Day 1, 14:00 (Tuesday) with initial fill telemetry.
         </p>
       </div>

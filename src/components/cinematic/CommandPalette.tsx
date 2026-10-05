@@ -7,17 +7,26 @@ import { playTick } from '../../lib/sounds';
 import { downloadReportCsv } from '../../utils/exportCsv';
 import { computeMetrics } from '../../lib/metrics';
 
+import { useTheme } from '../../lib/useTheme';
+
 export const CommandPalette: React.FC = () => {
   const open = useUiPrefs((s) => s.paletteOpen);
   const setOpen = useUiPrefs((s) => s.setPaletteOpen);
   const sound = useUiPrefs((s) => s.soundEnabled);
   const navigate = useNavigate();
   const { setMode, mode, startGuidedTour, startSimulation, pauseSimulation, isSimRunning } = useStore();
+  const { resolvedTheme, toggle: toggleTheme } = useTheme();
   const [q, setQ] = useState('');
 
   const actions = useMemo(
     () => [
       { id: 'dash', label: 'Open Dashboard', hint: 'G', run: () => navigate('/app/dashboard') },
+      {
+        id: 'theme',
+        label: `Switch to ${resolvedTheme === 'dark' ? 'Day' : 'Night'} mode`,
+        hint: 'T',
+        run: () => toggleTheme(),
+      },
       ...LOOP_STEPS.map((s) => ({
         id: `s${s.step}`,
         label: `Go to ${s.step}. ${s.name} · ${s.headline}`,
@@ -42,7 +51,7 @@ export const CommandPalette: React.FC = () => {
       { id: 'present', label: 'Presentation mode', hint: 'P', run: () => useUiPrefs.getState().togglePresentation() },
       { id: 'fx', label: 'Toggle reduce effects', hint: '', run: () => useUiPrefs.getState().toggleReduceEffects() },
     ],
-    [isSimRunning, mode, navigate, pauseSimulation, setMode, startGuidedTour, startSimulation]
+    [isSimRunning, mode, navigate, pauseSimulation, resolvedTheme, setMode, startGuidedTour, startSimulation, toggleTheme]
   );
 
   const filtered = actions.filter((a) => a.label.toLowerCase().includes(q.toLowerCase()));
@@ -62,15 +71,15 @@ export const CommandPalette: React.FC = () => {
       onClick={() => setOpen(false)}
     >
       <div
-        className="w-full max-w-lg glass-panel rounded-2xl overflow-hidden"
+        className="w-full max-w-lg bg-surface text-fg border border-line shadow-2xl rounded-2xl overflow-hidden animate-in zoom-in-95 duration-150"
         onClick={(e) => e.stopPropagation()}
       >
         <input
           autoFocus
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="Jump to a step, toggle mode, export…"
-          className="w-full bg-transparent px-4 py-3.5 text-sm text-white placeholder:text-slate-500 border-b border-white/10 outline-none"
+          placeholder="Jump to a step, toggle theme, export…"
+          className="w-full bg-transparent px-4 py-3.5 text-sm text-fg placeholder:text-fg-subtle border-b border-line outline-none"
           aria-label="Search commands"
         />
         <ul className="max-h-80 overflow-y-auto py-2">
@@ -78,7 +87,7 @@ export const CommandPalette: React.FC = () => {
             <li key={a.id}>
               <button
                 type="button"
-                className="w-full text-left px-4 py-2.5 text-sm text-slate-100 hover:bg-white/10 flex items-center justify-between min-h-[44px]"
+                className="w-full text-left px-4 py-2.5 text-sm text-fg hover:bg-surface-muted flex items-center justify-between min-h-[44px] transition-colors"
                 onClick={() => {
                   if (sound) playTick();
                   a.run();
@@ -86,7 +95,7 @@ export const CommandPalette: React.FC = () => {
                 }}
               >
                 <span>{a.label}</span>
-                {a.hint && <kbd className="text-[10px] font-mono text-slate-400 border border-white/15 rounded px-1.5 py-0.5">{a.hint}</kbd>}
+                {a.hint && <kbd className="text-[10px] font-mono text-fg-muted border border-line bg-surface-muted rounded px-1.5 py-0.5">{a.hint}</kbd>}
               </button>
             </li>
           ))}

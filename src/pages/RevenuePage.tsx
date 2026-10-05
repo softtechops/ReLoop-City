@@ -29,9 +29,11 @@ import {
   ResponsiveContainer 
 } from 'recharts';
 import { formatCurrencyINR } from '../lib/formatters';
+import { useChartTheme } from '../lib/chartTheme';
 
 export const RevenuePage: React.FC = () => {
   const { mode, councilReportApproved, councilApprovalTimestamp, approveCouncilReport } = useStore();
+  const chartTheme = useChartTheme();
   const isReloop = mode === 'reloop';
 
   // 6 Circular Revenue Streams breakdown
@@ -126,9 +128,9 @@ export const RevenuePage: React.FC = () => {
         decisionPrompt="What should we tell the city council?"
         actions={
           <div className="flex flex-wrap items-center gap-3">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-navy-50 border border-navy-200">
-              <span className="text-xs text-charcoal-500 font-medium">Pilot Run-rate:</span>
-              <span className="font-extrabold text-navy-900 text-sm font-['Outfit']">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface-muted border border-line">
+              <span className="text-xs text-fg-muted font-medium">Pilot Run-rate:</span>
+              <span className="font-extrabold text-fg text-sm font-['Outfit']">
                 {formatCurrencyINR(totalMonthlyRevenueInr)}/month
               </span>
             </div>
@@ -138,16 +140,16 @@ export const RevenuePage: React.FC = () => {
       />
 
       {/* One-Line Top Headline Result (Phase 4 requirement) */}
-      <div className="p-4 sm:p-5 rounded-2xl bg-white border border-charcoal-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="p-4 sm:p-5 rounded-2xl bg-surface border border-line shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <span className="p-2.5 rounded-xl bg-emerald-100 text-emerald-800 flex-shrink-0" aria-hidden="true">
-            <Coins className="w-5 h-5 text-emerald-700" />
+          <span className="p-2.5 rounded-xl bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 flex-shrink-0" aria-hidden="true">
+            <Coins className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
           </span>
           <div>
-            <div className="text-xs uppercase font-bold tracking-wider text-charcoal-500">
+            <div className="text-xs uppercase font-bold tracking-wider text-fg-muted">
               Macro-Economic Ledger
             </div>
-            <p className="text-sm sm:text-base font-bold text-navy-900 leading-snug">
+            <p className="text-sm sm:text-base font-bold text-fg leading-snug">
               ReLoop circular monetization generates {formatCurrencyINR(totalMonthlyRevenueInr)}/month across 6 resource streams, generating ₹20.4 Lakh net quarterly surplus.
             </p>
           </div>
@@ -160,13 +162,13 @@ export const RevenuePage: React.FC = () => {
       {/* Decision Card: Council Briefing Approval */}
       <div className={`p-5 rounded-2xl border transition-all ${
         councilReportApproved
-          ? 'bg-emerald-50/70 border-emerald-300 shadow-sm'
-          : 'bg-white border-charcoal-200 shadow-sm'
+          ? 'bg-emerald-500/10 border-emerald-500/30 shadow-xs'
+          : 'bg-surface border-line shadow-xs'
       }`}>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-start gap-3">
             <div className={`p-2.5 rounded-xl flex-shrink-0 ${
-              councilReportApproved ? 'bg-emerald-500 text-white' : 'bg-navy-50 text-navy-800'
+              councilReportApproved ? 'bg-emerald-500 text-white' : 'bg-surface-muted text-fg'
             }`}>
               {councilReportApproved ? (
                 <ShieldCheck className="w-5 h-5" />
@@ -176,7 +178,7 @@ export const RevenuePage: React.FC = () => {
             </div>
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-charcoal-500">
+                <span className="text-xs font-bold uppercase tracking-wider text-fg-muted">
                   Municipal Decision Action
                 </span>
                 {councilReportApproved ? (
@@ -189,12 +191,12 @@ export const RevenuePage: React.FC = () => {
                   </Badge>
                 )}
               </div>
-              <h3 className="text-base font-bold text-navy-900">
+              <h3 className="text-base font-bold text-fg">
                 {councilReportApproved
                   ? 'Circular Economic Ledger Certified for Municipal Submission'
                   : 'Approve Corridor Results for PCMC City Council Review'}
               </h3>
-              <p className="text-xs text-charcoal-600 max-w-2xl leading-relaxed">
+              <p className="text-xs text-fg-muted max-w-2xl leading-relaxed">
                 {councilReportApproved
                   ? `Sealed by City Waste Operations Manager on ${councilApprovalTimestamp}. Verified 95.8% diversion, net quarterly surplus of ₹20.4 Lakh, and 31.2 t CO₂ abatement under simulated pilot corridor standards.`
                   : 'Sign off on current simulation outcomes, diversion metrics, and facility economics to release the formal briefing pack to the PCMC Municipal Commissioner.'}
@@ -208,7 +210,7 @@ export const RevenuePage: React.FC = () => {
                 variant="outline"
                 size="sm"
                 onClick={() => approveCouncilReport(false)}
-                className="text-xs text-charcoal-600 hover:text-red-700 hover:border-red-300"
+                className="text-xs text-fg-muted hover:text-rose-600 hover:border-rose-300 dark:hover:text-rose-400"
               >
                 Revert to Draft
               </Button>
@@ -228,30 +230,30 @@ export const RevenuePage: React.FC = () => {
       </div>
 
       {/* Slide 9 Architecture: From Cost Center to City-Wide Impact */}
-      <div className="p-6 sm:p-7 rounded-3xl bg-gradient-to-r from-navy-800 to-navy-900 text-white shadow-xl space-y-4">
-        <span className="text-xs font-bold uppercase tracking-wider text-amberGold-300">
+      <div className="p-6 sm:p-7 rounded-3xl bg-gradient-to-r from-navy-900 via-navy-800 to-navy-900 border border-white/10 text-white shadow-xl space-y-4">
+        <span className="text-xs font-bold uppercase tracking-wider text-amber-300">
           The Macro-Economic Engine (Slide 9)
         </span>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-1">
           <div className="p-4 rounded-2xl bg-white/10 border border-white/15 space-y-1">
-            <span className="text-xs text-navy-200">1. Construction & Infra</span>
+            <span className="text-xs text-slate-300">1. Construction & Infra</span>
             <h3 className="text-sm font-bold text-white">Recycled M-Sand & Aggregates</h3>
-            <p className="text-xs text-navy-200">Supplying municipal road paving and affordable housing.</p>
+            <p className="text-xs text-slate-300">Supplying municipal road paving and affordable housing.</p>
           </div>
           <div className="p-4 rounded-2xl bg-white/10 border border-white/15 space-y-1">
-            <span className="text-xs text-navy-200">2. Clean City Energy</span>
-            <h3 className="text-sm font-bold text-amberGold-300">MWh Power & Bio-CNG</h3>
-            <p className="text-xs text-navy-200">Electrifying municipal facilities, street lights, and bus fleets.</p>
+            <span className="text-xs text-slate-300">2. Clean City Energy</span>
+            <h3 className="text-sm font-bold text-amber-300">MWh Power & Bio-CNG</h3>
+            <p className="text-xs text-slate-300">Electrifying municipal facilities, street lights, and bus fleets.</p>
           </div>
           <div className="p-4 rounded-2xl bg-white/10 border border-white/15 space-y-1">
-            <span className="text-xs text-navy-200">3. Environmental Health</span>
-            <h3 className="text-sm font-bold text-sage-300">95% Landfill Abatement</h3>
-            <p className="text-xs text-navy-200">Eliminating air toxic leachate and ground water contamination.</p>
+            <span className="text-xs text-slate-300">3. Environmental Health</span>
+            <h3 className="text-sm font-bold text-emerald-300">95% Landfill Abatement</h3>
+            <p className="text-xs text-slate-300">Eliminating air toxic leachate and ground water contamination.</p>
           </div>
           <div className="p-4 rounded-2xl bg-white/10 border border-white/15 space-y-1">
-            <span className="text-xs text-navy-200">4. Local Economy</span>
+            <span className="text-xs text-slate-300">4. Local Economy</span>
             <h3 className="text-sm font-bold text-white">Green Formal Jobs</h3>
-            <p className="text-xs text-navy-200">Decent tech-enabled jobs in automated sorting & bio-refining.</p>
+            <p className="text-xs text-slate-300">Decent tech-enabled jobs in automated sorting & bio-refining.</p>
           </div>
         </div>
       </div>
@@ -267,7 +269,7 @@ export const RevenuePage: React.FC = () => {
             return (
               <div
                 key={stream.id}
-                className="p-5 rounded-2xl bg-[#F8FAFC] border border-navy-100 shadow-xs space-y-3 hover:border-emerald-300 transition-all flex flex-col justify-between"
+                className="p-5 rounded-2xl bg-surface-muted border border-line shadow-xs space-y-3 hover:border-emerald-500/50 transition-all flex flex-col justify-between"
               >
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
@@ -284,25 +286,25 @@ export const RevenuePage: React.FC = () => {
                   </div>
 
                   <div>
-                    <h4 className="font-bold text-sm text-navy-900 leading-snug">{stream.title}</h4>
-                    <span className="text-xs text-charcoal-500 font-medium">{stream.category}</span>
+                    <h4 className="font-bold text-sm text-fg leading-snug">{stream.title}</h4>
+                    <span className="text-xs text-fg-muted font-medium">{stream.category}</span>
                   </div>
 
-                  <p className="text-xs text-charcoal-600 leading-relaxed">
+                  <p className="text-xs text-fg-muted leading-relaxed">
                     {stream.description}
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-navy-100 flex items-baseline justify-between">
+                <div className="pt-3 border-t border-line flex items-baseline justify-between">
                   <div>
-                    <span className="text-[10px] text-charcoal-400 block uppercase font-semibold">Monthly Rate</span>
-                    <span className="font-bold text-sm text-navy-900 font-mono">
+                    <span className="text-[10px] text-fg-subtle block uppercase font-semibold">Monthly Rate</span>
+                    <span className="font-bold text-sm text-fg font-mono">
                       {formatCurrencyINR(stream.monthlyRevenueInr)}
                     </span>
                   </div>
                   <div className="text-right">
-                    <span className="text-[10px] text-charcoal-400 block uppercase font-semibold">Annualized</span>
-                    <span className="font-bold text-xs text-sage-800 font-mono">
+                    <span className="text-[10px] text-fg-subtle block uppercase font-semibold">Annualized</span>
+                    <span className="font-bold text-xs text-emerald-600 dark:text-emerald-400 font-mono">
                       ₹{stream.annualizedLakh.toFixed(1)} Lakh/yr
                     </span>
                   </div>
@@ -319,11 +321,11 @@ export const RevenuePage: React.FC = () => {
         subtitle="Showing how ReLoop transforms operations from a net fiscal drain to a self-financing platform"
         headerAction={
           <div className="flex items-center gap-3 text-xs">
-            <span className="flex items-center gap-1.5 text-charcoal-600 font-semibold">
-              <span className="w-3 h-2 rounded-sm bg-charcoal-500" aria-hidden="true" /> Baseline Fixed Mode
+            <span className="flex items-center gap-1.5 text-fg-muted font-semibold">
+              <span className="w-3 h-2 rounded-sm bg-slate-400 dark:bg-slate-500" aria-hidden="true" /> Baseline Fixed Mode
             </span>
-            <span className="flex items-center gap-1.5 text-navy-800 font-semibold">
-              <span className="w-3 h-2 rounded-sm bg-navy-700" aria-hidden="true" /> ReLoop AI Mode
+            <span className="flex items-center gap-1.5 text-fg font-semibold">
+              <span className="w-3 h-2 rounded-sm bg-emerald-600" aria-hidden="true" /> ReLoop AI Mode
             </span>
           </div>
         }
@@ -331,27 +333,27 @@ export const RevenuePage: React.FC = () => {
         <div className="h-64" aria-label="Bar chart comparing baseline costs and reloop revenues in lakhs">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={financialWaterfallData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#F0F4FA" />
-              <XAxis dataKey="name" stroke="#757E81" fontSize={11} tickLine={false} />
-              <YAxis stroke="#757E81" fontSize={11} tickLine={false} unit="L" />
+              <CartesianGrid strokeDasharray="3 3" stroke={chartTheme.gridColor} />
+              <XAxis dataKey="name" stroke={chartTheme.axisColor} fontSize={11} tickLine={false} />
+              <YAxis stroke={chartTheme.axisColor} fontSize={11} tickLine={false} unit="L" />
               <RechartsTooltip 
                 formatter={(val: any) => [`₹${val} Lakh`, 'Amount']}
-                contentStyle={{ borderRadius: '0.75rem', border: '1px solid #D9E4F2', fontSize: '13px' }}
+                contentStyle={chartTheme.tooltipStyle}
               />
-              <Bar dataKey="baselineCost" name="Baseline (₹ Lakh)" fill="#8E9296" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="reloopCost" name="ReLoop AI (₹ Lakh)" fill="#12305C" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="baselineCost" name="Baseline (₹ Lakh)" fill={chartTheme.colors.landfill} radius={[4, 4, 0, 0]} />
+              <Bar dataKey="reloopCost" name="ReLoop AI (₹ Lakh)" fill={chartTheme.colors.recycled} radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
-        <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-sm text-emerald-950 mt-4">
+        <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/25 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-sm text-fg mt-4">
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-700 flex-shrink-0" aria-hidden="true" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" aria-hidden="true" />
             <span className="font-semibold">
               Net Municipal Balance: ReLoop generates an estimated <strong>₹20.4 Lakh net surplus quarterly</strong> compared to a ₹2.9 Lakh deficit under baseline municipal operations.
             </span>
           </div>
-          <span className="font-mono text-emerald-800 font-bold whitespace-nowrap hidden sm:inline">
+          <span className="font-mono text-emerald-600 dark:text-emerald-400 font-bold whitespace-nowrap hidden sm:inline">
             ROI: ~14.2 Months Payback
           </span>
         </div>

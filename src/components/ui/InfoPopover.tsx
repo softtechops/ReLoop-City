@@ -67,7 +67,7 @@ export const InfoPopover: React.FC<InfoPopoverProps> = ({
         aria-expanded={isOpen}
         aria-controls={popoverId}
         aria-label={label}
-        className="p-1 rounded-full text-charcoal-400 hover:text-navy-700 hover:bg-navy-50/80 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 focus-visible:ring-offset-1"
+        className="p-1 rounded-full text-fg-subtle hover:text-fg hover:bg-surface-muted transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-1"
       >
         <HelpCircle className="w-4 h-4" aria-hidden="true" />
       </button>
@@ -79,10 +79,10 @@ export const InfoPopover: React.FC<InfoPopoverProps> = ({
           role="tooltip"
           onMouseEnter={() => setIsOpen(true)}
           onMouseLeave={() => setIsOpen(false)}
-          className="absolute right-0 bottom-full mb-2 z-50 w-72 sm:w-80 p-3.5 rounded-xl bg-navy-900 text-white text-xs shadow-xl border border-navy-700 space-y-1.5 animate-in fade-in zoom-in-95 duration-150"
+          className="absolute right-0 bottom-full mb-2 z-50 w-72 sm:w-80 p-3.5 rounded-xl bg-slate-900 dark:bg-slate-800 text-white text-xs shadow-xl border border-slate-700/80 space-y-1.5 animate-in fade-in zoom-in-95 duration-150"
         >
-          <div className="flex items-center justify-between pb-1 border-b border-navy-700">
-            <span className="font-bold text-amberGold-400 tracking-wide text-xs">
+          <div className="flex items-center justify-between pb-1 border-b border-slate-700">
+            <span className="font-bold text-amber-400 tracking-wide text-xs">
               {title}
             </span>
             <button
@@ -90,13 +90,13 @@ export const InfoPopover: React.FC<InfoPopoverProps> = ({
                 setIsOpen(false);
                 buttonRef.current?.focus();
               }}
-              className="p-0.5 text-navy-300 hover:text-white rounded hover:bg-navy-800 transition-colors"
+              className="p-0.5 text-slate-300 hover:text-white rounded hover:bg-slate-800 dark:hover:bg-slate-700 transition-colors"
               aria-label="Close information popover"
             >
               <X className="w-3.5 h-3.5" />
             </button>
           </div>
-          <p className="text-navy-100 text-xs leading-relaxed">
+          <p className="text-slate-200 text-xs leading-relaxed">
             {content}
           </p>
         </div>

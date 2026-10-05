@@ -4,6 +4,16 @@
 
 @layer base {
   :root {
+    --page: #F8FAFC;
+    --surface: #FFFFFF;
+    --surface-muted: #F1F5F9;
+    --line: #E2E8F0;
+    --fg: #0F172A;
+    --fg-muted: #475569;
+    --fg-subtle: #64748B;
+    --ring-focus: #059669;
+    --color-scheme: light;
+
     --bg-blueprint: #F8FAFC;
     --navy-primary: #12305C;
     --sage-accent: #059669;
@@ -19,13 +29,32 @@
     --accent-rose: #F43F5E;
   }
 
+  :root.dark {
+    --page: #0B1220;
+    --surface: #111A2C;
+    --surface-muted: #16213A;
+    --line: rgba(255, 255, 255, 0.10);
+    --fg: #F1F5F9;
+    --fg-muted: #CBD5E1;
+    --fg-subtle: #94A3B8;
+    --ring-focus: #10B981;
+    --color-scheme: dark;
+
+    color-scheme: dark;
+  }
+
   html {
     scroll-behavior: smooth;
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
   }
 
   body {
-    background-color: #F8FAFC;
-    color: #0F172A;
+    background-color: var(--page);
+    color: var(--fg);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 16px;
     line-height: 1.6;
@@ -35,12 +64,82 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Space Grotesk', 'Outfit', 'Inter', system-ui, sans-serif;
     letter-spacing: -0.025em;
-    color: #0A1E35;
+    color: var(--fg);
   }
 
   .tabular-nums {
     font-variant-numeric: tabular-nums;
   }
+}
+
+/* Smooth theme transition when switching Day/Night mode */
+.theme-transition,
+.theme-transition *,
+.theme-transition *:before,
+.theme-transition *:after {
+  transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease, fill 200ms ease, stroke 200ms ease !important;
+  transition-delay: 0s !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-transition,
+  .theme-transition *,
+  .theme-transition *:before,
+  .theme-transition *:after {
+    transition: none !important;
+  }
+}
+
+/* Leaflet dark mode map styling */
+.dark .leaflet-tile-pane {
+  filter: invert(1) hue-rotate(180deg) brightness(0.85) contrast(0.9);
+}
+.dark .leaflet-container {
+  background-color: #0B1220 !important;
+}
+.dark .leaflet-popup-content-wrapper,
+.dark .leaflet-popup-tip {
+  background-color: #111A2C !important;
+  color: #F1F5F9 !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+.dark .leaflet-control-zoom a {
+  background-color: #111A2C !important;
+  color: #F1F5F9 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+.dark .leaflet-control-attribution {
+  background-color: rgba(17, 26, 44, 0.85) !important;
+  color: #94A3B8 !important;
+}
+.dark .leaflet-control-attribution a {
+  color: #34D399 !important;
+}
+
+/* Force light mode for print / PDF output */
+@media print {
+  html, body, :root {
+    background-color: #FFFFFF !important;
+    color: #0F172A !important;
+    color-scheme: light !important;
+  }
+  .forced-light,
+  .forced-light * {
+    background-color: #FFFFFF !important;
+    color: #0F172A !important;
+  }
+}
+
+.forced-light {
+  --page: #FFFFFF !important;
+  --surface: #FFFFFF !important;
+  --surface-muted: #F8FAFC !important;
+  --line: #E2E8F0 !important;
+  --fg: #0F172A !important;
+  --fg-muted: #475569 !important;
+  --fg-subtle: #64748B !important;
+  color: #0F172A !important;
+  background-color: #FFFFFF !important;
 }
 
 .website-hero-title {

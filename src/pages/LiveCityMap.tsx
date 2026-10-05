@@ -132,16 +132,16 @@ export const LiveCityMap: React.FC = () => {
       />
 
       {/* One-Line Top Headline Result (Phase 4 requirement) */}
-      <div className="p-4 sm:p-5 rounded-2xl bg-white border border-charcoal-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="p-4 sm:p-5 rounded-2xl bg-surface border border-line shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <span className="p-2.5 rounded-xl bg-emerald-100 text-emerald-800 flex-shrink-0" aria-hidden="true">
-            <Radio className="w-5 h-5 text-emerald-700" />
+          <span className="p-2.5 rounded-xl bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 flex-shrink-0" aria-hidden="true">
+            <Radio className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
           </span>
           <div>
-            <div className="text-xs uppercase font-bold tracking-wider text-charcoal-500">
+            <div className="text-xs uppercase font-bold tracking-wider text-fg-muted">
               Corridor Telemetry Status
             </div>
-            <p className="text-sm sm:text-base font-bold text-navy-900 leading-snug">
+            <p className="text-sm sm:text-base font-bold text-fg leading-snug">
               100 smart IoT bins online across 5 Pune zones: {criticalCount} critical bins (≥80%) prioritized for dynamic pickup.
             </p>
           </div>
@@ -152,19 +152,19 @@ export const LiveCityMap: React.FC = () => {
       </div>
 
       {/* Filter Chips Bar (Section 5) */}
-      <div className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-2xl bg-white border border-navy-100 shadow-blueprint">
+      <div className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-2xl bg-surface border border-line shadow-xs">
         
         {/* Fill Severity Filter Chips with Color + Text Labels for Color-Blind Accessibility */}
         <div className="flex flex-wrap items-center gap-2 text-xs">
-          <span className="text-xs font-bold text-charcoal-500 mr-1">Filter Fill:</span>
+          <span className="text-xs font-bold text-fg-muted mr-1">Filter Fill:</span>
           
           <button
             type="button"
             onClick={() => setActiveFilter('all')}
             className={`px-3 py-1.5 rounded-xl font-bold transition-all min-h-[36px] ${
               activeFilter === 'all'
-                ? 'bg-navy-700 text-white shadow-xs'
-                : 'bg-navy-50 text-charcoal-700 hover:bg-navy-100'
+                ? 'bg-slate-800 dark:bg-slate-700 text-white shadow-xs'
+                : 'bg-surface-muted text-fg hover:bg-line'
             }`}
           >
             All Bins ({bins.length})
@@ -175,11 +175,11 @@ export const LiveCityMap: React.FC = () => {
             onClick={() => setActiveFilter('critical')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition-all min-h-[36px] ${
               activeFilter === 'critical'
-                ? 'bg-red-600 text-white shadow-xs'
-                : 'bg-red-50 text-red-800 hover:bg-red-100'
+                ? 'bg-rose-600 text-white shadow-xs'
+                : 'bg-rose-50 text-rose-800 border border-rose-200 dark:bg-rose-500/15 dark:text-rose-300 dark:border-rose-500/30'
             }`}
           >
-            <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping" aria-hidden="true" />
+            <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping" aria-hidden="true" />
             <span>Critical &gt;80% ({criticalCount})</span>
           </button>
 
@@ -188,11 +188,11 @@ export const LiveCityMap: React.FC = () => {
             onClick={() => setActiveFilter('moderate')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition-all min-h-[36px] ${
               activeFilter === 'moderate'
-                ? 'bg-amberGold-600 text-white shadow-xs'
-                : 'bg-amberGold-100 text-amberGold-900 hover:bg-amberGold-200'
+                ? 'bg-amber-600 text-white shadow-xs'
+                : 'bg-amber-50 text-amber-800 border border-amber-200 dark:bg-amber-400/15 dark:text-amber-300 dark:border-amber-400/30'
             }`}
           >
-            <span className="w-2.5 h-2.5 rounded-full bg-amberGold-500" aria-hidden="true" />
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-500" aria-hidden="true" />
             <span>Moderate 50-80% ({moderateCount})</span>
           </button>
 
@@ -201,11 +201,11 @@ export const LiveCityMap: React.FC = () => {
             onClick={() => setActiveFilter('low')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition-all min-h-[36px] ${
               activeFilter === 'low'
-                ? 'bg-sage-600 text-white shadow-xs'
-                : 'bg-sage-100 text-sage-900 hover:bg-sage-200'
+                ? 'bg-emerald-600 text-white shadow-xs'
+                : 'bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-500/30'
             }`}
           >
-            <span className="w-2.5 h-2.5 rounded-full bg-sage-500" aria-hidden="true" />
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" aria-hidden="true" />
             <span>Normal &lt;50% ({normalCount})</span>
           </button>
 
@@ -215,10 +215,10 @@ export const LiveCityMap: React.FC = () => {
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition-all min-h-[36px] ${
               activeFilter === 'priority'
                 ? 'bg-amber-600 text-white shadow-xs'
-                : 'bg-amber-50 text-amber-900 hover:bg-amber-100 border border-amber-200'
+                : 'bg-amber-50 text-amber-800 border border-amber-200 dark:bg-amber-400/15 dark:text-amber-300 dark:border-amber-400/30'
             }`}
           >
-            <Sparkles className="w-3.5 h-3.5 text-amber-600" aria-hidden="true" />
+            <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" aria-hidden="true" />
             <span>Priority ({priorityBinIds.length})</span>
           </button>
         </div>
@@ -230,7 +230,7 @@ export const LiveCityMap: React.FC = () => {
             id="map-zone-filter"
             value={zoneFilter}
             onChange={(e) => setZoneFilter(e.target.value)}
-            className="px-3 py-1.5 rounded-xl border border-navy-200 text-xs font-semibold text-charcoal-700 bg-navy-50/60 hover:bg-navy-50 min-h-[38px] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600"
+            className="px-3 py-1.5 rounded-xl border border-line text-xs font-semibold text-fg bg-surface hover:bg-surface-muted min-h-[38px] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-500"
           >
             <option value="all">All Pilot Zones (5)</option>
             {PILOT_ZONES.map((z) => (
@@ -245,7 +245,7 @@ export const LiveCityMap: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         
         {/* Left Map View with responsive height */}
-        <div className="lg:col-span-8 bg-white rounded-2xl border border-navy-100 shadow-blueprint overflow-hidden flex flex-col min-h-[420px] h-[55vh] lg:h-[620px] relative">
+        <div className="lg:col-span-8 bg-surface rounded-2xl border border-line shadow-sm overflow-hidden flex flex-col min-h-[420px] h-[55vh] lg:h-[620px] relative">
           
           <div className="flex-1 w-full h-full relative">
             <MapContainer
@@ -266,8 +266,8 @@ export const LiveCityMap: React.FC = () => {
               <Marker position={config.depotCoordinates} icon={depotIcon}>
                 <Popup>
                   <div className="p-1 text-xs">
-                    <span className="font-bold text-navy-900 block">Central Municipal Depot</span>
-                    <span className="text-charcoal-600">Akurdi Fleet Maintenance & Dispatch</span>
+                    <span className="font-bold text-fg block">Central Municipal Depot</span>
+                    <span className="text-fg-muted">Akurdi Fleet Maintenance & Dispatch</span>
                   </div>
                 </Popup>
               </Marker>
@@ -276,8 +276,8 @@ export const LiveCityMap: React.FC = () => {
               <Marker position={config.mrfCoordinates} icon={mrfIcon}>
                 <Popup>
                   <div className="p-1 text-xs">
-                    <span className="font-bold text-sage-900 block">Material Recovery Facility (MRF)</span>
-                    <span className="text-charcoal-600">Optical sorting, baling & bio-refinery</span>
+                    <span className="font-bold text-fg block">Material Recovery Facility (MRF)</span>
+                    <span className="text-fg-muted">Optical sorting, baling & bio-refinery</span>
                   </div>
                 </Popup>
               </Marker>
@@ -309,16 +309,16 @@ export const LiveCityMap: React.FC = () => {
                   >
                     <Popup>
                       <div className="p-1 text-xs space-y-1">
-                        <div className="flex items-center justify-between gap-2 border-b pb-1">
-                          <span className="font-bold text-navy-900">{bin.id}</span>
+                        <div className="flex items-center justify-between gap-2 border-b border-line pb-1">
+                          <span className="font-bold text-fg">{bin.id}</span>
                           <span className="font-bold" style={{ color: fillColor }}>
                             {bin.fillPercent}% Full
                           </span>
                         </div>
-                        <p className="font-medium text-charcoal-800">{bin.name}</p>
-                        <p className="text-charcoal-600">Primary: {bin.primaryStream.toUpperCase()}</p>
-                        <p className="text-charcoal-700">
-                          Est. Time to Full: <strong>{bin.predictedHoursToFull}h</strong>
+                        <p className="font-medium text-fg">{bin.name}</p>
+                        <p className="text-fg-muted">Primary: {bin.primaryStream.toUpperCase()}</p>
+                        <p className="text-fg-muted">
+                          Est. Time to Full: <strong className="text-fg">{bin.predictedHoursToFull}h</strong>
                         </p>
                       </div>
                     </Popup>
@@ -332,25 +332,25 @@ export const LiveCityMap: React.FC = () => {
           <div
             role="region"
             aria-label="Map status legend"
-            className="absolute bottom-3 left-3 z-[1000] bg-white/95 backdrop-blur-md p-3.5 rounded-2xl border border-charcoal-200 shadow-md text-xs space-y-2"
+            className="absolute bottom-3 left-3 z-[1000] bg-surface/90 dark:bg-surface/85 backdrop-blur-md p-3.5 rounded-2xl border border-line shadow-md text-xs space-y-2 text-fg"
           >
-            <span className="font-bold text-navy-900 block text-xs uppercase tracking-wider">IoT Sensor Legend:</span>
+            <span className="font-bold text-fg block text-xs uppercase tracking-wider">IoT Sensor Legend:</span>
             <div className="flex items-center gap-2 text-xs">
-              <span className="w-3 h-3 rounded-full bg-red-600 flex-shrink-0" aria-hidden="true" />
-              <AlertTriangle className="w-3.5 h-3.5 text-red-600 flex-shrink-0" aria-hidden="true" />
-              <span className="font-semibold text-charcoal-800">&gt;80% Critical Fill</span>
+              <span className="w-3 h-3 rounded-full bg-rose-600 flex-shrink-0" aria-hidden="true" />
+              <AlertTriangle className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400 flex-shrink-0" aria-hidden="true" />
+              <span className="font-semibold text-fg-muted">&gt;80% Critical Fill</span>
             </div>
             <div className="flex items-center gap-2 text-xs">
               <span className="w-3 h-3 rounded-full bg-amber-500 flex-shrink-0" aria-hidden="true" />
-              <Clock className="w-3.5 h-3.5 text-amber-600 flex-shrink-0" aria-hidden="true" />
-              <span className="font-semibold text-charcoal-800">50-80% Moderate Fill</span>
+              <Clock className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 flex-shrink-0" aria-hidden="true" />
+              <span className="font-semibold text-fg-muted">50-80% Moderate Fill</span>
             </div>
             <div className="flex items-center gap-2 text-xs">
               <span className="w-3 h-3 rounded-full bg-emerald-600 flex-shrink-0" aria-hidden="true" />
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" aria-hidden="true" />
-              <span className="font-semibold text-charcoal-800">&lt;50% Normal Level</span>
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" aria-hidden="true" />
+              <span className="font-semibold text-fg-muted">&lt;50% Normal Level</span>
             </div>
-            <div className="flex items-center gap-3 text-xs pt-1.5 border-t border-charcoal-200 text-charcoal-700">
+            <div className="flex items-center gap-3 text-xs pt-1.5 border-t border-line text-fg-muted">
               <span className="font-medium">🏢 Central Depot</span>
               <span className="font-medium">♻️ MRF Plant</span>
             </div>
@@ -359,18 +359,18 @@ export const LiveCityMap: React.FC = () => {
         </div>
 
         {/* Right Side: Selected Bin Deep Inspection Card / Bottom Sheet on Mobile */}
-        <div className="lg:col-span-4 bg-white rounded-2xl border border-navy-100 shadow-blueprint p-5 sm:p-6 flex flex-col justify-between min-h-[380px] lg:h-[620px] overflow-y-auto">
+        <div className="lg:col-span-4 bg-surface rounded-2xl border border-line shadow-sm p-5 sm:p-6 flex flex-col justify-between min-h-[380px] lg:h-[620px] overflow-y-auto">
           {selectedBin ? (
             <div className="space-y-4">
               {/* Header */}
-              <div className="flex items-center justify-between pb-3 border-b border-navy-100">
+              <div className="flex items-center justify-between pb-3 border-b border-line">
                 <div>
-                  <span className="font-mono text-xs font-bold text-navy-600">{selectedBin.id}</span>
-                  <h3 className="font-bold text-base text-navy-900">{selectedBin.name}</h3>
-                  <span className="text-xs text-charcoal-500 block">{selectedBin.zoneName}</span>
+                  <span className="font-mono text-xs font-bold text-emerald-600 dark:text-emerald-400">{selectedBin.id}</span>
+                  <h3 className="font-bold text-base text-fg">{selectedBin.name}</h3>
+                  <span className="text-xs text-fg-muted block">{selectedBin.zoneName}</span>
                   {priorityBinIds.includes(selectedBin.id) && (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 text-[11px] font-bold mt-1">
-                      <Sparkles className="w-3 h-3 text-amber-600 fill-current" />
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 text-amber-900 dark:bg-amber-400/15 dark:text-amber-300 border border-amber-300 dark:border-amber-400/30 text-[11px] font-bold mt-1">
+                      <Sparkles className="w-3 h-3 text-amber-600 dark:text-amber-400 fill-current" />
                       Priority Pickup Flagged
                     </span>
                   )}
@@ -387,24 +387,24 @@ export const LiveCityMap: React.FC = () => {
                   >
                     {selectedBin.fillPercent}%
                   </span>
-                  <span className="block text-xs text-charcoal-500 uppercase font-semibold">Fill Level</span>
+                  <span className="block text-xs text-fg-subtle uppercase font-semibold">Fill Level</span>
                 </div>
               </div>
 
               {/* Progress Bar */}
               <div className="space-y-1.5">
-                <div className="flex justify-between text-xs font-semibold text-charcoal-700">
+                <div className="flex justify-between text-xs font-semibold text-fg-muted">
                   <span>Capacity: {selectedBin.capacityKg} kg</span>
                   <span>Current: {selectedBin.currentKg} kg</span>
                 </div>
-                <div className="w-full h-3 rounded-full bg-navy-50 overflow-hidden border border-navy-100">
+                <div className="w-full h-3 rounded-full bg-surface-muted overflow-hidden border border-line">
                   <div 
                     className={`h-full rounded-full transition-all duration-500 ${
                       selectedBin.fillPercent >= 80
-                        ? 'bg-red-600'
+                        ? 'bg-rose-600'
                         : selectedBin.fillPercent >= 50
-                        ? 'bg-amberGold-500'
-                        : 'bg-sage-500'
+                        ? 'bg-amber-500'
+                        : 'bg-emerald-500'
                     }`}
                     style={{ width: `${selectedBin.fillPercent}%` }}
                   />
@@ -415,13 +415,13 @@ export const LiveCityMap: React.FC = () => {
               <div
                 className={`p-3.5 rounded-xl border text-xs flex items-start gap-2.5 ${
                   selectedBin.predictedHoursToFull <= 4
-                    ? 'bg-red-50 border-red-200 text-red-900'
-                    : 'bg-navy-50 border-navy-100 text-navy-950'
+                    ? 'bg-rose-50 dark:bg-rose-500/15 border-rose-200 dark:border-rose-500/30 text-rose-900 dark:text-rose-200'
+                    : 'bg-surface-muted border-line text-fg'
                 }`}
               >
                 <Clock
                   className={`w-4 h-4 flex-shrink-0 mt-0.5 ${
-                    selectedBin.predictedHoursToFull <= 4 ? 'text-red-600' : 'text-navy-700'
+                    selectedBin.predictedHoursToFull <= 4 ? 'text-rose-600 dark:text-rose-400' : 'text-fg-subtle'
                   }`}
                   aria-hidden="true"
                 />
@@ -429,7 +429,7 @@ export const LiveCityMap: React.FC = () => {
                   <span className="font-bold block text-sm">
                     Predicted Full in: {selectedBin.predictedHoursToFull} Hours
                   </span>
-                  <span className="text-xs opacity-85 mt-0.5 block leading-relaxed">
+                  <span className="text-xs opacity-85 mt-0.5 block leading-relaxed text-fg-muted">
                     {selectedBin.fillPercent >= 75
                       ? 'Queued for immediate ReLoop dynamic compactor truck pickup.'
                       : 'Generation rate is within standard diurnal tolerance.'}
@@ -444,8 +444,8 @@ export const LiveCityMap: React.FC = () => {
                   onClick={() => togglePriorityBin(selectedBin.id)}
                   className={`w-full py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 min-h-[44px] cursor-pointer shadow-xs ${
                     priorityBinIds.includes(selectedBin.id)
-                      ? 'bg-amber-100 hover:bg-amber-200 text-amber-950 border border-amber-300'
-                      : 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                      ? 'bg-amber-100 hover:bg-amber-200 dark:bg-amber-400/20 dark:hover:bg-amber-400/30 text-amber-950 dark:text-amber-200 border border-amber-300 dark:border-amber-400/30'
+                      : 'bg-emerald-600 hover:bg-emerald-500 text-white'
                   }`}
                 >
                   <Sparkles className="w-4 h-4 fill-current" aria-hidden="true" />
@@ -458,61 +458,61 @@ export const LiveCityMap: React.FC = () => {
               </div>
 
               {/* Composition Breakdown */}
-              <div className="space-y-2 pt-2 border-t border-navy-50">
-                <span className="text-xs font-bold uppercase tracking-wider text-charcoal-500 block">
+              <div className="space-y-2 pt-2 border-t border-line">
+                <span className="text-xs font-bold uppercase tracking-wider text-fg-subtle block">
                   Sensor Stream Composition:
                 </span>
                 
                 <div className="space-y-1.5 text-xs">
                   <div className="flex justify-between items-center">
-                    <span className="flex items-center gap-1.5 text-sage-800 font-medium">
-                      <span className="w-2.5 h-2.5 rounded-full bg-sage-500" aria-hidden="true" />
+                    <span className="flex items-center gap-1.5 text-fg font-medium">
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" aria-hidden="true" />
                       Organic Food & Kitchen
                     </span>
-                    <span className="font-mono font-bold text-charcoal-800">{selectedBin.composition.organic}%</span>
+                    <span className="font-mono font-bold text-fg">{selectedBin.composition.organic}%</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="flex items-center gap-1.5 text-navy-800 font-medium">
-                      <span className="w-2.5 h-2.5 rounded-full bg-navy-700" aria-hidden="true" />
+                    <span className="flex items-center gap-1.5 text-fg font-medium">
+                      <span className="w-2.5 h-2.5 rounded-full bg-blue-500" aria-hidden="true" />
                       Recyclables (Plastic/OCC/Metal)
                     </span>
-                    <span className="font-mono font-bold text-charcoal-800">{selectedBin.composition.recyclable}%</span>
+                    <span className="font-mono font-bold text-fg">{selectedBin.composition.recyclable}%</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="flex items-center gap-1.5 text-charcoal-700 font-medium">
-                      <span className="w-2.5 h-2.5 rounded-full bg-charcoal-400" aria-hidden="true" />
+                    <span className="flex items-center gap-1.5 text-fg font-medium">
+                      <span className="w-2.5 h-2.5 rounded-full bg-amber-500" aria-hidden="true" />
                       C&D Aggregate Debris
                     </span>
-                    <span className="font-mono font-bold text-charcoal-800">{selectedBin.composition.cdWaste}%</span>
+                    <span className="font-mono font-bold text-fg">{selectedBin.composition.cdWaste}%</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="flex items-center gap-1.5 text-blue-800 font-medium">
-                      <span className="w-2.5 h-2.5 rounded-full bg-blue-500" aria-hidden="true" />
+                    <span className="flex items-center gap-1.5 text-fg font-medium">
+                      <span className="w-2.5 h-2.5 rounded-full bg-cyan-500" aria-hidden="true" />
                       E-Waste (Discarded IT)
                     </span>
-                    <span className="font-mono font-bold text-charcoal-800">{selectedBin.composition.eWaste}%</span>
+                    <span className="font-mono font-bold text-fg">{selectedBin.composition.eWaste}%</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="flex items-center gap-1.5 text-charcoal-600 font-medium">
-                      <span className="w-2.5 h-2.5 rounded-full bg-residual-500" aria-hidden="true" />
+                    <span className="flex items-center gap-1.5 text-fg-muted font-medium">
+                      <span className="w-2.5 h-2.5 rounded-full bg-slate-400" aria-hidden="true" />
                       Residual (Non-Recyclable)
                     </span>
-                    <span className="font-mono font-bold text-charcoal-800">{selectedBin.composition.residual}%</span>
+                    <span className="font-mono font-bold text-fg">{selectedBin.composition.residual}%</span>
                   </div>
                 </div>
               </div>
 
               {/* 8-Hour Fill Progression */}
-              <div className="pt-2 border-t border-navy-50">
-                <span className="text-xs font-bold text-charcoal-500 uppercase tracking-wide block mb-1.5">
+              <div className="pt-2 border-t border-line">
+                <span className="text-xs font-bold text-fg-subtle uppercase tracking-wide block mb-1.5">
                   Recent Fill Progression:
                 </span>
-                <div className="flex items-end gap-1.5 h-12 bg-navy-50/60 p-2 rounded-xl border border-navy-100">
+                <div className="flex items-end gap-1.5 h-12 bg-surface-muted p-2 rounded-xl border border-line">
                   {selectedBin.history.map((val, idx) => (
                     <div 
                       key={idx} 
                       className={`flex-1 rounded-sm transition-all ${
-                        val >= 80 ? 'bg-red-600' : val >= 50 ? 'bg-amberGold-500' : 'bg-sage-500'
+                        val >= 80 ? 'bg-rose-600' : val >= 50 ? 'bg-amber-500' : 'bg-emerald-500'
                       }`}
                       style={{ height: `${val}%` }}
                       title={`t-${selectedBin.history.length - idx}h: ${val}%`}
@@ -522,15 +522,15 @@ export const LiveCityMap: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-3 text-charcoal-500">
-              <div className="w-12 h-12 rounded-2xl bg-navy-50 flex items-center justify-center text-navy-700" aria-hidden="true">
+            <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-3 text-fg-muted">
+              <div className="w-12 h-12 rounded-2xl bg-surface-muted flex items-center justify-center text-fg" aria-hidden="true">
                 <MapPin className="w-6 h-6" />
               </div>
               <div className="max-w-xs">
-                <h4 className="font-bold text-base text-navy-900 font-['Outfit']">
+                <h4 className="font-bold text-base text-fg font-['Outfit']">
                   No Smart Bin Selected
                 </h4>
-                <p className="text-xs text-charcoal-600 mt-1 leading-relaxed">
+                <p className="text-xs text-fg-muted mt-1 leading-relaxed">
                   Click on any smart bin pin on the map or click below to inspect live IoT telemetry, composition breakdown, and overflow predictions.
                 </p>
               </div>
@@ -546,12 +546,12 @@ export const LiveCityMap: React.FC = () => {
 
           {/* Bottom GPS Coordinates */}
           {selectedBin && (
-            <div className="pt-3 border-t border-navy-100 flex items-center justify-between text-xs text-charcoal-500 font-mono">
+            <div className="pt-3 border-t border-line flex items-center justify-between text-xs text-fg-subtle font-mono">
               <span>LAT: {selectedBin.lat} · LNG: {selectedBin.lng}</span>
               <button 
                 type="button"
                 onClick={() => setSelectedBin(null)}
-                className="text-navy-700 hover:underline font-sans font-bold"
+                className="text-emerald-600 dark:text-emerald-400 hover:underline font-sans font-bold"
               >
                 Close Inspector
               </button>

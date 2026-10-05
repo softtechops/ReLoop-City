@@ -10,13 +10,42 @@
     <meta property="og:title" content="ReLoop City | Mission control for a circular city" />
     <meta property="og:description" content="Turn daily municipal waste streams into clean energy, circular commodities, and landfill diversion. Calibrated for Pune PCMC." />
     <meta property="og:site_name" content="ReLoop City" />
-    <meta name="theme-color" content="#060B14" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" id="theme-color-meta" content="#F8FAFC" />
+    
+    <!-- Inline anti-FOUC theme detector: Default is strictly Light Mode -->
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem('reloop-theme');
+          var isDark = false;
+          if (stored === 'dark') {
+            isDark = true;
+          } else if (stored === 'system') {
+            isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          } else {
+            // Default is strictly light mode
+            isDark = false;
+          }
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+            var meta = document.getElementById('theme-color-meta');
+            if (meta) meta.setAttribute('content', '#0B1220');
+          } else {
+            document.documentElement.classList.remove('dark');
+            var meta = document.getElementById('theme-color-meta');
+            if (meta) meta.setAttribute('content', '#F8FAFC');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   </head>
-  <body class="bg-[#F8FAFC] text-[#0F172A] antialiased selection:bg-emerald-200 selection:text-emerald-950">
+  <body class="bg-page text-fg antialiased selection:bg-emerald-200 selection:text-emerald-950 dark:selection:bg-emerald-900 dark:selection:text-emerald-100">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

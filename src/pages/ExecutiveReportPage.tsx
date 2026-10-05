@@ -148,7 +148,7 @@ export const ExecutiveReportPage: React.FC = () => {
   }, [simState.history, mode]);
 
   return (
-    <div className="min-h-screen bg-charcoal-50 py-8 px-4 sm:px-6 lg:px-8 print:bg-white print:p-0 print:m-0 text-navy-900">
+    <div className="min-h-screen bg-slate-100 py-8 px-4 sm:px-6 lg:px-8 print:bg-white print:p-0 print:m-0 text-slate-900 forced-light">
       <style>{`
         @media print {
           @page {

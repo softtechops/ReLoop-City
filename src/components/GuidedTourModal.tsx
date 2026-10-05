@@ -174,7 +174,7 @@ export const GuidedTourModal: React.FC = () => {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/60 backdrop-blur-xs animate-in fade-in duration-150"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs animate-in fade-in duration-150"
       onClick={(e) => {
         if (e.target === e.currentTarget) closeGuidedTour();
       }}
@@ -186,17 +186,17 @@ export const GuidedTourModal: React.FC = () => {
         aria-labelledby="tour-dialog-title"
         aria-describedby="tour-dialog-desc"
         tabIndex={-1}
-        className="bg-white rounded-2xl max-w-2xl w-full border border-navy-100 shadow-2xl overflow-hidden flex flex-col focus:outline-hidden animate-in zoom-in-95 duration-150"
+        className="bg-surface rounded-2xl max-w-2xl w-full border border-line shadow-2xl overflow-hidden flex flex-col focus:outline-hidden animate-in zoom-in-95 duration-150"
       >
         {/* Header */}
-        <div className="bg-navy-700 text-white p-5 sm:p-6 flex items-center justify-between">
+        <div className="bg-slate-900 dark:bg-slate-950 text-white p-5 sm:p-6 flex items-center justify-between border-b border-line">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-amberGold-400" aria-hidden="true">
+            <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-amber-400" aria-hidden="true">
               <StepIcon className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-amberGold-300">
+                <span className="text-xs font-bold uppercase tracking-wider text-amber-300">
                   Step {step.stepNumber} of 7 · {step.stepName}
                 </span>
                 <span className="px-2 py-0.5 rounded text-xs bg-white/15 text-white font-mono">
@@ -220,7 +220,7 @@ export const GuidedTourModal: React.FC = () => {
         </div>
 
         {/* Step Progress Dots */}
-        <div className="bg-navy-50/80 px-4 sm:px-6 py-2.5 border-b border-navy-100 flex items-center justify-between overflow-x-auto">
+        <div className="bg-surface-muted px-4 sm:px-6 py-2.5 border-b border-line flex items-center justify-between overflow-x-auto">
           <div className="flex items-center gap-1.5 sm:gap-2">
             {TOUR_STEPS.map((s, idx) => (
               <button
@@ -230,37 +230,37 @@ export const GuidedTourModal: React.FC = () => {
                 aria-label={`Jump to step ${s.stepNumber}: ${s.stepName}`}
                 className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all min-h-[36px] ${
                   idx === currentTourStep
-                    ? 'bg-navy-700 text-white shadow-xs'
+                    ? 'bg-slate-900 dark:bg-emerald-600 text-white shadow-xs'
                     : idx < currentTourStep
-                    ? 'bg-sage-100 text-sage-900 hover:bg-sage-200'
-                    : 'bg-white text-charcoal-600 hover:bg-navy-100/60'
+                    ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-500/30'
+                    : 'bg-surface text-fg-muted hover:bg-surface-muted'
                 }`}
               >
                 <span>{s.stepNumber}. {s.stepName}</span>
               </button>
             ))}
           </div>
-          <span className="text-xs font-mono text-charcoal-500 hidden sm:inline ml-2 whitespace-nowrap">
+          <span className="text-xs font-mono text-fg-subtle hidden sm:inline ml-2 whitespace-nowrap">
             (Use ← → arrow keys)
           </span>
         </div>
 
         {/* Content Body */}
-        <div className="p-6 space-y-4 text-charcoal-700">
-          <p id="tour-dialog-desc" className="text-sm leading-relaxed text-charcoal-600">
+        <div className="p-6 space-y-4 text-fg">
+          <p id="tour-dialog-desc" className="text-sm leading-relaxed text-fg-muted">
             {step.description}
           </p>
 
-          <div className="p-3.5 rounded-xl bg-amberGold-50/80 border border-amberGold-200 text-amberGold-900 text-xs flex items-start gap-2.5">
-            <Sparkles className="w-4 h-4 text-amberGold-700 flex-shrink-0 mt-0.5" aria-hidden="true" />
+          <div className="p-3.5 rounded-xl bg-amber-50/80 dark:bg-amber-400/10 border border-amber-200 dark:border-amber-400/30 text-amber-900 dark:text-amber-200 text-xs flex items-start gap-2.5">
+            <Sparkles className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
             <div>
               <span className="font-bold block mb-0.5">Try this in the UI:</span>
               <span>{step.highlightAction}</span>
             </div>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-sage-50/80 border border-sage-200 text-sage-900 text-xs flex items-start gap-2.5">
-            <CheckCircle2 className="w-4 h-4 text-sage-700 flex-shrink-0 mt-0.5" aria-hidden="true" />
+          <div className="p-3.5 rounded-xl bg-emerald-50/80 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 text-emerald-900 dark:text-emerald-200 text-xs flex items-start gap-2.5">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
             <div>
               <span className="font-bold block mb-0.5">Circular Impact:</span>
               <span>{step.takeaway}</span>
@@ -269,7 +269,7 @@ export const GuidedTourModal: React.FC = () => {
         </div>
 
         {/* Footer Navigation */}
-        <div className="p-4 sm:p-5 bg-navy-50/50 border-t border-navy-100 flex items-center justify-between gap-2">
+        <div className="p-4 sm:p-5 bg-surface-muted border-t border-line flex items-center justify-between gap-2">
           <Button
             variant="ghost"
             size="sm"
@@ -282,7 +282,7 @@ export const GuidedTourModal: React.FC = () => {
             Previous
           </Button>
 
-          <span className="text-xs font-mono text-charcoal-500">
+          <span className="text-xs font-mono text-fg-muted">
             {currentTourStep + 1} / {TOUR_STEPS.length}
           </span>
 

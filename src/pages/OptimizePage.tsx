@@ -99,16 +99,16 @@ export const OptimizePage: React.FC = () => {
       />
 
       {/* One-Line Top Headline Result (Phase 4 requirement) */}
-      <div className="p-4 sm:p-5 rounded-2xl bg-white border border-charcoal-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="p-4 sm:p-5 rounded-2xl bg-surface border border-line shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <span className="p-2.5 rounded-xl bg-emerald-100 text-emerald-800 flex-shrink-0" aria-hidden="true">
-            <RouteIcon className="w-5 h-5 text-emerald-700" />
+          <span className="p-2.5 rounded-xl bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 flex-shrink-0" aria-hidden="true">
+            <RouteIcon className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
           </span>
           <div>
-            <div className="text-xs uppercase font-bold tracking-wider text-charcoal-500">
+            <div className="text-xs uppercase font-bold tracking-wider text-fg-subtle">
               Fleet Efficiency Optimization
             </div>
-            <p className="text-sm sm:text-base font-bold text-navy-900 leading-snug">
+            <p className="text-sm sm:text-base font-bold text-fg leading-snug">
               Dynamic CVRP routes cut fuel use by {comparison.savings.distanceReductionPercent}% ({comparison.savings.fuelSavedLiters} L diesel saved) and save ₹{comparison.savings.fuelCostSavedInr.toLocaleString('en-IN')}.
             </p>
           </div>
@@ -119,80 +119,80 @@ export const OptimizePage: React.FC = () => {
       </div>
 
       {/* Before / After Summary Card (Section 5) */}
-      <div className="p-6 rounded-2xl bg-white border border-navy-100 shadow-blueprint space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-navy-50">
+      <div className="p-6 rounded-2xl bg-surface border border-line shadow-sm space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-line">
           <div>
-            <h2 className="text-base font-bold text-navy-900 font-['Outfit']">
+            <h2 className="text-base font-bold text-fg font-['Outfit']">
               Routing Fleet Efficiency Summary (Before vs After)
             </h2>
-            <p className="text-xs text-charcoal-500">
+            <p className="text-xs text-fg-muted">
               Immediate savings achieved by switching from static fixed routes to dynamic fill-triggered collection
             </p>
           </div>
           <Badge variant="sage" size="md">
-            <TrendingDown className="w-3.5 h-3.5 text-sage-700" aria-hidden="true" />
+            <TrendingDown className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
             <span>-{comparison.savings.distanceReductionPercent}% Distance Reduction</span>
           </Badge>
         </div>
 
         {/* 4 Before vs After Metrics */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-1">
-          <div className="p-4 rounded-xl bg-navy-50/60 border border-navy-100 space-y-1">
-            <span className="text-xs font-semibold text-charcoal-500 block">Total Route Distance</span>
+          <div className="p-4 rounded-xl bg-surface-muted border border-line space-y-1">
+            <span className="text-xs font-semibold text-fg-muted block">Total Route Distance</span>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-black text-navy-900 font-['Outfit']">
+              <span className="text-2xl font-black text-fg font-['Outfit']">
                 {comparison.reloop.totalDistanceKm} km
               </span>
-              <span className="text-xs text-charcoal-400 line-through">
+              <span className="text-xs text-fg-subtle line-through">
                 {comparison.baseline.totalDistanceKm} km
               </span>
             </div>
-            <span className="text-xs font-bold text-sage-700 block">
+            <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 block">
               -{comparison.savings.distanceReductionPercent}% Saved
             </span>
           </div>
 
-          <div className="p-4 rounded-xl bg-navy-50/60 border border-navy-100 space-y-1">
-            <span className="text-xs font-semibold text-charcoal-500 block">Smart Bins Serviced</span>
+          <div className="p-4 rounded-xl bg-surface-muted border border-line space-y-1">
+            <span className="text-xs font-semibold text-fg-muted block">Smart Bins Serviced</span>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-black text-navy-900 font-['Outfit']">
+              <span className="text-2xl font-black text-fg font-['Outfit']">
                 {comparison.reloop.binsVisited} bins
               </span>
-              <span className="text-xs text-charcoal-400">
+              <span className="text-xs text-fg-subtle">
                 (≥75% full only)
               </span>
             </div>
-            <span className="text-xs font-bold text-sage-700 block">
+            <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 block">
               Zero wasted stops
             </span>
           </div>
 
-          <div className="p-4 rounded-xl bg-navy-50/60 border border-navy-100 space-y-1">
-            <span className="text-xs font-semibold text-charcoal-500 block">Diesel Fuel Consumed</span>
+          <div className="p-4 rounded-xl bg-surface-muted border border-line space-y-1">
+            <span className="text-xs font-semibold text-fg-muted block">Diesel Fuel Consumed</span>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-black text-navy-900 font-['Outfit']">
+              <span className="text-2xl font-black text-fg font-['Outfit']">
                 {comparison.reloop.fuelLiters} L
               </span>
-              <span className="text-xs text-charcoal-400 line-through">
+              <span className="text-xs text-fg-subtle line-through">
                 {comparison.baseline.fuelLiters} L
               </span>
             </div>
-            <span className="text-xs font-bold text-sage-700 block">
+            <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 block">
               -{comparison.savings.fuelSavedLiters} L saved / day
             </span>
           </div>
 
-          <div className="p-4 rounded-xl bg-navy-50/60 border border-navy-100 space-y-1">
-            <span className="text-xs font-semibold text-charcoal-500 block">Tailpipe Emissions</span>
+          <div className="p-4 rounded-xl bg-surface-muted border border-line space-y-1">
+            <span className="text-xs font-semibold text-fg-muted block">Tailpipe Emissions</span>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-black text-navy-900 font-['Outfit']">
+              <span className="text-2xl font-black text-fg font-['Outfit']">
                 {comparison.reloop.co2EmittedKg} kg
               </span>
-              <span className="text-xs text-charcoal-400 line-through">
+              <span className="text-xs text-fg-subtle line-through">
                 {comparison.baseline.co2EmittedKg} kg
               </span>
             </div>
-            <span className="text-xs font-bold text-sage-700 block">
+            <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 block">
               -{comparison.savings.co2SavedKg} kg CO₂ avoided
             </span>
           </div>
@@ -203,12 +203,12 @@ export const OptimizePage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         
         {/* Map View */}
-        <div className="lg:col-span-8 bg-white rounded-2xl border border-navy-100 shadow-blueprint overflow-hidden flex flex-col min-h-[420px] h-[55vh] lg:h-[540px] relative">
+        <div className="lg:col-span-8 bg-surface rounded-2xl border border-line shadow-sm overflow-hidden flex flex-col min-h-[420px] h-[55vh] lg:h-[540px] relative">
           
           {/* Header strip with truck visibility toggles (Section 5) */}
-          <div className="px-4 py-2.5 bg-navy-50/90 border-b border-navy-100 flex flex-wrap items-center justify-between gap-2 text-xs z-10">
+          <div className="px-4 py-2.5 bg-surface-muted border-b border-line flex flex-wrap items-center justify-between gap-2 text-xs z-10">
             <div className="flex items-center gap-2">
-              <span className="font-bold text-navy-900">Toggle Trucks:</span>
+              <span className="font-bold text-fg">Toggle Trucks:</span>
               <div className="flex items-center gap-1.5 flex-wrap">
                 {routes.map((r) => {
                   const isChecked = activeTruckFilters.includes(r.truckId);
@@ -218,10 +218,10 @@ export const OptimizePage: React.FC = () => {
                       type="button"
                       onClick={() => toggleTruckFilter(r.truckId)}
                       aria-pressed={isChecked}
-                      className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition-all min-h-[32px] ${
+                      className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition-all min-h-[32px] cursor-pointer ${
                         isChecked
-                          ? 'bg-navy-700 text-white shadow-xs'
-                          : 'bg-white text-charcoal-600 border border-navy-200 opacity-60'
+                          ? 'bg-emerald-600 text-white shadow-xs'
+                          : 'bg-surface text-fg-muted border border-line opacity-60'
                       }`}
                     >
                       <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: r.color }} aria-hidden="true" />
@@ -231,7 +231,7 @@ export const OptimizePage: React.FC = () => {
                 })}
               </div>
             </div>
-            <span className="text-xs text-charcoal-500 font-mono hidden sm:inline">
+            <span className="text-xs text-fg-muted font-mono hidden sm:inline">
               Active: {comparison.reloop.totalDistanceKm} km
             </span>
           </div>
@@ -252,8 +252,8 @@ export const OptimizePage: React.FC = () => {
               <Marker position={config.depotCoordinates} icon={depotIcon}>
                 <Popup>
                   <div className="text-xs p-1">
-                    <span className="font-bold text-navy-900">Central Municipal Depot</span>
-                    <p className="text-charcoal-600">Fleet Starting & Returning Station</p>
+                    <span className="font-bold text-fg">Central Municipal Depot</span>
+                    <p className="text-fg-muted">Fleet Starting & Returning Station</p>
                   </div>
                 </Popup>
               </Marker>
@@ -273,7 +273,7 @@ export const OptimizePage: React.FC = () => {
                     }}
                   >
                     <Popup>
-                      <div className="text-xs p-1 space-y-1">
+                      <div className="text-xs p-1 space-y-1 text-fg">
                         <span className="font-bold" style={{ color: route.color }}>{route.truckName}</span>
                         <p>{route.binIds.length} stops · {route.totalDistanceKm} km</p>
                         <p>Load: {route.collectedKg} kg ({route.utilizationPercent}%)</p>
@@ -305,9 +305,9 @@ export const OptimizePage: React.FC = () => {
                     }}
                   >
                     <Popup>
-                      <div className="text-xs p-1">
+                      <div className="text-xs p-1 text-fg">
                         <span className="font-bold">{bin.id}</span>
-                        <p className="text-charcoal-600">{bin.fillPercent}% full</p>
+                        <p className="text-fg-muted">{bin.fillPercent}% full</p>
                         <p className="font-semibold" style={{ color: assignedRoute.color }}>
                           Picked by {assignedRoute.truckName}
                         </p>
@@ -324,7 +324,7 @@ export const OptimizePage: React.FC = () => {
         {/* Right: Truck Manifest Cards */}
         <div className="lg:col-span-4 space-y-3 min-h-[380px] lg:h-[540px] overflow-y-auto pr-1">
           <div className="flex items-center justify-between pb-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-charcoal-400">
+            <span className="text-xs font-bold uppercase tracking-wider text-fg-subtle">
               Fleet Manifest (4 Compactor Trucks)
             </span>
           </div>
@@ -334,8 +334,8 @@ export const OptimizePage: React.FC = () => {
             return (
               <div
                 key={route.truckId}
-                className={`p-4 rounded-xl bg-white border border-navy-100 shadow-blueprint space-y-2 transition-all ${
-                  isVisible ? 'hover:border-navy-300' : 'opacity-50'
+                className={`p-4 rounded-xl bg-surface border border-line shadow-sm space-y-2 transition-all ${
+                  isVisible ? 'hover:border-emerald-500/50' : 'opacity-50'
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -346,8 +346,8 @@ export const OptimizePage: React.FC = () => {
                       aria-hidden="true"
                     />
                     <div>
-                      <h3 className="font-bold text-sm text-navy-900">{route.truckName}</h3>
-                      <span className="text-xs text-charcoal-400 font-mono">{route.truckId}</span>
+                      <h3 className="font-bold text-sm text-fg">{route.truckName}</h3>
+                      <span className="text-xs text-fg-subtle font-mono">{route.truckId}</span>
                     </div>
                   </div>
                   <Badge variant="navy" size="sm">
@@ -357,11 +357,11 @@ export const OptimizePage: React.FC = () => {
 
                 {/* Progress Payload */}
                 <div className="space-y-1">
-                  <div className="flex justify-between text-xs text-charcoal-600">
+                  <div className="flex justify-between text-xs text-fg-muted">
                     <span>Payload: {(route.collectedKg / 1000).toFixed(2)} t</span>
                     <span className="font-bold">{route.utilizationPercent}% capacity</span>
                   </div>
-                  <div className="w-full h-1.5 rounded-full bg-navy-100 overflow-hidden">
+                  <div className="w-full h-1.5 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
                     <div
                       className="h-full rounded-full transition-all"
                       style={{ width: `${route.utilizationPercent}%`, backgroundColor: route.color }}
@@ -370,18 +370,18 @@ export const OptimizePage: React.FC = () => {
                 </div>
 
                 {/* Metrics Grid */}
-                <div className="grid grid-cols-3 gap-2 pt-2 border-t border-navy-50 text-center text-xs">
-                  <div className="p-1 rounded-lg bg-navy-50/50">
-                    <span className="text-charcoal-400 block text-[10px]">Distance</span>
-                    <span className="font-bold text-navy-800">{route.totalDistanceKm} km</span>
+                <div className="grid grid-cols-3 gap-2 pt-2 border-t border-line text-center text-xs">
+                  <div className="p-1 rounded-lg bg-surface-muted">
+                    <span className="text-fg-subtle block text-[10px]">Distance</span>
+                    <span className="font-bold text-fg">{route.totalDistanceKm} km</span>
                   </div>
-                  <div className="p-1 rounded-lg bg-navy-50/50">
-                    <span className="text-charcoal-400 block text-[10px]">Fuel</span>
-                    <span className="font-bold text-navy-800">{route.fuelLiters} L</span>
+                  <div className="p-1 rounded-lg bg-surface-muted">
+                    <span className="text-fg-subtle block text-[10px]">Fuel</span>
+                    <span className="font-bold text-fg">{route.fuelLiters} L</span>
                   </div>
-                  <div className="p-1 rounded-lg bg-navy-50/50">
-                    <span className="text-charcoal-400 block text-[10px]">Time</span>
-                    <span className="font-bold text-navy-800">{route.estimatedHours}h</span>
+                  <div className="p-1 rounded-lg bg-surface-muted">
+                    <span className="text-fg-subtle block text-[10px]">Time</span>
+                    <span className="font-bold text-fg">{route.estimatedHours}h</span>
                   </div>
                 </div>
               </div>

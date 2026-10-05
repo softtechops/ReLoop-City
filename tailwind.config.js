@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -7,7 +8,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#F8FAFC',
+        page: 'var(--page)',
+        surface: 'var(--surface)',
+        'surface-muted': 'var(--surface-muted)',
+        line: 'var(--line)',
+        fg: 'var(--fg)',
+        'fg-muted': 'var(--fg-muted)',
+        'fg-subtle': 'var(--fg-subtle)',
+        'ring-focus': 'var(--ring-focus)',
+        background: 'var(--page)',
         cc: {
           0: '#060B14',
           1: '#0B1220',

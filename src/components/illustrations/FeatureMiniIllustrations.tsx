@@ -9,12 +9,12 @@ export const SmartBinIllustration: React.FC<{ className?: string }> = ({ classNa
     role="img"
     aria-label="Smart IoT bin telemetry illustration"
   >
-    <rect x="50" y="60" width="100" height="120" rx="12" fill="#E1EDF7" stroke="#0F3E6D" strokeWidth="3" />
-    <path d="M 40 50 L 160 50" stroke="#0F3E6D" strokeWidth="4" strokeLinecap="round" />
-    <rect x="75" y="38" width="50" height="12" rx="4" fill="#0F3E6D" />
+    <rect x="50" y="60" width="100" height="120" rx="12" fill="currentColor" className="text-slate-100 dark:text-slate-800" stroke="currentColor" strokeWidth="3" />
+    <path d="M 40 50 L 160 50" stroke="currentColor" className="text-navy-800 dark:text-slate-300" strokeWidth="4" strokeLinecap="round" />
+    <rect x="75" y="38" width="50" height="12" rx="4" fill="currentColor" className="text-navy-800 dark:text-slate-700" />
     
     {/* Internal Ultrasonic Fill Level Display (84%) */}
-    <rect x="62" y="85" width="76" height="85" rx="6" fill="#D1FAE5" />
+    <rect x="62" y="85" width="76" height="85" rx="6" fill="#D1FAE5" className="dark:opacity-20" />
     <rect x="62" y="115" width="76" height="55" rx="6" fill="#10B981" />
     
     {/* Telemetry Sensor Indicator */}
@@ -38,9 +38,9 @@ export const TruckRouteIllustration: React.FC<{ className?: string }> = ({ class
     aria-label="Smart AI Route Optimization"
   >
     {/* City Ward Map Grid lines */}
-    <rect width="240" height="180" rx="12" fill="#F1F5F9" />
-    <path d="M 20 50 H 220 M 20 100 H 220 M 20 140 H 220" stroke="#CBD5E1" strokeWidth="1.5" strokeDasharray="4 4" />
-    <path d="M 60 20 V 160 M 120 20 V 160 M 180 20 V 160" stroke="#CBD5E1" strokeWidth="1.5" strokeDasharray="4 4" />
+    <rect width="240" height="180" rx="12" fill="currentColor" className="text-slate-100 dark:text-slate-800/80" />
+    <path d="M 20 50 H 220 M 20 100 H 220 M 20 140 H 220" stroke="currentColor" className="text-slate-300 dark:text-slate-700" strokeWidth="1.5" strokeDasharray="4 4" />
+    <path d="M 60 20 V 160 M 120 20 V 160 M 180 20 V 160" stroke="currentColor" className="text-slate-300 dark:text-slate-700" strokeWidth="1.5" strokeDasharray="4 4" />
     
     {/* Old Inefficient Baseline Route (Faint Red) */}
     <path

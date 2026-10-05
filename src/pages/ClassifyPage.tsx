@@ -124,16 +124,16 @@ export const ClassifyPage: React.FC = () => {
       />
 
       {/* One-Line Top Headline Result (Phase 4 requirement) */}
-      <div className="p-4 sm:p-5 rounded-2xl bg-white border border-charcoal-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="p-4 sm:p-5 rounded-2xl bg-surface border border-line shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <span className="p-2.5 rounded-xl bg-emerald-100 text-emerald-800 flex-shrink-0" aria-hidden="true">
-            <ScanSearch className="w-5 h-5 text-emerald-700" />
+          <span className="p-2.5 rounded-xl bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 flex-shrink-0" aria-hidden="true">
+            <ScanSearch className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
           </span>
           <div>
-            <div className="text-xs uppercase font-bold tracking-wider text-charcoal-500">
+            <div className="text-xs uppercase font-bold tracking-wider text-fg-subtle">
               Optical Computer Vision Inference
             </div>
-            <p className="text-sm sm:text-base font-bold text-navy-900 leading-snug">
+            <p className="text-sm sm:text-base font-bold text-fg leading-snug">
               Neural network sorting achieves {classificationResult ? (classificationResult.confidence * 100).toFixed(0) : '94'}% purity, routing items to {classificationResult?.targetProcessingUnit || 'high-yield secondary lines'}.
             </p>
           </div>
@@ -162,20 +162,20 @@ export const ClassifyPage: React.FC = () => {
                     type="button"
                     onClick={() => handleClassify(item)}
                     aria-label={`Select sample item: ${item.name}`}
-                    className={`p-3.5 rounded-2xl border text-left transition-all flex flex-col justify-between min-h-[110px] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 ${
+                    className={`p-3.5 rounded-2xl border text-left transition-all flex flex-col justify-between min-h-[110px] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-500 cursor-pointer ${
                       isSelected
-                        ? 'border-navy-700 bg-navy-50 shadow-xs ring-2 ring-navy-700/20'
-                        : 'border-navy-100 bg-[#F8FAFC] hover:bg-white hover:border-emerald-300'
+                        ? 'border-emerald-600 bg-emerald-500/15 shadow-xs ring-2 ring-emerald-500/30'
+                        : 'border-line bg-surface-muted hover:bg-surface hover:border-emerald-500/50'
                     }`}
                   >
                     <div className="text-3xl mb-1" role="img" aria-label={`Icon for ${item.name}`}>
                       {item.imageThumbnail}
                     </div>
                     <div>
-                      <span className="font-bold text-xs text-navy-900 line-clamp-1">{item.name}</span>
-                      <span className="text-xs text-charcoal-500 block">{item.category}</span>
+                      <span className="font-bold text-xs text-fg line-clamp-1">{item.name}</span>
+                      <span className="text-xs text-fg-muted block">{item.category}</span>
                     </div>
-                    <span className="text-xs font-mono text-sage-800 font-bold mt-2">
+                    <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold mt-2">
                       ₹{item.valuePerKg}/kg
                     </span>
                   </button>
@@ -199,10 +199,10 @@ export const ClassifyPage: React.FC = () => {
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
-            className={`p-7 rounded-2xl border-2 border-dashed text-center cursor-pointer transition-all space-y-2 select-none focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-navy-600 ${
+            className={`p-7 rounded-2xl border-2 border-dashed text-center cursor-pointer transition-all space-y-2 select-none focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-500 ${
               isDragOver
-                ? 'border-navy-700 bg-navy-100/60 scale-[1.01]'
-                : 'border-navy-200 hover:border-emerald-500 bg-[#F8FAFC] hover:bg-white'
+                ? 'border-emerald-500 bg-emerald-500/10 scale-[1.01]'
+                : 'border-line hover:border-emerald-500 bg-surface-muted hover:bg-surface'
             }`}
           >
             <input
@@ -213,14 +213,14 @@ export const ClassifyPage: React.FC = () => {
               className="hidden"
               aria-hidden="true"
             />
-            <div className="w-12 h-12 rounded-2xl bg-navy-100 text-navy-800 flex items-center justify-center mx-auto transition-colors" aria-hidden="true">
+            <div className="w-12 h-12 rounded-2xl bg-surface border border-line text-fg flex items-center justify-center mx-auto transition-colors" aria-hidden="true">
               <UploadCloud className="w-6 h-6" />
             </div>
             <div>
-              <span className="text-sm font-bold text-navy-900 block">
+              <span className="text-sm font-bold text-fg block">
                 Drag and drop custom waste image or click to browse
               </span>
-              <span className="text-xs text-charcoal-500">
+              <span className="text-xs text-fg-muted">
                 Supports JPG, PNG, WEBP (Max 10 MB). Press Enter or Space to open file picker.
               </span>
             </div>
@@ -228,7 +228,7 @@ export const ClassifyPage: React.FC = () => {
             {uploadError && (
               <div
                 role="alert"
-                className="mt-3 p-3 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs flex items-center justify-center gap-1.5"
+                className="mt-3 p-3 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-600 dark:text-rose-400 text-xs flex items-center justify-center gap-1.5"
               >
                 <AlertCircle className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
                 <span>{uploadError}</span>
@@ -244,13 +244,13 @@ export const ClassifyPage: React.FC = () => {
             subtitle="Deep learning stream classification & facility assignment"
             headerAction={
               isProcessing ? (
-                <span className="text-sm font-semibold text-amber-700 animate-pulse flex items-center gap-1.5">
+                <span className="text-sm font-semibold text-amber-600 dark:text-amber-400 animate-pulse flex items-center gap-1.5">
                   <RefreshCw className="w-4 h-4 animate-spin" aria-hidden="true" />
                   Analyzing...
                 </span>
               ) : (
                 <Badge variant="emerald" size="sm">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700" aria-hidden="true" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
                   <span>High Confidence</span>
                 </Badge>
               )
@@ -265,20 +265,20 @@ export const ClassifyPage: React.FC = () => {
                 /* Skeleton Processing State */
                 <div className="space-y-4 p-2 animate-pulse" role="status" aria-label="Analyzing image...">
                   <div className="flex items-center gap-3">
-                    <div className="w-16 h-16 rounded-2xl bg-charcoal-200" />
+                    <div className="w-16 h-16 rounded-2xl bg-surface-muted" />
                     <div className="space-y-2 flex-1">
-                      <div className="h-4 bg-charcoal-200 rounded w-1/3" />
-                      <div className="h-5 bg-charcoal-200 rounded w-2/3" />
+                      <div className="h-4 bg-surface-muted rounded w-1/3" />
+                      <div className="h-5 bg-surface-muted rounded w-2/3" />
                     </div>
                   </div>
-                  <div className="h-16 bg-charcoal-100 rounded-2xl" />
-                  <div className="h-24 bg-charcoal-100 rounded-2xl" />
+                  <div className="h-16 bg-surface-muted rounded-2xl" />
+                  <div className="h-24 bg-surface-muted rounded-2xl" />
                 </div>
               ) : classificationResult ? (
                 <>
                   {/* Item Image Preview & Detected Label */}
                   <div className="flex items-center gap-3">
-                    <div className="w-16 h-16 rounded-2xl bg-navy-50 border border-navy-100 flex items-center justify-center text-3xl shadow-xs overflow-hidden flex-shrink-0">
+                    <div className="w-16 h-16 rounded-2xl bg-surface-muted border border-line flex items-center justify-center text-3xl shadow-xs overflow-hidden flex-shrink-0">
                       {customImagePreview ? (
                         <img
                           src={customImagePreview}
@@ -293,10 +293,10 @@ export const ClassifyPage: React.FC = () => {
                       )}
                     </div>
                     <div>
-                      <span className="text-xs font-mono font-bold text-charcoal-500 uppercase">
+                      <span className="text-xs font-mono font-bold text-fg-subtle uppercase">
                         ID: {classificationResult.id}
                       </span>
-                      <h3 className="font-bold text-base text-navy-900 leading-snug">
+                      <h3 className="font-bold text-base text-fg leading-snug">
                         {classificationResult.detectedLabel}
                       </h3>
                       <span
@@ -309,10 +309,10 @@ export const ClassifyPage: React.FC = () => {
                   </div>
 
                   {/* Neural Network Confidence Bar */}
-                  <div className="space-y-1.5 p-3.5 rounded-2xl bg-navy-50/70 border border-navy-100">
-                    <div className="flex justify-between text-sm font-semibold text-charcoal-700">
+                  <div className="space-y-1.5 p-3.5 rounded-2xl bg-surface-muted border border-line">
+                    <div className="flex justify-between text-sm font-semibold text-fg">
                       <span>Neural Network Confidence</span>
-                      <span className="font-mono font-bold text-navy-900">
+                      <span className="font-mono font-bold text-fg">
                         {(classificationResult.confidence * 100).toFixed(1)}%
                       </span>
                     </div>
@@ -321,7 +321,7 @@ export const ClassifyPage: React.FC = () => {
                       aria-valuenow={Math.round(classificationResult.confidence * 100)}
                       aria-valuemin={0}
                       aria-valuemax={100}
-                      className="w-full h-2.5 rounded-full bg-navy-200 overflow-hidden"
+                      className="w-full h-2.5 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden"
                     >
                       <div 
                         className="h-full rounded-full bg-emerald-600 transition-all duration-500"
@@ -331,27 +331,27 @@ export const ClassifyPage: React.FC = () => {
                   </div>
 
                   {/* Target Facility & Handling Instructions */}
-                  <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-1 text-sm">
-                    <div className="flex items-center gap-1.5 font-bold text-emerald-900">
-                      <Factory className="w-4 h-4 text-emerald-700" aria-hidden="true" />
+                  <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 dark:bg-emerald-500/15 dark:border-emerald-500/30 space-y-1 text-sm">
+                    <div className="flex items-center gap-1.5 font-bold text-emerald-950 dark:text-emerald-200">
+                      <Factory className="w-4 h-4 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
                       <span>Target Processing Line:</span>
                     </div>
-                    <p className="font-bold text-navy-900 text-sm">
+                    <p className="font-bold text-fg text-sm">
                       {classificationOverrides[classificationResult.id] || classificationResult.targetProcessingUnit}
                     </p>
-                    <p className="text-charcoal-700 text-sm mt-1 leading-relaxed">
+                    <p className="text-fg-muted text-sm mt-1 leading-relaxed">
                       {classificationResult.sortingInstructions}
                     </p>
                   </div>
 
                   {/* Manager Routing Decision Selector */}
-                  <div className="pt-2 border-t border-charcoal-200 space-y-1.5">
+                  <div className="pt-2 border-t border-line space-y-1.5">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold uppercase tracking-wider text-charcoal-600">
+                      <span className="text-xs font-bold uppercase tracking-wider text-fg-subtle">
                         Manager Routing Decision:
                       </span>
                       {classificationOverrides[classificationResult.id] && (
-                        <span className="text-[11px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-md">
+                        <span className="text-[11px] font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-500/15 px-2 py-0.5 rounded-md">
                           Override Active
                         </span>
                       )}
@@ -372,12 +372,12 @@ export const ClassifyPage: React.FC = () => {
                             onClick={() => setClassificationOverride(classificationResult.id, facility.label)}
                             className={`px-3 py-2 rounded-xl text-xs font-bold text-left transition-all min-h-[44px] cursor-pointer flex items-center justify-between ${
                               isSelected
-                                ? 'bg-navy-900 text-white shadow-xs ring-2 ring-emerald-400'
-                                : 'bg-white hover:bg-charcoal-50 text-charcoal-800 border border-charcoal-200'
+                                ? 'bg-emerald-600 text-white shadow-xs ring-2 ring-emerald-400'
+                                : 'bg-surface hover:bg-surface-muted text-fg border border-line'
                             }`}
                           >
                             <span>{facility.label}</span>
-                            {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />}
+                            {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-white flex-shrink-0" />}
                           </button>
                         );
                       })}
@@ -386,15 +386,15 @@ export const ClassifyPage: React.FC = () => {
 
                   {/* Economic & Carbon Metrics */}
                   <div className="grid grid-cols-2 gap-3 pt-2">
-                    <div className="p-3.5 rounded-2xl bg-slate-50 border border-charcoal-200 text-sm">
-                      <span className="text-charcoal-500 block font-semibold uppercase text-xs">Market Value</span>
-                      <span className="font-bold text-base text-navy-900">
+                    <div className="p-3.5 rounded-2xl bg-surface-muted border border-line text-sm">
+                      <span className="text-fg-subtle block font-semibold uppercase text-xs">Market Value</span>
+                      <span className="font-bold text-base text-fg">
                         ₹{classificationResult.estimatedValuePerKgInr}/kg
                       </span>
                     </div>
-                    <div className="p-3.5 rounded-2xl bg-slate-50 border border-charcoal-200 text-sm">
-                      <span className="text-charcoal-500 block font-semibold uppercase text-xs">Avoided Carbon</span>
-                      <span className="font-bold text-base text-emerald-800">
+                    <div className="p-3.5 rounded-2xl bg-surface-muted border border-line text-sm">
+                      <span className="text-fg-subtle block font-semibold uppercase text-xs">Avoided Carbon</span>
+                      <span className="font-bold text-base text-emerald-600 dark:text-emerald-400">
                         {classificationResult.carbonAvoidanceKgPerKg} kg CO₂/kg
                       </span>
                     </div>
@@ -402,15 +402,15 @@ export const ClassifyPage: React.FC = () => {
                 </>
               ) : (
                 <EmptyState
-                  icon={<ScanSearch className="w-6 h-6 text-navy-800" />}
+                  icon={<ScanSearch className="w-6 h-6 text-fg-muted" />}
                   title="Drop an image or choose a sample"
                   description="Select one of the 8 conveyor belt samples or upload an image to inspect AI confidence, material stream, and facility routing."
                 />
               )}
             </div>
 
-            <div className="mt-4 p-3.5 rounded-2xl bg-slate-50 border border-charcoal-200 text-sm text-charcoal-600">
-              <strong>Pluggable Architecture:</strong> The clean <code className="text-navy-900 bg-white px-1.5 py-0.5 rounded font-mono text-xs border border-charcoal-200">classifyImage()</code> function can be connected directly to an on-device TensorFlow.js edge model or municipal camera webhook.
+            <div className="mt-4 p-3.5 rounded-2xl bg-surface-muted border border-line text-sm text-fg-muted">
+              <strong>Pluggable Architecture:</strong> The clean <code className="text-fg bg-surface px-1.5 py-0.5 rounded font-mono text-xs border border-line">classifyImage()</code> function can be connected directly to an on-device TensorFlow.js edge model or municipal camera webhook.
             </div>
           </SectionCard>
         </div>
