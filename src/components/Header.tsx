@@ -19,6 +19,7 @@ import {
   Monitor,
 } from 'lucide-react';
 import { WhatCanIDoModal } from './WhatCanIDoModal';
+import { useUiPrefs } from '../store/useUiPrefs';
 
 export const Header: React.FC = () => {
   const {
@@ -35,6 +36,7 @@ export const Header: React.FC = () => {
   } = useStore();
 
   const { theme, setTheme } = useTheme();
+  const { presentationMode } = useUiPrefs();
 
   const [isOverflowOpen, setIsOverflowOpen] = useState(false);
   const [isWhatCanIDoOpen, setIsWhatCanIDoOpen] = useState(false);
@@ -150,24 +152,26 @@ export const Header: React.FC = () => {
           <div className="flex items-center gap-2 sm:gap-3">
             
             {/* Single Status Pill ("Running · Day 1, 14:00") */}
-            <div
-              className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-medium ${
-                isSimRunning
-                  ? 'bg-emerald-50 text-emerald-800 border-emerald-200 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-500/30'
-                  : 'bg-surface-muted text-fg-subtle border-line'
-              }`}
-              title={isSimRunning ? 'Simulation running' : 'Simulation paused'}
-            >
-              <span
-                className={`w-2 h-2 rounded-full flex-shrink-0 ${
-                  isSimRunning ? 'bg-emerald-600 dark:bg-emerald-400' : 'bg-slate-400'
+            {!presentationMode && (
+              <div
+                className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-medium ${
+                  isSimRunning
+                    ? 'bg-emerald-50 text-emerald-800 border-emerald-200 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-500/30'
+                    : 'bg-surface-muted text-fg-subtle border-line'
                 }`}
-                aria-hidden="true"
-              />
-              <span>{statusPillText}</span>
-            </div>
+                title={isSimRunning ? 'Simulation running' : 'Simulation paused'}
+              >
+                <span
+                  className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                    isSimRunning ? 'bg-emerald-600 dark:bg-emerald-400' : 'bg-slate-400'
+                  }`}
+                  aria-hidden="true"
+                />
+                <span>{statusPillText}</span>
+              </div>
+            )}
 
-            {/* Primary Play / Pause Button */}
+            {/* Primary Play / Pause Button - Always visible! */}
             <button
               type="button"
               onClick={() => (isSimRunning ? pauseSimulation() : startSimulation())}
@@ -191,22 +195,24 @@ export const Header: React.FC = () => {
               )}
             </button>
 
-            {/* Day / Night ThemeToggle Component */}
-            <ThemeToggle />
+            {!presentationMode && (
+              <>
+                {/* Day / Night ThemeToggle Component */}
+                <ThemeToggle />
 
-            {/* "⋯" Overflow Menu */}
-            <div className="relative" ref={overflowRef}>
-              <button
-                ref={overflowButtonRef}
-                type="button"
-                onClick={() => setIsOverflowOpen((prev) => !prev)}
-                aria-haspopup="menu"
-                aria-expanded={isOverflowOpen}
-                aria-label="More simulation and navigation options"
-                className="min-h-[40px] min-w-[40px] p-2 rounded-xl border border-line hover:border-slate-300 dark:hover:border-slate-600 bg-surface hover:bg-surface-muted text-fg transition-all flex items-center justify-center cursor-pointer shadow-xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-600"
-              >
-                <MoreHorizontal className="w-5 h-5" aria-hidden="true" />
-              </button>
+                {/* "⋯" Overflow Menu */}
+                <div className="relative" ref={overflowRef}>
+                  <button
+                    ref={overflowButtonRef}
+                    type="button"
+                    onClick={() => setIsOverflowOpen((prev) => !prev)}
+                    aria-haspopup="menu"
+                    aria-expanded={isOverflowOpen}
+                    aria-label="More simulation and navigation options"
+                    className="min-h-[40px] min-w-[40px] p-2 rounded-xl border border-line hover:border-slate-300 dark:hover:border-slate-600 bg-surface hover:bg-surface-muted text-fg transition-all flex items-center justify-center cursor-pointer shadow-xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-600"
+                  >
+                    <MoreHorizontal className="w-5 h-5" aria-hidden="true" />
+                  </button>
 
               {/* Accessible Dropdown Menu */}
               {isOverflowOpen && (
@@ -345,8 +351,10 @@ export const Header: React.FC = () => {
                 </div>
               )}
             </div>
+          </>
+        )}
 
-          </div>
+      </div>
 
         </div>
       </div>

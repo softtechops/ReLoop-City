@@ -59,29 +59,33 @@ export const StatCard: React.FC<StatCardProps> = ({
 
   return (
     <div
-      className="relative rounded-2xl bg-surface border border-line shadow-sm p-6 hover:-translate-y-0.5 hover:border-emerald-500 transition-all duration-200 flex flex-col justify-between"
+      className="relative rounded-2xl bg-surface border border-line shadow-xs p-6 sm:p-8 hover:-translate-y-0.5 hover:border-emerald-500/50 hover:shadow-sm transition-all duration-200 flex flex-col justify-between h-full"
     >
-      {/* Top Row: Label + Icon + Info Popover */}
+      {/* Top Row: Label + Icon (Tooltip on label, no ? icon clutter) */}
       <div>
-        <div className="flex items-center justify-between gap-2 mb-2">
+        <div className="flex items-center justify-between gap-2 mb-3">
           <div className="flex items-center gap-2">
             {icon && (
               <span className="text-fg-subtle flex-shrink-0" aria-hidden="true">
                 {icon}
               </span>
             )}
-            <span className="text-sm font-medium text-fg-muted">
+            <span
+              className="text-sm font-medium text-fg-muted cursor-help border-b border-dotted border-fg-subtle/40 hover:text-fg hover:border-fg-subtle transition-colors"
+              title={calculationInfo}
+              tabIndex={0}
+              aria-label={`${title}: ${calculationInfo}`}
+            >
               {title}
             </span>
           </div>
-          <InfoPopover content={calculationInfo} label={`Learn how ${title} is calculated`} />
         </div>
 
         {/* Main Metric Value with Sparkline */}
         <div className="flex items-baseline justify-between gap-3 mb-2 flex-wrap">
           <div className="flex items-baseline gap-2 flex-wrap">
             <span
-              className={`text-3xl font-semibold tabular-nums text-fg tracking-tight transition-colors duration-200 ${
+              className={`text-4xl font-semibold tabular-nums text-fg tracking-tight transition-colors duration-200 ${
                 isHighlighted ? 'text-emerald-500' : ''
               }`}
             >

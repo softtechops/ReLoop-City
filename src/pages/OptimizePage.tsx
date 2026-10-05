@@ -1,8 +1,26 @@
 import React, { useState, useMemo } from 'react';
 import { useStore } from '../store/useStore';
 import { generateReLoopRoutes } from '../sim/routing';
-import { MapContainer, TileLayer, Marker, Popup, Polyline, CircleMarker } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Polyline, CircleMarker, useMap } from 'react-leaflet';
 import L from 'leaflet';
+
+function MapResizer() {
+  const map = useMap();
+  React.useEffect(() => {
+    const handleResize = () => {
+      map.invalidateSize();
+    };
+    window.addEventListener('resize', handleResize);
+    const timer = setTimeout(() => {
+      map.invalidateSize();
+    }, 250);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(timer);
+    };
+  }, [map]);
+  return null;
+}
 import confetti from 'canvas-confetti';
 import { PageHeader } from '../components/ui/PageHeader';
 import { LoopStepNav } from '../components/ui/LoopStepNav';
@@ -243,6 +261,7 @@ export const OptimizePage: React.FC = () => {
               scrollWheelZoom={true}
               style={{ width: '100%', height: '100%' }}
             >
+              <MapResizer />
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

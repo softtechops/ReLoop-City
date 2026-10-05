@@ -79,12 +79,12 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
           <div>
             <h1
               tabIndex={-1}
-              className="text-3xl font-semibold text-fg tracking-tight focus:outline-hidden"
+              className="text-3xl sm:text-4xl font-semibold text-fg tracking-tight focus:outline-hidden"
             >
               {title}
             </h1>
             {subtitle && (
-              <p className="text-sm text-fg-muted mt-1 max-w-3xl leading-relaxed">
+              <p className="text-base sm:text-lg text-fg-muted mt-1.5 max-w-3xl leading-relaxed">
                 {subtitle}
               </p>
             )}

@@ -18,6 +18,23 @@ function systemPrefersReducedMotion(): boolean {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
+export type SidebarMode = 'expanded' | 'collapsed';
+
+const SIDEBAR_KEY = 'reloop-sidebar';
+
+function initialSidebarMode(): SidebarMode {
+  try {
+    const saved = localStorage.getItem(SIDEBAR_KEY);
+    if (saved === 'expanded' || saved === 'collapsed') return saved;
+  } catch {
+    /* ignore */
+  }
+  if (typeof window !== 'undefined') {
+    return window.innerWidth >= 1280 ? 'expanded' : 'collapsed';
+  }
+  return 'expanded';
+}
+
 export interface UiPrefsState {
   soundEnabled: boolean;
   reduceEffects: boolean;
@@ -25,12 +42,19 @@ export interface UiPrefsState {
   helpOpen: boolean;
   paletteOpen: boolean;
   bootPlaying: boolean;
+  sidebarMode: SidebarMode;
+  isFlyoutOpen: boolean;
+  mobileDrawerOpen: boolean;
   setSoundEnabled: (v: boolean) => void;
   setReduceEffects: (v: boolean) => void;
   setPresentationMode: (v: boolean) => void;
   setHelpOpen: (v: boolean) => void;
   setPaletteOpen: (v: boolean) => void;
   setBootPlaying: (v: boolean) => void;
+  setSidebarMode: (v: SidebarMode) => void;
+  setFlyoutOpen: (v: boolean) => void;
+  setMobileDrawerOpen: (v: boolean) => void;
+  toggleSidebar: () => void;
   toggleSound: () => void;
   toggleReduceEffects: () => void;
   togglePresentation: () => void;
@@ -43,6 +67,9 @@ export const useUiPrefs = create<UiPrefsState>((set, get) => ({
   helpOpen: false,
   paletteOpen: false,
   bootPlaying: false,
+  sidebarMode: initialSidebarMode(),
+  isFlyoutOpen: false,
+  mobileDrawerOpen: false,
   setSoundEnabled: (v) => {
     try {
       localStorage.setItem(SOUND_KEY, String(v));
@@ -63,6 +90,20 @@ export const useUiPrefs = create<UiPrefsState>((set, get) => ({
   setHelpOpen: (v) => set({ helpOpen: v }),
   setPaletteOpen: (v) => set({ paletteOpen: v }),
   setBootPlaying: (v) => set({ bootPlaying: v }),
+  setSidebarMode: (v) => {
+    try {
+      localStorage.setItem(SIDEBAR_KEY, v);
+    } catch {
+      /* ignore */
+    }
+    set({ sidebarMode: v, isFlyoutOpen: false });
+  },
+  setFlyoutOpen: (v) => set({ isFlyoutOpen: v }),
+  setMobileDrawerOpen: (v) => set({ mobileDrawerOpen: v }),
+  toggleSidebar: () => {
+    const next = get().sidebarMode === 'expanded' ? 'collapsed' : 'expanded';
+    get().setSidebarMode(next);
+  },
   toggleSound: () => get().setSoundEnabled(!get().soundEnabled),
   toggleReduceEffects: () => get().setReduceEffects(!get().reduceEffects),
   togglePresentation: () => set({ presentationMode: !get().presentationMode }),
