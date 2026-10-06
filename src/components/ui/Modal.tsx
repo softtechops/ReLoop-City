@@ -100,7 +100,7 @@ export const Modal: React.FC<ModalProps> = ({
               {title && (
                 <h2
                   id="modal-dialog-title"
-                  className="text-lg font-bold text-fg font-['Outfit']"
+                  className="text-xl font-semibold text-fg font-heading tracking-tight"
                 >
                   {title}
                 </h2>

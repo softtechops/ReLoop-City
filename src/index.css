@@ -11,22 +11,14 @@
     --fg: #0F172A;
     --fg-muted: #475569;
     --fg-subtle: #64748B;
+    --brand: #059669;
+    --brand-tint: rgba(16, 185, 129, 0.12);
+    --warning: #D97706;
+    --warning-tint: rgba(217, 119, 6, 0.12);
+    --danger: #DC2626;
+    --danger-tint: rgba(220, 38, 38, 0.12);
     --ring-focus: #059669;
     --color-scheme: light;
-
-    --bg-blueprint: #F8FAFC;
-    --navy-primary: #12305C;
-    --sage-accent: #059669;
-    --amber-accent: #D9A441;
-    --charcoal-text: #0F172A;
-    --residual-gray: #64748B;
-    --cc-0: #060B14;
-    --cc-1: #0B1220;
-    --accent-emerald: #34D399;
-    --accent-lime: #A3E635;
-    --accent-amber: #FBBF24;
-    --accent-cyan: #22D3EE;
-    --accent-rose: #F43F5E;
   }
 
   :root.dark {
@@ -37,6 +29,12 @@
     --fg: #F1F5F9;
     --fg-muted: #CBD5E1;
     --fg-subtle: #94A3B8;
+    --brand: #10B981;
+    --brand-tint: rgba(16, 185, 129, 0.15);
+    --warning: #F59E0B;
+    --warning-tint: rgba(245, 158, 11, 0.15);
+    --danger: #F43F5E;
+    --danger-tint: rgba(244, 63, 94, 0.15);
     --ring-focus: #10B981;
     --color-scheme: dark;
 
@@ -287,107 +285,7 @@
   animation: pageIn 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.command-center {
-  background: linear-gradient(180deg, #060B14 0%, #0B1220 100%);
-  color: #E2E8F0;
-}
 
-.command-center h1,
-.command-center h2,
-.command-center h3 {
-  color: #F8FAFC;
-}
-
-.command-center ::selection {
-  background: rgba(52, 211, 153, 0.35);
-  color: #ecfdf5;
-}
-
-.command-center :focus-visible {
-  outline: 2px solid #34D399 !important;
-  outline-offset: 2px !important;
-}
-
-.command-center .leaflet-container {
-  background: #0B1220;
-  border-radius: 1rem;
-  filter: saturate(0.85) brightness(0.92);
-}
-
-html.command-center {
-  color-scheme: dark;
-}
-
-html.command-center body {
-  background: #060B14;
-  color: #E2E8F0;
-}
-
-/* Dark remaps for shared light UI inside command center */
-.command-center .bg-white,
-.command-center .bg-\[\#F8FAFC\],
-.command-center .bg-charcoal-50,
-.command-center .bg-navy-50,
-.command-center .bg-navy-50\/50,
-.command-center .bg-navy-50\/70,
-.command-center .bg-emerald-50,
-.command-center .bg-emerald-50\/50,
-.command-center .bg-amber-50,
-.command-center .bg-amber-50\/50,
-.command-center .bg-amber-50\/80 {
-  background-color: rgba(255, 255, 255, 0.045) !important;
-}
-
-.command-center .border-charcoal-100,
-.command-center .border-charcoal-200,
-.command-center .border-navy-50,
-.command-center .border-navy-100,
-.command-center .border-navy-200,
-.command-center .border-emerald-200,
-.command-center .border-emerald-300,
-.command-center .border-amber-200,
-.command-center .border-amber-200\/70 {
-  border-color: rgba(255, 255, 255, 0.10) !important;
-}
-
-.command-center .text-navy-900,
-.command-center .text-navy-800,
-.command-center .text-charcoal-800,
-.command-center .text-charcoal-900 {
-  color: #F1F5F9 !important;
-}
-
-.command-center .text-charcoal-700,
-.command-center .text-charcoal-600 {
-  color: #CBD5E1 !important;
-}
-
-.command-center .text-charcoal-500,
-.command-center .text-charcoal-400 {
-  color: #94A3B8 !important;
-}
-
-.command-center .shadow-sm,
-.command-center .shadow-md,
-.command-center .shadow-blueprint,
-.command-center .shadow-xl {
-  box-shadow: 0 18px 50px -24px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-}
-
-.command-center input,
-.command-center select,
-.command-center textarea {
-  background: rgba(255, 255, 255, 0.06);
-  color: #F8FAFC;
-  border-color: rgba(255, 255, 255, 0.14);
-}
-
-.command-center .recharts-cartesian-grid line {
-  stroke: rgba(255, 255, 255, 0.08);
-}
-.command-center .recharts-text {
-  fill: #94A3B8;
-}
 
 .presentation-mode .cc-chrome {
   display: none !important;
@@ -453,22 +351,15 @@ html.command-center body {
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0B1220;
+  background: var(--page);
 }
 ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: var(--fg-subtle);
+  opacity: 0.5;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
-}
-
-body:not(.command-center):not(:has(.command-center)) ::-webkit-scrollbar-track,
-html:not(.command-center) body ::-webkit-scrollbar-track {
-  background: #F1F5F9;
-}
-html:not(.command-center) ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: var(--fg-muted);
 }
 
 .leaflet-container {

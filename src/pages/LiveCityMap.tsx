@@ -396,12 +396,12 @@ export const LiveCityMap: React.FC = () => {
                 </div>
                 <div className="text-right">
                   <span
-                    className={`text-3xl font-black font-['Outfit'] ${
+                    className={`text-3xl font-semibold font-heading tabular-nums ${
                       selectedBin.fillPercent >= 80
-                        ? 'text-red-600'
+                        ? 'text-rose-600 dark:text-rose-400'
                         : selectedBin.fillPercent >= 50
-                        ? 'text-amberGold-700'
-                        : 'text-sage-700'
+                        ? 'text-amber-600 dark:text-amber-400'
+                        : 'text-emerald-600 dark:text-emerald-400'
                     }`}
                   >
                     {selectedBin.fillPercent}%
@@ -546,7 +546,7 @@ export const LiveCityMap: React.FC = () => {
                 <MapPin className="w-6 h-6" />
               </div>
               <div className="max-w-xs">
-                <h4 className="font-bold text-base text-fg font-['Outfit']">
+                <h4 className="font-semibold text-base text-fg font-heading">
                   No Smart Bin Selected
                 </h4>
                 <p className="text-xs text-fg-muted mt-1 leading-relaxed">

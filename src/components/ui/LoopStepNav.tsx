@@ -75,7 +75,7 @@ export const LoopStepNav: React.FC<LoopStepNavProps> = ({
               size="md"
               icon={<ArrowRight className="w-4 h-4" />}
               iconPosition="right"
-              className="w-full sm:w-auto min-h-[44px] text-sm bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-md shadow-emerald-900/10 px-5"
+              className="w-full sm:w-auto min-h-[44px] text-sm px-5"
             >
               Next: {nextLabel || 'Next Step'}
             </Button>
@@ -87,7 +87,7 @@ export const LoopStepNav: React.FC<LoopStepNavProps> = ({
               size="md"
               icon={<CheckCircle2 className="w-4 h-4" />}
               iconPosition="right"
-              className="w-full sm:w-auto min-h-[44px] text-sm bg-navy-900 hover:bg-navy-800 text-white font-bold px-5"
+              className="w-full sm:w-auto min-h-[44px] text-sm px-5"
             >
               Complete Loop: Dashboard
             </Button>

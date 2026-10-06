@@ -8,6 +8,7 @@ import { Toast } from './ui/Toast';
 import { Skeleton } from './ui/Skeleton';
 import { useUiPrefs } from '../store/useUiPrefs';
 import { Minimize2 } from 'lucide-react';
+import { CommandHud } from './cinematic/CommandHud';
 
 // Accessible loading fallback skeleton matching catalog card layout
 const PageFallback: React.FC = () => (
@@ -135,6 +136,7 @@ export const AppShell: React.FC = () => {
       <GuidedTourModal />
       <ResetConfirmDialog />
       <Toast />
+      <CommandHud />
     </div>
   );
 };

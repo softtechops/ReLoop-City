@@ -48,9 +48,9 @@ export function Tabs<T extends string>({
             tabIndex={isActive ? 0 : -1}
             onClick={() => onChange(tab.id)}
             onKeyDown={(e) => handleKeyDown(e, idx)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all select-none focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 min-h-[38px] rounded-lg text-sm font-semibold transition-all select-none cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-500 ${
               isActive
-                ? 'bg-slate-900 dark:bg-emerald-600 text-white shadow-xs'
+                ? 'bg-emerald-600 text-white shadow-xs'
                 : 'text-fg-muted hover:text-fg hover:bg-surface'
             }`}
           >

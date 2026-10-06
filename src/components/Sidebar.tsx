@@ -112,6 +112,29 @@ export const Sidebar: React.FC = () => {
     }
   }, [location.pathname]);
 
+  // Keyboard arrow keys move between sidebar links and buttons
+  const handleNavKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      const container = e.currentTarget as HTMLElement;
+      const focusable = Array.from(
+        container.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')
+      ).filter((el) => el.offsetParent !== null);
+      if (focusable.length === 0) return;
+
+      const currentIndex = focusable.indexOf(document.activeElement as HTMLElement);
+      e.preventDefault();
+      if (currentIndex === -1) {
+        focusable[0]?.focus();
+      } else if (e.key === 'ArrowDown') {
+        const nextIndex = (currentIndex + 1) % focusable.length;
+        focusable[nextIndex]?.focus();
+      } else {
+        const prevIndex = (currentIndex - 1 + focusable.length) % focusable.length;
+        focusable[prevIndex]?.focus();
+      }
+    }
+  };
+
   // Don't render rail at all if in presentation mode (Phase 3)
   if (presentationMode) {
     return null;
@@ -287,6 +310,20 @@ export const Sidebar: React.FC = () => {
                 </NavLink>
               );
             })}
+
+            {/* Help action item */}
+            <button
+              type="button"
+              onClick={() => {
+                onItemClick?.();
+                setHelpOpen(true);
+              }}
+              title="Keyboard shortcuts & Help guide"
+              className="w-full relative flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm transition-colors min-h-[40px] text-fg-muted hover:text-fg hover:bg-surface-muted font-medium cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-600 text-left"
+            >
+              <HelpCircle className="w-4 h-4 flex-shrink-0 text-fg-subtle" aria-hidden="true" />
+              <span>Help</span>
+            </button>
           </nav>
         </div>
       </div>
@@ -348,6 +385,7 @@ export const Sidebar: React.FC = () => {
         aria-expanded={sidebarMode === 'expanded'}
         onMouseEnter={handleRailMouseEnter}
         onMouseLeave={handleRailMouseLeave}
+        onKeyDown={handleNavKeyDown}
         className={`hidden md:flex flex-col bg-surface border-r border-line flex-shrink-0 h-[calc(100vh-4rem)] sticky top-16 select-none transition-[width] duration-200 ease-out z-20 ${
           sidebarMode === 'expanded' ? 'w-60' : 'w-14'
         }`}
@@ -499,6 +537,25 @@ export const Sidebar: React.FC = () => {
                   </div>
                 );
               })}
+
+              {/* Help button in collapsed rail */}
+              <div className="relative group w-full flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setHelpOpen(true)}
+                  aria-label="Help and keyboard shortcuts"
+                  className="relative w-10 h-10 rounded-xl flex items-center justify-center transition-colors text-fg-muted hover:text-fg hover:bg-surface-muted cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-600"
+                >
+                  <HelpCircle className="w-4 h-4 text-fg-subtle" aria-hidden="true" />
+                </button>
+
+                <div
+                  role="tooltip"
+                  className="absolute left-full ml-3 top-1/2 -translate-y-1/2 hidden group-hover:flex group-focus-within:flex items-center gap-2 px-3 py-1.5 bg-slate-900 dark:bg-slate-800 text-white text-xs font-semibold rounded-lg shadow-xl pointer-events-none z-50 whitespace-nowrap animate-in fade-in zoom-in-95 duration-100"
+                >
+                  <span>Help</span>
+                </div>
+              </div>
 
             </div>
 

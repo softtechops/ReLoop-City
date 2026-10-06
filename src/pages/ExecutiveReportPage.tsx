@@ -231,7 +231,7 @@ export const ExecutiveReportPage: React.FC = () => {
 
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pt-1">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-navy-950 font-['Outfit']">
+              <h1 className="text-2xl sm:text-3xl font-semibold text-navy-950 font-heading tracking-tight">
                 ReLoop City · Executive Operational Report
               </h1>
               <p className="text-sm text-charcoal-600 font-medium flex items-center gap-1.5 mt-1">
@@ -291,7 +291,7 @@ export const ExecutiveReportPage: React.FC = () => {
             {/* KPI 1 */}
             <div className="print-card p-4 rounded-xl border border-charcoal-200 bg-white space-y-1">
               <span className="text-xs text-charcoal-500 font-semibold block">Landfill Diversion</span>
-              <p className="text-2xl font-extrabold text-navy-950 font-['Outfit']">
+              <p className="text-2xl font-semibold text-navy-950 font-heading tabular-nums">
                 {displayActive.diversionRatePercent.toFixed(1)}%
               </p>
               <p className="text-xs font-bold text-emerald-800">
@@ -302,7 +302,7 @@ export const ExecutiveReportPage: React.FC = () => {
             {/* KPI 2 */}
             <div className="print-card p-4 rounded-xl border border-charcoal-200 bg-white space-y-1">
               <span className="text-xs text-charcoal-500 font-semibold block">Fleet Distance</span>
-              <p className="text-2xl font-extrabold text-navy-950 font-['Outfit']">
+              <p className="text-2xl font-semibold text-navy-950 font-heading tabular-nums">
                 {displayActive.routeKm.toFixed(0)} km
               </p>
               <p className="text-xs font-bold text-emerald-800">
@@ -313,7 +313,7 @@ export const ExecutiveReportPage: React.FC = () => {
             {/* KPI 3 */}
             <div className="print-card p-4 rounded-xl border border-charcoal-200 bg-white space-y-1">
               <span className="text-xs text-charcoal-500 font-semibold block">Clean Energy Yield</span>
-              <p className="text-2xl font-extrabold text-navy-950 font-['Outfit']">
+              <p className="text-2xl font-semibold text-navy-950 font-heading tabular-nums">
                 {safeFormatMwh(displayActive.energyMwh)}
               </p>
               <p className="text-xs font-bold text-amber-800">
@@ -324,7 +324,7 @@ export const ExecutiveReportPage: React.FC = () => {
             {/* KPI 4 */}
             <div className="print-card p-4 rounded-xl border border-charcoal-200 bg-white space-y-1">
               <span className="text-xs text-charcoal-500 font-semibold block">Circular Gross Revenue</span>
-              <p className="text-2xl font-extrabold text-navy-950 font-['Outfit']">
+              <p className="text-2xl font-semibold text-navy-950 font-heading tabular-nums">
                 {safeFormatCurrencyINR(displayActive.revenueInr)}
               </p>
               <p className="text-xs font-bold text-emerald-800">

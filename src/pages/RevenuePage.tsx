@@ -130,7 +130,7 @@ export const RevenuePage: React.FC = () => {
           <div className="flex flex-wrap items-center gap-3">
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface-muted border border-line">
               <span className="text-xs text-fg-muted font-medium">Pilot Run-rate:</span>
-              <span className="font-extrabold text-fg text-sm font-['Outfit']">
+              <span className="font-semibold text-fg text-sm font-heading tabular-nums">
                 {formatCurrencyINR(totalMonthlyRevenueInr)}/month
               </span>
             </div>

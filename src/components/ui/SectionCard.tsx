@@ -30,7 +30,7 @@ export const SectionCard: React.FC<SectionCardProps> = ({
   return (
     <section
       id={id}
-      className={`rounded-2xl bg-surface border border-line shadow-sm transition-shadow duration-200 overflow-hidden ${className}`}
+      className={`rounded-2xl bg-surface border border-line shadow-sm hover:-translate-y-0.5 hover:border-emerald-500/40 hover:shadow-sm transition-all duration-200 overflow-hidden ${className}`}
     >
       {(title || headerAction) && (
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 pt-6 pb-4 border-b border-line">

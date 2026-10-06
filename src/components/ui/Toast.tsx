@@ -54,14 +54,14 @@ export const Toast: React.FC = () => {
   const getBorderAndBg = () => {
     switch (toast.type) {
       case 'error':
-        return 'bg-navy-950 text-white border-red-500/50 shadow-red-950/20';
+        return 'bg-surface text-fg border-rose-500/40 shadow-xl';
       case 'success':
       case 'reloop':
-        return 'bg-navy-950 text-white border-emerald-500/40 shadow-emerald-950/20';
+        return 'bg-surface text-fg border-emerald-500/40 shadow-xl';
       case 'baseline':
-        return 'bg-navy-950 text-white border-amber-500/40 shadow-amber-950/20';
+        return 'bg-surface text-fg border-amber-500/40 shadow-xl';
       default:
-        return 'bg-navy-950 text-white border-navy-700 shadow-navy-950/20';
+        return 'bg-surface text-fg border-line shadow-xl';
     }
   };
 
@@ -114,7 +114,7 @@ export const Toast: React.FC = () => {
         <button
           type="button"
           onClick={() => setToast(null)}
-          className="p-1 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-colors flex-shrink-0"
+          className="p-1 rounded-lg text-fg-muted hover:text-fg hover:bg-surface-muted transition-colors flex-shrink-0"
           aria-label="Dismiss notification"
         >
           <X className="w-4 h-4" />

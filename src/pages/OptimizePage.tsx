@@ -109,7 +109,7 @@ export const OptimizePage: React.FC = () => {
             icon={<Sparkles className="w-4 h-4 text-emerald-400" />}
             isLoading={isSolving}
             onClick={handleGenerateRoutes}
-            className="min-h-[44px] text-sm bg-navy-900 hover:bg-navy-800"
+            className="min-h-[44px] text-sm"
           >
             {isSolving ? 'Solving 2-Opt TSP...' : 'Generate Smart Routes'}
           </Button>
@@ -140,7 +140,7 @@ export const OptimizePage: React.FC = () => {
       <div className="p-6 rounded-2xl bg-surface border border-line shadow-sm space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-line">
           <div>
-            <h2 className="text-base font-bold text-fg font-['Outfit']">
+            <h2 className="text-base font-bold text-fg font-heading">
               Routing Fleet Efficiency Summary (Before vs After)
             </h2>
             <p className="text-xs text-fg-muted">
@@ -158,7 +158,7 @@ export const OptimizePage: React.FC = () => {
           <div className="p-4 rounded-xl bg-surface-muted border border-line space-y-1">
             <span className="text-xs font-semibold text-fg-muted block">Total Route Distance</span>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-black text-fg font-['Outfit']">
+              <span className="text-2xl font-semibold text-fg font-heading tabular-nums">
                 {comparison.reloop.totalDistanceKm} km
               </span>
               <span className="text-xs text-fg-subtle line-through">
@@ -173,7 +173,7 @@ export const OptimizePage: React.FC = () => {
           <div className="p-4 rounded-xl bg-surface-muted border border-line space-y-1">
             <span className="text-xs font-semibold text-fg-muted block">Smart Bins Serviced</span>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-black text-fg font-['Outfit']">
+              <span className="text-2xl font-semibold text-fg font-heading tabular-nums">
                 {comparison.reloop.binsVisited} bins
               </span>
               <span className="text-xs text-fg-subtle">
@@ -188,7 +188,7 @@ export const OptimizePage: React.FC = () => {
           <div className="p-4 rounded-xl bg-surface-muted border border-line space-y-1">
             <span className="text-xs font-semibold text-fg-muted block">Diesel Fuel Consumed</span>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-black text-fg font-['Outfit']">
+              <span className="text-2xl font-semibold text-fg font-heading tabular-nums">
                 {comparison.reloop.fuelLiters} L
               </span>
               <span className="text-xs text-fg-subtle line-through">
@@ -203,7 +203,7 @@ export const OptimizePage: React.FC = () => {
           <div className="p-4 rounded-xl bg-surface-muted border border-line space-y-1">
             <span className="text-xs font-semibold text-fg-muted block">Tailpipe Emissions</span>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-black text-fg font-['Outfit']">
+              <span className="text-2xl font-semibold text-fg font-heading tabular-nums">
                 {comparison.reloop.co2EmittedKg} kg
               </span>
               <span className="text-xs text-fg-subtle line-through">

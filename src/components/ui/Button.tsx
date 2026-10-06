@@ -24,23 +24,23 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      'inline-flex items-center justify-center font-semibold rounded-xl transition-all select-none min-h-[44px] active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none disabled:active:scale-100 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900';
+      'inline-flex items-center justify-center font-semibold rounded-xl transition-all select-none min-h-[44px] active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none disabled:active:scale-100 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900 cursor-pointer';
 
     const variantStyles = {
       primary:
-        'bg-slate-900 hover:bg-slate-800 text-white shadow-sm dark:bg-emerald-500 dark:hover:bg-emerald-400 dark:text-slate-950 dark:shadow-none active:scale-[0.98]',
+        'bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white active:bg-emerald-700',
       secondary:
-        'bg-surface hover:bg-surface-muted text-fg border border-line shadow-2xs hover:border-slate-300 dark:hover:border-slate-700',
+        'bg-surface hover:bg-surface-muted text-fg border border-line shadow-xs hover:border-slate-300 dark:hover:border-slate-600',
       ghost:
         'bg-transparent hover:bg-surface-muted text-fg-muted hover:text-fg border border-transparent',
       danger:
-        'bg-red-600 hover:bg-red-700 text-white shadow-xs active:bg-red-800 dark:bg-red-500 dark:hover:bg-red-600',
+        'bg-rose-600 hover:bg-rose-700 text-white shadow-xs active:bg-rose-800 dark:bg-rose-600 dark:hover:bg-rose-700',
       sage:
-        'bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm shadow-emerald-600/20 active:bg-emerald-800 dark:bg-emerald-500 dark:text-slate-950',
+        'bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm active:bg-emerald-700',
       emerald:
-        'bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm shadow-emerald-600/20 active:bg-emerald-800 dark:bg-emerald-500 dark:text-slate-950',
+        'bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm active:bg-emerald-700',
       outline:
-        'bg-transparent hover:bg-surface-muted text-fg border border-line hover:border-slate-300 dark:hover:border-slate-700',
+        'bg-transparent hover:bg-surface-muted text-fg border border-line hover:border-slate-300 dark:hover:border-slate-600',
     };
 
     const sizeStyles = {

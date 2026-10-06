@@ -68,7 +68,7 @@ export const LandingOverview: React.FC = () => {
           <div className="relative z-10 max-w-3xl space-y-4">
             <div className="flex items-center gap-2">
               <Badge variant="amber" size="md">
-                <Sparkles className="w-3.5 h-3.5 text-amberGold-700" aria-hidden="true" />
+                <Sparkles className="w-3.5 h-3.5 text-amber-600" aria-hidden="true" />
                 <span>Welcome to ReLoop City Prototype</span>
               </Badge>
               <span className="text-xs text-navy-300 hidden sm:inline">
@@ -76,7 +76,7 @@ export const LandingOverview: React.FC = () => {
               </span>
             </div>
 
-            <h2 className="text-xl sm:text-2xl font-bold font-['Outfit'] text-white">
+            <h2 className="text-xl sm:text-2xl font-semibold font-heading text-white">
               How would you like to experience the municipal circular platform?
             </h2>
 
@@ -92,7 +92,7 @@ export const LandingOverview: React.FC = () => {
                 className="flex flex-col items-start p-4 rounded-2xl bg-sage-600 hover:bg-sage-500 text-white font-semibold text-left shadow-md transition-all active:scale-[0.98] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white"
               >
                 <div className="flex items-center justify-between w-full mb-1">
-                  <Sparkles className="w-5 h-5 text-amberGold-300" aria-hidden="true" />
+                  <Sparkles className="w-5 h-5 text-amber-300" aria-hidden="true" />
                   <span className="text-xs opacity-80 font-mono">2 mins</span>
                 </div>
                 <span className="font-bold text-sm">Guided Tour</span>
@@ -122,7 +122,7 @@ export const LandingOverview: React.FC = () => {
                 className="flex flex-col items-start p-4 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-semibold text-left border border-white/20 transition-all active:scale-[0.98] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white"
               >
                 <div className="flex items-center justify-between w-full mb-1">
-                  <Compass className="w-5 h-5 text-amberGold-300" aria-hidden="true" />
+                  <Compass className="w-5 h-5 text-amber-300" aria-hidden="true" />
                   <span className="text-xs opacity-70 font-mono">Freely</span>
                 </div>
                 <span className="font-bold text-sm">Explore on My Own</span>
@@ -141,14 +141,14 @@ export const LandingOverview: React.FC = () => {
         <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-sage-500/20 blur-3xl pointer-events-none" />
 
         <div className="relative max-w-4xl space-y-6">
-          <Badge variant="amber" size="md" className="bg-amberGold-500/20 text-amberGold-200 border-amberGold-400/40">
-            <Sparkles className="w-3.5 h-3.5 text-amberGold-300" aria-hidden="true" />
+          <Badge variant="amber" size="md" className="bg-amber-500/20 text-amber-200 border-amber-400/40">
+            <Sparkles className="w-3.5 h-3.5 text-amber-300" aria-hidden="true" />
             <span>PCCOE International Grand Challenge 2026 · Pune, India</span>
           </Badge>
 
           <h1
             tabIndex={-1}
-            className="text-3xl sm:text-5xl lg:text-5xl font-extrabold tracking-tight leading-tight font-['Outfit'] focus:outline-hidden"
+            className="text-3xl sm:text-5xl lg:text-5xl font-semibold tracking-tight leading-tight font-heading focus:outline-hidden"
           >
             AI-Powered Waste-to-Resource <br />
             <span className="text-sage-400">Circular City Platform</span>
@@ -173,7 +173,7 @@ export const LandingOverview: React.FC = () => {
             <Button
               variant="secondary"
               size="lg"
-              icon={<Sparkles className="w-4 h-4 text-amberGold-600" />}
+              icon={<Sparkles className="w-4 h-4 text-amber-500" />}
               onClick={handleStartTour}
               className="bg-white/10 text-white hover:bg-white/20 border-white/25 backdrop-blur-xs"
             >
@@ -184,19 +184,19 @@ export const LandingOverview: React.FC = () => {
           {/* 4 Highlight Outcomes */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-white/15 text-xs text-navy-200">
             <div>
-              <span className="block font-bold text-2xl text-white font-['Outfit']">95.2%</span>
+              <span className="block font-semibold text-2xl text-white font-heading tabular-nums">95.2%</span>
               <span className="text-xs">Landfill Diversion Rate</span>
             </div>
             <div>
-              <span className="block font-bold text-2xl text-amberGold-400 font-['Outfit']">-32%</span>
+              <span className="block font-semibold text-2xl text-amber-300 font-heading tabular-nums">-32%</span>
               <span className="text-xs">Fleet Route Distance (km)</span>
             </div>
             <div>
-              <span className="block font-bold text-2xl text-sage-400 font-['Outfit']">71.0 MWh</span>
+              <span className="block font-semibold text-2xl text-emerald-300 font-heading tabular-nums">71.0 MWh</span>
               <span className="text-xs">Clean Power Generated</span>
             </div>
             <div>
-              <span className="block font-bold text-2xl text-white font-['Outfit']">₹34.2 Lakh</span>
+              <span className="block font-semibold text-2xl text-white font-heading tabular-nums">₹34.2 Lakh</span>
               <span className="text-xs">Quarterly Resource Value</span>
             </div>
           </div>
@@ -207,7 +207,7 @@ export const LandingOverview: React.FC = () => {
       <section className="space-y-4">
         <div className="text-center max-w-2xl mx-auto space-y-1">
           <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">The Paradigm Shift</span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-fg font-['Outfit']">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-fg font-heading">
             Minimizing Landfill Dependency
           </h2>
           <p className="text-sm text-fg-muted">
@@ -307,7 +307,7 @@ export const LandingOverview: React.FC = () => {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">The 7 AI Steps</span>
-            <h2 className="text-2xl font-bold text-fg font-['Outfit']">
+            <h2 className="text-2xl font-semibold text-fg font-heading">
               Where AI Adds Intelligence
             </h2>
           </div>
@@ -358,7 +358,7 @@ export const LandingOverview: React.FC = () => {
 
       {/* CTA Box */}
       <section className="rounded-3xl bg-gradient-to-r from-navy-700 to-navy-800 text-white p-8 text-center space-y-4 shadow-xl">
-        <h3 className="text-xl sm:text-2xl font-bold font-['Outfit'] text-white">
+        <h3 className="text-xl sm:text-2xl font-semibold font-heading text-white">
           Ready to experience ReLoop City in action?
         </h3>
         <p className="text-sm text-navy-200 max-w-xl mx-auto leading-relaxed">

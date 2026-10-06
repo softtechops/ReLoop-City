@@ -24,11 +24,21 @@ export default {
           glass: 'rgba(255,255,255,0.05)',
         },
         brand: {
+          DEFAULT: 'var(--brand)',
+          tint: 'var(--brand-tint)',
           navy: '#12305C',
           sage: '#7BA17D',
           amber: '#D9A441',
           charcoal: '#2F3437',
           offWhite: '#F7F6F2',
+        },
+        warning: {
+          DEFAULT: 'var(--warning)',
+          tint: 'var(--warning-tint)',
+        },
+        danger: {
+          DEFAULT: 'var(--danger)',
+          tint: 'var(--danger-tint)',
         },
         navy: {
           50: '#F0F5FA',

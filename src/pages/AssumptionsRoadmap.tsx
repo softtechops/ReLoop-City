@@ -298,7 +298,7 @@ export const AssumptionsRoadmap: React.FC = () => {
       <div className="space-y-4">
         <div>
           <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">Strategic Scaling Roadmap</span>
-          <h2 className="text-2xl font-bold text-fg font-['Outfit']">
+          <h2 className="text-2xl font-semibold text-fg font-heading">
             Scope for Scaling: From Pilot to Circular City Network (Slide 10)
           </h2>
           <p className="text-sm text-fg-muted">
@@ -332,7 +332,7 @@ export const AssumptionsRoadmap: React.FC = () => {
                       <span className="text-xs font-bold uppercase font-mono text-emerald-600 dark:text-emerald-400">
                         {item.phase}
                       </span>
-                      <h3 className="font-bold text-base text-fg font-['Outfit']">
+                      <h3 className="font-semibold text-base text-fg font-heading">
                         {item.title}
                       </h3>
                     </div>

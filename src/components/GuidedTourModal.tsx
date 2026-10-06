@@ -203,7 +203,7 @@ export const GuidedTourModal: React.FC = () => {
                   Guided Walkthrough
                 </span>
               </div>
-              <h2 id="tour-dialog-title" className="text-lg sm:text-xl font-bold text-white font-['Outfit'] mt-0.5">
+              <h2 id="tour-dialog-title" className="text-lg sm:text-xl font-semibold text-white font-heading mt-0.5">
                 {step.title}
               </h2>
             </div>

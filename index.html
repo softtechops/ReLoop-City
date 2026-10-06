@@ -21,11 +21,11 @@
           var isDark = false;
           if (stored === 'dark') {
             isDark = true;
-          } else if (stored === 'system') {
-            isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-          } else {
-            // Default is strictly light mode
+          } else if (stored === 'light') {
             isDark = false;
+          } else {
+            // Default is system (follows OS live)
+            isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
           }
           if (isDark) {
             document.documentElement.classList.add('dark');

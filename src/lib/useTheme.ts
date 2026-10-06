@@ -14,7 +14,7 @@ function getStoredTheme(): Theme {
   } catch {
     // LocalStorage unavailable
   }
-  return 'light'; // Default is strictly light mode
+  return 'system'; // Default is system, follows OS live
 }
 
 function getSystemPrefersDark(): boolean {
@@ -32,7 +32,7 @@ function applyThemeToDocument(resolved: ResolvedTheme, animate = true) {
     root.classList.add('theme-transition');
     window.setTimeout(() => {
       root.classList.remove('theme-transition');
-    }, 320);
+    }, 200);
   }
 
   if (resolved === 'dark') {
@@ -49,7 +49,7 @@ function applyThemeToDocument(resolved: ResolvedTheme, animate = true) {
 
 // Global subscribers for synchronizing across component instances
 const listeners = new Set<() => void>();
-let globalTheme: Theme = typeof window !== 'undefined' ? getStoredTheme() : 'light';
+let globalTheme: Theme = typeof window !== 'undefined' ? getStoredTheme() : 'system';
 
 export function useTheme() {
   const [theme, setInternalTheme] = useState<Theme>(globalTheme);
