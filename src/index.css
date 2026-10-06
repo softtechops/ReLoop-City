@@ -19,6 +19,7 @@
     --danger-tint: rgba(220, 38, 38, 0.12);
     --ring-focus: #059669;
     --color-scheme: light;
+    color-scheme: light;
   }
 
   :root.dark {

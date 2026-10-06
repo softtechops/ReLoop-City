@@ -16,7 +16,6 @@ import {
   HelpCircle,
   Sun,
   Moon,
-  Monitor,
 } from 'lucide-react';
 import { WhatCanIDoModal } from './WhatCanIDoModal';
 import { useUiPrefs } from '../store/useUiPrefs';
@@ -227,13 +226,13 @@ export const Header: React.FC = () => {
                       <Sun className="w-3.5 h-3.5 text-amber-500" />
                       <span>Theme mode</span>
                     </span>
-                    <div className="grid grid-cols-3 gap-1">
-                      {(['light', 'dark', 'system'] as const).map((t) => (
+                    <div className="grid grid-cols-2 gap-1.5">
+                      {(['light', 'dark'] as const).map((t) => (
                         <button
                           key={t}
                           type="button"
                           onClick={() => setTheme(t)}
-                          className={`min-h-[30px] px-2 py-1 rounded-lg text-xs font-semibold transition-all capitalize cursor-pointer flex items-center justify-center gap-1 ${
+                          className={`min-h-[32px] px-2 py-1 rounded-lg text-xs font-semibold transition-all capitalize cursor-pointer flex items-center justify-center gap-1.5 ${
                             theme === t
                               ? 'bg-emerald-600 text-white shadow-2xs'
                               : 'bg-surface-muted text-fg-muted hover:text-fg hover:bg-slate-200 dark:hover:bg-slate-700'
@@ -241,18 +240,13 @@ export const Header: React.FC = () => {
                         >
                           {t === 'light' ? (
                             <>
-                              <Sun className="w-3 h-3" />
+                              <Sun className="w-3.5 h-3.5 text-amber-500" />
                               <span>Day</span>
-                            </>
-                          ) : t === 'dark' ? (
-                            <>
-                              <Moon className="w-3 h-3" />
-                              <span>Night</span>
                             </>
                           ) : (
                             <>
-                              <Monitor className="w-3 h-3" />
-                              <span>Auto</span>
+                              <Moon className="w-3.5 h-3.5 text-emerald-400" />
+                              <span>Night</span>
                             </>
                           )}
                         </button>

@@ -10,33 +10,17 @@
     <meta property="og:title" content="ReLoop City | Mission control for a circular city" />
     <meta property="og:description" content="Turn daily municipal waste streams into clean energy, circular commodities, and landfill diversion. Calibrated for Pune PCMC." />
     <meta property="og:site_name" content="ReLoop City" />
-    <meta name="color-scheme" content="light dark" />
+    <meta name="color-scheme" content="light" />
     <meta name="theme-color" id="theme-color-meta" content="#F8FAFC" />
     
-    <!-- Inline anti-FOUC theme detector: Default is strictly Light Mode -->
+    <!-- Ensure page always opens in Light theme on every visit/refresh; remove any legacy stored theme -->
     <script>
       (function() {
         try {
-          var stored = localStorage.getItem('reloop-theme');
-          var isDark = false;
-          if (stored === 'dark') {
-            isDark = true;
-          } else if (stored === 'light') {
-            isDark = false;
-          } else {
-            // Default is system (follows OS live)
-            isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-          }
-          if (isDark) {
-            document.documentElement.classList.add('dark');
-            var meta = document.getElementById('theme-color-meta');
-            if (meta) meta.setAttribute('content', '#0B1220');
-          } else {
-            document.documentElement.classList.remove('dark');
-            var meta = document.getElementById('theme-color-meta');
-            if (meta) meta.setAttribute('content', '#F8FAFC');
-          }
+          localStorage.removeItem('reloop-theme');
         } catch (e) {}
+        document.documentElement.classList.remove('dark');
+        document.documentElement.style.colorScheme = 'light';
       })();
     </script>
 
